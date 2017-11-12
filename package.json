@@ -1,0 +1,41 @@
+{
+  "name": "asl-validator",
+  "version": "1.0.0",
+  "description": "Amazon States Language validator",
+  "main": "bin/asl-validator.js",
+  "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "test": "./node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChristopheBougere/asl-validator.git"
+  },
+  "keywords": [
+    "asl",
+    "amazon states language",
+    "aws",
+    "step function",
+    "state machine",
+    "validator",
+    "linter"
+  ],
+  "author": "Christophe Bougère",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChristopheBougere/asl-validator/issues"
+  },
+  "homepage": "https://github.com/ChristopheBougere/asl-validator#readme",
+  "dependencies": {
+    "ajv": "^5.3.0",
+    "commander": "^2.11.0",
+    "jsonpath": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "jest": "^21.2.1"
+  }
+}

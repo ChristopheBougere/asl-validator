@@ -1,0 +1,41 @@
+{
+  "$id": "http://asl-validator.cloud/parallel#",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "pattern": "^Parallel$"
+    },
+    "Next": {
+      "type": "string"
+    },
+    "End": {
+      "enum": [true]
+    },
+    "Comment": {
+      "type": "string"
+    },
+    "OutputPath": {
+      "type": "string"
+    },
+    "InputPath": {
+      "type": "string"
+    },
+    "Branches": {
+      "type": "array",
+      "items": {
+        "types": {
+          "$ref": "http://asl-validator.cloud/state-machine#"
+        }
+      }
+    }
+  },
+  "oneOf": [{
+    "required": ["Next"]
+  }, {
+    "required": ["End"]
+  }],
+  "required": ["Type"],
+  "additionalProperties": false
+}

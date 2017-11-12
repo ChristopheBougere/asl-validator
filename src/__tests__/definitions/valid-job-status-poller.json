@@ -1,0 +1,68 @@
+{
+  "Comment": "A state machine that submits a Job to AWS Batch and monitors the Job until it completes.",
+  "StartAt": "Submit Job",
+  "States": {
+    "Submit Job": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:SubmitJob",
+      "ResultPath": "$.guid",
+      "Next": "Wait X Seconds",
+      "Retry": [{
+        "ErrorEquals": ["States.ALL"],
+        "IntervalSeconds": 1,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }]
+    },
+    "Wait X Seconds": {
+      "Type": "Wait",
+      "SecondsPath": "$.wait_time",
+      "Next": "Get Job Status"
+    },
+    "Get Job Status": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:CheckJob",
+      "Next": "Job Complete?",
+      "InputPath": "$.guid",
+      "ResultPath": "$.status",
+      "Retry": [{
+        "ErrorEquals": ["States.ALL"],
+        "IntervalSeconds": 1,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }]
+    },
+    "Job Complete?": {
+      "Type": "Choice",
+      "Choices": [{
+          "Variable": "$.status",
+          "StringEquals": "FAILED",
+          "Next": "Job Failed"
+        },
+        {
+          "Variable": "$.status",
+          "StringEquals": "SUCCEEDED",
+          "Next": "Get Final Job Status"
+        }
+      ],
+      "Default": "Wait X Seconds"
+    },
+    "Job Failed": {
+      "Type": "Fail",
+      "Cause": "AWS Batch Job Failed",
+      "Error": "DescribeJob returned FAILED"
+    },
+    "Get Final Job Status": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:CheckJob",
+      "InputPath": "$.guid",
+      "End": true,
+      "Retry": [{
+        "ErrorEquals": ["States.ALL"],
+        "IntervalSeconds": 1,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }]
+    }
+  }
+}

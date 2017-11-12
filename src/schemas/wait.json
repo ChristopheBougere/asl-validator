@@ -1,0 +1,46 @@
+{
+  "$id": "http://asl-validator.cloud/wait#",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "pattern": "^Wait$"
+    },
+    "Next": {
+      "type": "string"
+    },
+    "End": {
+      "enum": [true]
+    },
+    "Comment": {
+      "type": "string"
+    },
+    "OutputPath": {
+      "type": "string"
+    },
+    "InputPath": {
+      "type": "string"
+    },
+    "Seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "Timestamp": {
+      "type": "string"
+    },
+    "SecondsPath": {
+      "type": "string"
+    },
+    "TimestampPath": {
+      "type": "string"
+    }
+  },
+  "oneOf": [{
+    "required": ["Next"]
+  }, {
+    "required": ["End"]
+  }],
+  "required": ["Type"],
+  "additionalProperties": false
+}
