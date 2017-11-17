@@ -39,7 +39,7 @@ let definition;
 try {
   if (typeof program.jsonDefinition === 'string') {
     definition = JSON.parse(program.jsonDefinition);
-  } else if (typeof program.jsonpath === 'string') {
+  } else if (typeof program.jsonPath === 'string') {
     definition = JSON.parse(fs.readFileSync(program.jsonPath));
   } else {
     program.help();

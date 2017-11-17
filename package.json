@@ -2,7 +2,10 @@
   "name": "asl-validator",
   "version": "1.0.1",
   "description": "Amazon States Language validator",
-  "main": "bin/asl-validator.js",
+  "main": "./src/validator.js",
+  "bin": {
+    "asl-validator": "./bin/asl-validator.js"
+  },
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "test": "./node_modules/jest/bin/jest.js"
