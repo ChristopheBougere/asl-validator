@@ -2,7 +2,7 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
 
-A simple **Amazon States Language** validator based on JSON schemas.
+A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas.
 
 When writing your state machine (for AWS step functions), you can't locally validate you state machine definition without creating it. `asl-validator` makes it possible.
 
