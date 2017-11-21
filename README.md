@@ -16,7 +16,7 @@ npm install asl-validator
 
 ## CLI
 ```bash
-$ asl-validator.js --help
+$ asl-validator --help
 
   Usage: asl-validator [options]
 
