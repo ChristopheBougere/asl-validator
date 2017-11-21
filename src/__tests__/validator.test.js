@@ -11,10 +11,13 @@ describe('validator', () => {
     if (match) {
       it(`${match[1]}-${match[2]}`, () => {
         const definition = JSON.parse(fs.readFileSync(path.join(__dirname, 'definitions', files[i])));
+        const { isValid, errors } = validator(definition);
         if (match[1] === 'valid') {
-          expect(validator(definition)).toBeTruthy();
+          expect(isValid).toBeTruthy();
+          expect(errors).toBeNull();
         } else if (match[1] === 'invalid') {
-          expect(validator(definition)).toThrowError(/InvalidStateMachineDefinition/);
+          expect(isValid).toBeFalsy();
+          expect(errors.length).toBeGreaterThan(0);
         }
       });
     }

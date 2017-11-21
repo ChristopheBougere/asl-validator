@@ -36,6 +36,6 @@
   }, {
     "required": ["End"]
   }],
-  "required": ["Type"],
+  "required": ["Type", "Branches"],
   "additionalProperties": false
 }
