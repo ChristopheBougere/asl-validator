@@ -29,6 +29,23 @@
           "$ref": "http://asl-validator.cloud/state-machine#"
         }
       }
+    },
+    "Catch": {
+      "type": "array",
+      "items": {
+        "types": "object",
+        "properties": {
+          "ErrorEquals": {
+            "type": "array",
+            "items": {
+              "types": "string"
+            }
+          },
+          "Next": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "oneOf": [{

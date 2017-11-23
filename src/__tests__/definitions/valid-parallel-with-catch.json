@@ -1,0 +1,36 @@
+{
+  "StartAt": "A",
+  "States": {
+    "A": {
+      "Type": "Parallel",
+      "Next": "D",
+      "Branches": [{
+          "StartAt": "B",
+          "States": {
+            "B": {
+              "Type": "Fail"
+            }
+          }
+        },
+        {
+          "StartAt": "C",
+          "States": {
+            "C": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Catch": [{
+        "ErrorEquals": [
+          "States.ALL"
+        ],
+        "Next": "D"
+      }]
+    },
+    "D": {
+      "Type": "Fail"
+    }
+  }
+}
