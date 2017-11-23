@@ -24,7 +24,7 @@
     "linter"
   ],
   "author": "Christophe Bougère",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/airware/asl-validator/issues"
   },
