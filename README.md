@@ -25,10 +25,10 @@ $ asl-validator --help
 
   Options:
 
-    --version                           output the version number
+    -v, --version                       output the version number
     --json-definition <jsonDefinition>  JSON definition
     --json-path <jsonPath>              JSON path
-    --silent                            Silent mode
+    --silent                            silent mode
     -h, --help                          output usage information
 ```
 Return status:
@@ -59,6 +59,6 @@ npm run lint
 ```
 
 ## See also
-- [ASL specifications](https://states-language.net)
+- [ASL specifications](https://states-language.net/spec.html)
 - [ASL documentation on AWS website](http://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [Blog post](https://www.tbray.org/ongoing/When/201x/2016/12/01/J2119-Validator) from the creator of ASL explaining the pros and cons of a JSON schema based validator. An RFC based looks really interesting, but still the JSON schema approach seems more flexible and evolutive.

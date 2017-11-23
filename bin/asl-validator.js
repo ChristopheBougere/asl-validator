@@ -28,11 +28,11 @@ function fail(message) {
 }
 
 program
-  .version(version, '--version')
+  .version(version, '-v, --version')
   .description('Amazon States Language validator')
   .option('--json-definition <jsonDefinition>', 'JSON definition')
   .option('--json-path <jsonPath>', 'JSON path')
-  .option('--silent', 'Silent mode')
+  .option('--silent', 'silent mode')
   .parse(process.argv);
 
 let definition;
