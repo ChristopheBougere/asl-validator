@@ -1,6 +1,6 @@
 # asl-validator
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
 
 A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas.
 
