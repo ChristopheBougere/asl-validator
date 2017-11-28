@@ -1,0 +1,45 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:4
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          keys:
+          - dependency-cache-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - dependency-cache
+
+      - run:
+          name: "npm install --only=dev"
+          command: npm install --only=dev
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+      - run:
+          name: "Linting"
+          command: npm run lint -- --format junit -o reports/junit/js-lint-results.xml
+
+      - run:
+          name: "Test suite execution"
+          command: npm run test -- --ci --testResultsProcessor="jest-junit" #--coverageReporters="lcov"
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+
+      - store_test_results: #along with linting results
+          path: reports/junit
+
+      - store_artifacts:
+          path: reports/junit
