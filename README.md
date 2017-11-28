@@ -1,6 +1,7 @@
 # asl-validator
 
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
 
 A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas.
 
