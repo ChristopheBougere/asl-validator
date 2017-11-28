@@ -32,16 +32,19 @@ jobs:
 
       - run:
           name: "Test suite execution"
-          command: npm run test -- --ci --testResultsProcessor="jest-junit" --coverageReporters="lcov"
+          command: npm run test -- --ci --testResultsProcessor="jest-junit" --collectCoverage --coverageReporters="lcov"
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
 
       - run:
           name: "Report to codecov.io"
-          command: ./node_modules/codecov/bin/codecov -t a334ce88-b6cc-4950-928b-5d9dde32bcad
+          command: ./node_modules/codecov/bin/codecov --token $CODECOV_TOKEN
 
       - store_test_results: #along with linting results
           path: reports/junit
 
       - store_artifacts:
           path: reports/junit
+
+      - store_artifacts:
+          path: coverage
