@@ -38,7 +38,7 @@ jobs:
 
       - run:
           name: "Report to codecov.io"
-          command: ./node_modules/codecov/bin/codecov --token ${CODECOV_TOKEN}
+          command: ./node_modules/codecov/bin/codecov
 
       - store_test_results: #along with linting results
           path: reports/junit
