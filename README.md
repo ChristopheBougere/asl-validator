@@ -1,7 +1,10 @@
 # asl-validator
 
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
+[![npm version](https://badge.fury.io/js/asl-validator.svg)](https://badge.fury.io/js/asl-validator)
+[![CircleCI](https://circleci.com/gh/airware/asl-validator/tree/master.svg?style=svg)](https://circleci.com/gh/airware/asl-validator/tree/master)
 [![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
+
 
 A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas.
 
