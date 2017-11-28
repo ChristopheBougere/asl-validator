@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: "Test suite execution"
-          command: npm run test -- --ci --testResultsProcessor="jest-junit --coverageReporters="lcov"
+          command: npm run test -- --ci --testResultsProcessor="jest-junit" --coverageReporters="lcov"
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
 
