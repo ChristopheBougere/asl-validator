@@ -3,5 +3,3 @@ plugins:
   - jest
 env:
   jest/globals: true
-rules:
-  strict: 0
