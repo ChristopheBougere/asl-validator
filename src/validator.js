@@ -25,10 +25,13 @@ function validator(definition) {
       state,
       succeed,
       task,
-      wait,
+      wait, 
     ],
   });
   const isValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
+  if (false) {
+    console.log('Test CI');
+  }
   return { isValid, errors: ajv.errors };
 }
 
