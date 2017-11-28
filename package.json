@@ -39,6 +39,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.3.2",
     "jest": "^21.2.1",
-    "jest-junit": "^3.3.0"
+    "jest-junit": "^3.3.0",
+    "process-nextick-args": "^1.0.7"
   }
 }
