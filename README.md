@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/asl-validator.svg)](https://badge.fury.io/js/asl-validator)
 [![CircleCI](https://circleci.com/gh/airware/asl-validator/tree/master.svg?style=shield&circle-token=cbc6b9369907c4854a5881d486c244ddcc1b1f55)](https://circleci.com/gh/airware/asl-validator/tree/master)
 [![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
-
+[![Dependency Status](https://www.versioneye.com/user/projects/5a1daaa20fb24f5b29e6b4a3/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5a1daaa20fb24f5b29e6b4a3)
 
 A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas.
 
