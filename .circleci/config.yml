@@ -38,7 +38,7 @@ jobs:
 
       - run:
           name: "Report to codecov.io"
-          command: bash <(curl -s https://codecov.io/bash)
+          command: ./node_modules/codecov/bin/codecov -t a334ce88-b6cc-4950-928b-5d9dde32bcad
 
       - store_test_results: #along with linting results
           path: reports/junit
