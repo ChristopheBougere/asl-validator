@@ -10,10 +10,6 @@ const succeed = require('./schemas/succeed');
 const task = require('./schemas/task');
 const wait = require('./schemas/wait');
 
-// TODO
-// - validate JSON path
-// - add invalid definitions in tests
-
 function validator(definition) {
   const ajv = new Ajv({
     schemas: [
