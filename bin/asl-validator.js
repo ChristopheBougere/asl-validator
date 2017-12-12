@@ -1,9 +1,12 @@
 #!/usr/bin/env node
-/* eslint-disable no-console */
+/* eslint-disable no-console, strict, prefer-destructuring */
+
+'use strict';
+
 const fs = require('fs');
 const program = require('commander');
 
-const { version } = require('../package.json');
+const version = require('../package.json').version;
 const validator = require('../src/validator');
 
 function doneValid() {
@@ -49,11 +52,11 @@ try {
   fail(`Unable to read or parse state machine definition: ${e}`);
 }
 try {
-  const { isValid, errors } = validator(definition);
-  if (isValid) {
+  const result = validator(definition);
+  if (result.isValid) {
     doneValid();
   } else {
-    doneInvalid(errors);
+    doneInvalid(result.errors);
   }
 } catch (e) {
   fail(`Validator exception: ${e}`);
