@@ -1,0 +1,30 @@
+{
+  "Comment": "The 4 following tasks contain an invalid JSON path",
+  "StartAt": "Invalid1",
+  "States": {
+    "Invalid1": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:InvalidJsonPath",
+      "ResultPath": ".guid",
+      "Next": "Invalid2"
+    },
+    "Invalid2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:InvalidJsonPath",
+      "ResultPath": "..guid",
+      "Next": "Invalid3"
+    },
+    "Invalid3": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:InvalidJsonPath",
+      "ResultPath": "()",
+      "Next": "Invalid4"
+    },
+    "Invalid4": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:InvalidJsonPath",
+      "ResultPath": "$...",
+      "End": true
+    }
+  }
+}
