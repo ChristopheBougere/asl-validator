@@ -1,4 +1,5 @@
 const Ajv = require('ajv');
+const jp = require('jsonpath');
 
 const choice = require('./schemas/choice');
 const fail = require('./schemas/fail');
@@ -24,8 +25,26 @@ function validator(definition) {
       wait,
     ],
   });
-  const isValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
-  return { isValid, errors: ajv.errors };
+
+  // Validating JSON paths
+  const jsonPathErrors = jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
+    .map((path) => {
+      try {
+        jp.parse(path);
+        return null;
+      } catch (e) {
+        return e;
+      }
+    })
+    .filter(parsed => parsed); // remove null values to keep only errors
+
+  // Validating JSON schemas
+  const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
+
+  return {
+    isValid: isJsonSchemaValid && !jsonPathErrors.length,
+    errors: jsonPathErrors.concat(ajv.errors || []),
+  };
 }
 
 module.exports = validator;

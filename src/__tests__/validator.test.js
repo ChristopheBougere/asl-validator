@@ -14,9 +14,11 @@ describe('validator', () => {
         const { isValid, errors } = validator(definition);
         if (match[1] === 'valid') {
           expect(isValid).toBeTruthy();
-          expect(errors).toBeNull();
+          expect(Array.isArray(errors)).toBeTruthy();
+          expect(errors.length).toEqual(0);
         } else if (match[1] === 'invalid') {
           expect(isValid).toBeFalsy();
+          expect(Array.isArray(errors)).toBeTruthy();
           expect(errors.length).toBeGreaterThan(0);
         }
       });
