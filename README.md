@@ -6,6 +6,8 @@
 [![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
 [![Dependency Status](https://www.versioneye.com/user/projects/5a1daaa20fb24f5b29e6b4a3/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5a1daaa20fb24f5b29e6b4a3)
 
+[![NPM](https://nodei.co/npm/asl-validator.png?stars=true)](https://www.npmjs.com/package/asl-validator)
+
 A simple [**Amazon States Language**](https://states-language.net/spec.html) validator based on JSON schemas. It also validates JSON paths syntax in `InputPath`, `OutputPath` and `ResultPath`.
 
 When writing your state machine (for AWS step functions), you can't locally validate you state machine definition without creating it. `asl-validator` makes it possible.
