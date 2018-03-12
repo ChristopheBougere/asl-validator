@@ -17,10 +17,10 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "InputPath": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "Seconds": {
       "type": "number",
@@ -30,10 +30,10 @@
       "type": "string"
     },
     "SecondsPath": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "TimestampPath": {
-      "type": "string"
+      "type": ["string", "null"]
     }
   },
   "oneOf": [{

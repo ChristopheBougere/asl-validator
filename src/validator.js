@@ -28,6 +28,7 @@ function validator(definition) {
 
   // Validating JSON paths
   const jsonPathErrors = jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
+    .filter(path => typeof path === 'string')
     .map((path) => {
       try {
         jp.parse(path);
