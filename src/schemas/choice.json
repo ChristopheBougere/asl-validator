@@ -151,10 +151,10 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "InputPath": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "Choices": {
       "type": "array",
