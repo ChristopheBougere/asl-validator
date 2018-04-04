@@ -1,0 +1,24 @@
+{
+  "StartAt": "Start State",
+  "States":{
+    "Start State": {
+      "Type": "Pass",
+      "Next": "Finished"
+    },
+    "Finished Choice":{
+      "Type":"Choice",
+      "Choices": [
+        {
+          "Variable": "$.x",
+          "BooleanEquals": false,
+          "Next": "Finished"
+        }
+      ],
+      "Default": "Finished"
+    },
+    "Finished": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

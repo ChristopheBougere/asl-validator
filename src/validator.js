@@ -1,5 +1,4 @@
 const Ajv = require('ajv');
-const jp = require('jsonpath');
 
 const choice = require('./schemas/choice');
 const fail = require('./schemas/fail');
@@ -10,6 +9,8 @@ const state = require('./schemas/state');
 const succeed = require('./schemas/succeed');
 const task = require('./schemas/task');
 const wait = require('./schemas/wait');
+const checkJsonPath = require('./lib/json-path-errors');
+const checkUnreachableStates = require('./lib/unreachable-states-errors');
 
 function validator(definition) {
   const ajv = new Ajv({
@@ -27,24 +28,17 @@ function validator(definition) {
   });
 
   // Validating JSON paths
-  const jsonPathErrors = jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
-    .filter(path => typeof path === 'string')
-    .map((path) => {
-      try {
-        jp.parse(path);
-        return null;
-      } catch (e) {
-        return e;
-      }
-    })
-    .filter(parsed => parsed); // remove null values to keep only errors
+  const jsonPathErrors = checkJsonPath(definition);
+
+  // Check unreachable states
+  const unreachableStatesErrors = checkUnreachableStates(definition);
 
   // Validating JSON schemas
   const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
 
   return {
-    isValid: isJsonSchemaValid && !jsonPathErrors.length,
-    errors: jsonPathErrors.concat(ajv.errors || []),
+    isValid: isJsonSchemaValid && !jsonPathErrors.length && !unreachableStatesErrors.length,
+    errors: jsonPathErrors.concat(ajv.errors || []).concat(unreachableStatesErrors || []),
   };
 }
 
