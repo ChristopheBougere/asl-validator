@@ -70,7 +70,8 @@
           "Next": {
             "type": "string"
           }
-        }
+        },
+        "required": ["ErrorEquals", "Next"]
       }
     },
     "TimeoutSeconds": {

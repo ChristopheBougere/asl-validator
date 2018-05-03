@@ -1,0 +1,20 @@
+{
+  "StartAt": "Testing",
+  "States": {
+    "Testing": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-west-2:111126812102:function:some-dev-function",
+      "Catch": [{
+        "Error Equals": [
+          "Some Error"
+        ],
+        "Next": "Success"
+      }],
+      "Next": "Success"
+    },
+    "Success": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
