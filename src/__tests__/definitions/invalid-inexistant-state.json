@@ -1,0 +1,9 @@
+{
+  "StartAt": "Start State",
+  "States":{
+    "Start State": {
+      "Type": "Pass",
+      "Next": "Finished"
+    }
+  }
+}
