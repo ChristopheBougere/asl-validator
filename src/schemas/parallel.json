@@ -22,6 +22,9 @@
     "InputPath": {
       "type": ["string", "null"]
     },
+    "ResultPath": {
+      "type": ["string", "null"]
+    },
     "Branches": {
       "type": "array",
       "items": {

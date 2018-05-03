@@ -1,0 +1,38 @@
+{
+  "StartAt": "Steps Start",
+  "States":{
+    "Steps Start": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Step A",
+          "States": {
+            "Step A": {
+              "InputPath": "$.a",
+              "Type": "Pass",
+              "Result": "2.4",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "Step B",
+          "States": {
+            "Step B": {
+              "InputPath": "$.b",
+              "Type": "Pass",
+              "Result": "5.4",
+              "End": true
+            }
+          }
+        }
+      ],
+      "ResultPath": "$.m",
+      "Next": "End State"
+    },
+    "End State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
