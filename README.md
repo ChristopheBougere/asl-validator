@@ -5,6 +5,7 @@
 [![CircleCI](https://circleci.com/gh/airware/asl-validator/tree/master.svg?style=shield&circle-token=cbc6b9369907c4854a5881d486c244ddcc1b1f55)](https://circleci.com/gh/airware/asl-validator/tree/master)
 [![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
 [![NSP Status](https://nodesecurity.io/orgs/airware/projects/2fb3072b-db43-4287-817a-251d14cae96f/badge)](https://nodesecurity.io/orgs/airware/projects/2fb3072b-db43-4287-817a-251d14cae96f)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fairware%2Fasl-validator.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fairware%2Fasl-validator?ref=badge_shield)
 
 [![NPM](https://nodei.co/npm/asl-validator.png?stars=true)](https://www.npmjs.com/package/asl-validator)
 
@@ -68,3 +69,7 @@ npm run lint
 - [ASL specifications](https://states-language.net/spec.html)
 - [ASL documentation on AWS website](http://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [Blog post](https://www.tbray.org/ongoing/When/201x/2016/12/01/J2119-Validator) from the creator of ASL explaining the pros and cons of a JSON schema based validator. An RFC based looks really interesting, but still the JSON schema approach seems more flexible and evolutive.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fairware%2Fasl-validator.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fairware%2Fasl-validator?ref=badge_large)
