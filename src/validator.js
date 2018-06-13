@@ -10,7 +10,7 @@ const succeed = require('./schemas/succeed');
 const task = require('./schemas/task');
 const wait = require('./schemas/wait');
 const checkJsonPath = require('./lib/json-path-errors');
-const checkUnreachableStates = require('./lib/unreachable-states-errors');
+const missingTransitionTarget = require('./lib/missing-transition-target');
 
 function validator(definition) {
   const ajv = new Ajv({
@@ -31,14 +31,14 @@ function validator(definition) {
   const jsonPathErrors = checkJsonPath(definition);
 
   // Check unreachable states
-  const unreachableStatesErrors = checkUnreachableStates(definition);
+  const missingTransitionTargetErrors = missingTransitionTarget(definition);
 
   // Validating JSON schemas
   const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
 
   return {
-    isValid: isJsonSchemaValid && !jsonPathErrors.length && !unreachableStatesErrors.length,
-    errors: jsonPathErrors.concat(ajv.errors || []).concat(unreachableStatesErrors || []),
+    isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length,
+    errors: jsonPathErrors.concat(ajv.errors || []).concat(missingTransitionTargetErrors || []),
   };
 }
 
