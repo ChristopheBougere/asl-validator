@@ -1,6 +1,6 @@
 {
   "name": "asl-validator",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Amazon States Language validator",
   "main": "./src/validator.js",
   "bin": {
