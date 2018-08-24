@@ -33,6 +33,33 @@
         }
       }
     },
+    "Retry": {
+      "type": "array",
+      "items": {
+        "types": "object",
+        "properties": {
+          "ErrorEquals": {
+            "type": "array",
+            "items": {
+              "types": "string"
+            }
+          },
+          "IntervalSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "MaxAttempts": {
+            "type": "number",
+            "minimum": 0
+          },
+          "BackoffRate": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": ["ErrorEquals"]
+      }
+    },
     "Catch": {
       "type": "array",
       "items": {

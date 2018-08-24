@@ -1,0 +1,43 @@
+{
+  "StartAt": "Steps Start",
+  "States":{
+    "Steps Start": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Step A",
+          "States": {
+            "Step A": {
+              "InputPath": "$.a",
+              "Type": "Pass",
+              "Result": "2.4",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "Step B",
+          "States": {
+            "Step B": {
+              "InputPath": "$.b",
+              "Type": "Pass",
+              "Result": "5.4",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Retry": [{
+        "ErrorEquals": ["States.ALL"],
+        "IntervalSeconds": 1,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }],
+      "Next": "End State"
+    },
+    "End State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
