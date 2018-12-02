@@ -1,0 +1,18 @@
+{
+  "Comment": "https://states-language.net/spec.html#parameters",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Task",
+      "Resource": "arn:aws:swf:us-east-1:123456789012:task:X",
+      "Parameters": {
+        "flagged": true,
+        "parts": {
+          "first.$": "$.vals[0]",
+          "last3.$": "$.vals[3:]"
+        }
+      },
+      "End": true
+    }
+  }
+}
