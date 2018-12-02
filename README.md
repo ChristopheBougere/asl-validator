@@ -50,7 +50,7 @@ const { isValid, errors } = aslValidator(definition);
 if (isValid) {
   console.log('✓ State machine definition is valid')
 } else {
-  console.errors('✕ State machine definition is invalid:', errors);
+  console.error('✕ State machine definition is invalid:', errors);
 }
 ```
 
