@@ -81,6 +81,9 @@
     "HeartbeatSeconds": {
       "type": "number",
       "minimum": 1
+    },
+    "Parameters": {
+      "type": "object"
     }
   },
   "oneOf": [{
