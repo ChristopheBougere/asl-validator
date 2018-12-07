@@ -24,7 +24,7 @@
     },
     "Resource": {
       "type": "string",
-      "pattern": "^arn:aws:([a-z]|-)+:([a-z]|[0-9]|-)+:[0-9]+:([a-z]|-)+:.+$"
+      "pattern": "^arn:aws:([a-z]|-)+:([a-z]|[0-9]|-)*:[0-9]*:([a-z]|-)+:.+$"
     },
     "ResultPath": {
       "type": ["string", "null"]

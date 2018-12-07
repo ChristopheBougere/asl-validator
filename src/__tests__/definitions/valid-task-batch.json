@@ -1,0 +1,20 @@
+{
+  "Comment": "https://docs.aws.amazon.com/step-functions/latest/dg/connectors-batch.html",
+  "StartAt": "BATCH_JOB",
+  "States": {
+    "BATCH_JOB": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::batch:submitJob.sync",
+      "Parameters": {  
+        "JobDefinition": "preprocessing",
+        "JobName": "PreprocessingBatchJob",
+        "JobQueue": "SecondaryQueue",
+        "Parameters.$": "$.batchjob.parameters",
+        "RetryStrategy": {
+          "Attempts": 5
+        }
+      },
+      "End": true
+    }
+  }
+}
