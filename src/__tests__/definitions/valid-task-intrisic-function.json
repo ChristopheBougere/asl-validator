@@ -1,0 +1,28 @@
+{
+  "Comment": "Different resource types for tasks.",
+  "StartAt": "GetAttResource",
+  "States": {
+    "GetAttResource": {
+      "Type": "Task",
+      "Resource": {
+        "Fn::GetAtt": [
+          "lambda-name_GetAtt",
+          "Arn"
+        ]
+      },
+      "Next": "RefResource"
+    },
+    "RefResource": {
+      "Type": "Task",
+      "Resource": {
+        "Ref": "lambda-name_Ref"
+      },
+      "Next": "ArnResource"
+    },
+    "ArnResource": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:lambda-name_Arn",
+      "End": true
+    }
+  }
+}
