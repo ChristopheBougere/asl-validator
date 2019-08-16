@@ -23,8 +23,12 @@
       "type": ["string", "null"]
     },
     "Resource": {
-      "type": "string",
-      "pattern": "^arn:aws:([a-z]|-)+:([a-z]|[0-9]|-)*:[0-9]*:([a-z]|-)+:.+$"
+      "oneOf": [{
+        "type": "string",
+        "pattern": "^arn:aws:([a-z]|-)+:([a-z]|[0-9]|-)*:[0-9]*:([a-z]|-)+:[a-zA-Z0-9-_.]+$"
+      }, {
+        "type": "object"
+      }]
     },
     "ResultPath": {
       "type": ["string", "null"]
