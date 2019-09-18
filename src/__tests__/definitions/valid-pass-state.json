@@ -1,0 +1,34 @@
+{
+  "Comment": "An example of the Amazon States Language using a pass state.",
+  "StartAt": "FirstState",
+  "States": {
+    "FirstState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:FUNCTION_NAME",
+      "ResultPath": "$.fooList",
+      "Next": "ForLoopCondition"
+    },
+    "ForLoopCondition": {
+      "Type": "Choice",
+      "Choices": [{
+          "Not": {
+            "Variable": "$.fooList[0]",
+            "StringEquals": "DONE"
+          },
+          "Next": "PassState"
+        }
+      ],
+      "Default": "Succeed"
+    },
+    "PassState": {
+      "Type": "Pass",
+      "Parameters": {
+        "fooList.$": "$.fooList[1:]"
+      },
+      "Next": "ForLoopCondition"
+    },
+    "Succeed": {
+      "Type": "Succeed"
+    }
+  }
+}
