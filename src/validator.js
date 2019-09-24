@@ -9,6 +9,7 @@ const state = require('./schemas/state');
 const succeed = require('./schemas/succeed');
 const task = require('./schemas/task');
 const wait = require('./schemas/wait');
+const map = require('./schemas/map');
 const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 
@@ -24,6 +25,7 @@ function validator(definition) {
       succeed,
       task,
       wait,
+      map,
     ],
   });
 

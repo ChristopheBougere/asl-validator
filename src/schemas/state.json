@@ -22,6 +22,9 @@
     },
     {
       "$ref": "http://asl-validator.cloud/wait#"
+    },
+    {
+      "$ref": "http://asl-validator.cloud/map#"
     }
   ]
 }
