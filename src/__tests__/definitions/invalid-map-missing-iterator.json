@@ -1,0 +1,18 @@
+{
+  "Comment": "An example of the Amazon States Language using a map state to map over items in parallel.",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "Next": "Final State",
+      "InputPath": "$.input",
+      "ItemsPath": "$.items",
+      "MaxConcurrency": 0,      
+      "ResultPath": "$.result"
+    },
+    "Final State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
