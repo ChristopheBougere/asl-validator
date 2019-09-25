@@ -31,9 +31,12 @@
     "MaxConcurrency": {
       "type": "number",
       "minimum": 0
-    },    
+    },
     "Iterator": {
       "$ref": "http://asl-validator.cloud/state-machine#"
+    },
+    "Parameters": {
+      "type": "object"
     },
     "Retry": {
       "type": "array",
