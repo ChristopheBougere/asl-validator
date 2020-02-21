@@ -41,7 +41,7 @@ function validator(definition) {
   return {
     isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length,
     errors: jsonPathErrors.concat(ajv.errors || []).concat(missingTransitionTargetErrors || []),
-    errorsText: () => `${jsonPathErrors.join('\n')}\n${ajv.errorsText(ajv.errors, { separator: '\n' })}\n${missingTransitionTargetErrors.join('\n')}`,
+    errorsText: (separator) => `${jsonPathErrors.join(separator)}${separator}${ajv.errorsText(ajv.errors, { separator })}${separator}${missingTransitionTargetErrors.join(separator)}`,
   };
 }
 
