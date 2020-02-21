@@ -15,17 +15,11 @@ module.exports = (definition) => {
 
   // check if all states are reachable
   const unreachable = machineStates.filter(state => reachableStates.indexOf(state) === -1)
-    .map(state => ({
-      'Error code': 'MISSING_TRANSITION_TARGET',
-      Message: `State ${state} is not reachable`,
-    }));
+    .map(state => `State ${state} is not reachable`);
 
   // check if all 'Next', 'StartAt' and 'Default' states exist
   const inexistant = reachableStates.filter(state => machineStates.indexOf(state) === -1)
-    .map(state => ({
-      'Error code': 'MISSING_TRANSITION_TARGET',
-      Message: `Missing 'StartAt'|'Next'|'Default' target: ${state}`,
-    }));
+    .map(state => `Missing 'StartAt'|'Next'|'Default' target: ${state}`);
 
   return unreachable.concat(inexistant);
 };
