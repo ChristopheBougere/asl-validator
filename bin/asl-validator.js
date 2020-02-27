@@ -56,7 +56,7 @@ try {
   if (result.isValid) {
     doneValid();
   } else {
-    doneInvalid(result.errorsText);
+    doneInvalid(result.errorsText());
   }
 } catch (e) {
   fail(`Validator exception: ${e}`);
