@@ -28,9 +28,7 @@
     "Branches": {
       "type": "array",
       "items": {
-        "types": {
-          "$ref": "http://asl-validator.cloud/state-machine#"
-        }
+        "$ref": "http://asl-validator.cloud/state-machine#"
       }
     },
     "Retry": {
