@@ -1,0 +1,21 @@
+{
+  "StartAt": "A",
+  "States": {
+    "A": {
+      "Type": "Parallel",
+      "End": true,
+      "Branches": [
+        [
+          {
+            "StartAt": "B",
+            "States": {
+              "B": {
+                "Type": "Fail"
+              }
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
