@@ -1,6 +1,6 @@
 {
   "name": "asl-validator",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Amazon States Language validator",
   "main": "./src/validator.js",
   "bin": {
@@ -31,16 +31,16 @@
   "homepage": "https://github.com/ChristopheBougere/asl-validator#readme",
   "dependencies": {
     "ajv": "^6.12.2",
-    "commander": "^2.20.3",
+    "commander": "^5.1.0",
     "jsonpath": "^1.0.2"
   },
   "devDependencies": {
     "codecov": "^3.6.5",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^22.21.0",
-    "jest": "^23.6.0",
-    "jest-junit": "^5.2.0"
+    "eslint-plugin-jest": "^23.10.0",
+    "jest": "^26.0.1",
+    "jest-junit": "^10.0.0"
   }
 }
