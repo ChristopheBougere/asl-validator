@@ -1,9 +1,7 @@
 # asl-validator
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/airware/asl-validator/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ChristopheBougere/asl-validator/blob/master/LICENSE)
 [![npm version](https://badge.fury.io/js/asl-validator.svg)](https://badge.fury.io/js/asl-validator)
-[![CircleCI](https://circleci.com/gh/airware/asl-validator/tree/master.svg?style=shield&circle-token=cbc6b9369907c4854a5881d486c244ddcc1b1f55)](https://circleci.com/gh/airware/asl-validator/tree/master)
-[![codecov](https://codecov.io/gh/airware/asl-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/airware/asl-validator)
 
 [![NPM](https://nodei.co/npm/asl-validator.png?stars=true)](https://www.npmjs.com/package/asl-validator)
 
