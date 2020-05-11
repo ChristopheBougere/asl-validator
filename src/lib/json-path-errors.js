@@ -1,7 +1,7 @@
 const jp = require('jsonpath');
 
-module.exports = definition => jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
-  .filter(path => typeof path === 'string')
+module.exports = (definition) => jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
+  .filter((path) => typeof path === 'string')
   .map((path) => {
     try {
       jp.parse(path);
@@ -10,4 +10,4 @@ module.exports = definition => jp.query(definition, '$..[\'InputPath\',\'OutputP
       return e;
     }
   })
-  .filter(parsed => parsed); // remove null values to keep only errors
+  .filter((parsed) => parsed); // remove null values to keep only errors
