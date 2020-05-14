@@ -17,7 +17,7 @@ describe('validator', () => {
           expect(isValid).toBeTruthy();
           expect(Array.isArray(errors)).toBeTruthy();
           expect(errors.length).toEqual(0);
-          expect(typeof textErrors)).toBe('string');
+          expect(typeof textErrors).toBe('string');
         } else if (match[1] === 'invalid') {
           expect(isValid).toBeFalsy();
           expect(Array.isArray(errors)).toBeTruthy();
