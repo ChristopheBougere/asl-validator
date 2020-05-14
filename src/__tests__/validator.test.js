@@ -11,15 +11,18 @@ describe('validator', () => {
     if (match) {
       it(`${match[1]}-${match[2]}`, () => {
         const definition = JSON.parse(fs.readFileSync(path.join(__dirname, 'definitions', files[i])));
-        const { isValid, errors } = validator(definition);
+        const { isValid, errors, errorsText } = validator(definition);
+        const textErrors = errorsText();
         if (match[1] === 'valid') {
           expect(isValid).toBeTruthy();
           expect(Array.isArray(errors)).toBeTruthy();
           expect(errors.length).toEqual(0);
+          expect(typeof textErrors)).toBe('string');
         } else if (match[1] === 'invalid') {
           expect(isValid).toBeFalsy();
           expect(Array.isArray(errors)).toBeTruthy();
           expect(errors.length).toBeGreaterThan(0);
+          expect(typeof textErrors).toBe('string');
         }
       });
     }
