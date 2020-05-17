@@ -43,11 +43,14 @@ Return status:
 ```javascript
 const aslValidator = require('asl-validator');
 const definition = require('./path/to/my/state/machine/json/definition');
-const { isValid, errors } = aslValidator(definition);
+const { isValid, errors, errorsText } = aslValidator(definition);
 if (isValid) {
   console.log('✓ State machine definition is valid')
 } else {
-  console.error('✕ State machine definition is invalid:', errors);
+  // Either go through the errors object
+  console.error('✕ State machine definition is invalid:', errors.map(({ message }) => message).join('\n'));
+  // Or display the preformatted errors text
+  console.error('✕ State machine definition is invalid:', errorsText('\n'));
 }
 ```
 
