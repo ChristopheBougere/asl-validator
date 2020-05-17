@@ -18,7 +18,7 @@ function doneValid() {
 
 function doneInvalid(errors) {
   if (!program.silent) {
-    console.error('✕ State machine definition is invalid:', errors);
+    console.error('✕ State machine definition is invalid:\n', errors);
   }
   process.exit(1);
 }
@@ -56,7 +56,7 @@ try {
   if (result.isValid) {
     doneValid();
   } else {
-    doneInvalid(result.errors);
+    doneInvalid(result.errorsText());
   }
 } catch (e) {
   fail(`Validator exception: ${e}`);
