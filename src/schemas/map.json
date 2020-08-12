@@ -41,12 +41,12 @@
     "Retry": {
       "type": "array",
       "items": {
-        "types": "object",
+        "type": "object",
         "properties": {
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "types": "string"
+              "type": "string"
             }
           },
           "IntervalSeconds": {
@@ -68,12 +68,12 @@
     "Catch": {
       "type": "array",
       "items": {
-        "types": "object",
+        "type": "object",
         "properties": {
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "types": "string"
+              "type": "string"
             }
           },
           "Next": {
