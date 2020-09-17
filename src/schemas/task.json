@@ -92,6 +92,9 @@
     "HeartbeatSecondsPath": {
       "type": "string"
     },
+    "ResultSelector": {
+      "type": "object"
+    },
     "Parameters": {
       "type": "object"
     }
