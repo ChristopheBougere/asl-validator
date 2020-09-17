@@ -82,9 +82,15 @@
       "type": "number",
       "minimum": 1
     },
+    "TimeoutSecondsPath": {
+      "type": "string"
+    },
     "HeartbeatSeconds": {
       "type": "number",
       "minimum": 1
+    },
+    "HeartbeatSecondsPath": {
+      "type": "string"
     },
     "Parameters": {
       "type": "object"
