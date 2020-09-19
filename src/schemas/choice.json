@@ -26,53 +26,122 @@
         "Not": {
           "$ref": "#/definitions/Operator"
         },
+        "IsNull": {
+          "type": "boolean"
+        },
+        "IsPresent": {
+          "type": "boolean"
+        },
         "BooleanEquals": {
+          "type": "boolean"
+        },
+        "BooleanEqualsPath": {
+          "type": "string"
+        },
+        "IsBoolean": {
           "type": "boolean"
         },
         "NumericEquals": {
           "type": "number"
         },
+        "NumericEqualsPath": {
+          "type": "string"
+        },
         "NumericGreaterThan": {
           "type": "number"
+        },
+        "NumericGreaterThanPath": {
+          "type": "string"
         },
         "NumericGreaterThanEquals": {
           "type": "number"
         },
+        "NumericGreaterThanEqualsPath": {
+          "type": "string"
+        },
         "NumericLessThan": {
           "type": "number"
+        },
+        "NumericLessThanPath": {
+          "type": "string"
         },
         "NumericLessThanEquals": {
           "type": "number"
         },
+        "NumericLessThanEqualsPath": {
+          "type": "string"
+        },
+        "IsNumeric": {
+          "type": "boolean"
+        },
         "StringEquals": {
+          "type": "string"
+        },
+        "StringEqualsPath": {
           "type": "string"
         },
         "StringGreaterThan": {
           "type": "string"
         },
+        "StringGreaterThanPath": {
+          "type": "string"
+        },
         "StringGreaterThanEquals": {
+          "type": "string"
+        },
+        "StringGreaterThanEqualsPath": {
           "type": "string"
         },
         "StringLessThan": {
           "type": "string"
         },
+        "StringLessThanPath": {
+          "type": "string"
+        },
         "StringLessThanEquals": {
           "type": "string"
         },
+        "StringLessThanEqualsPath": {
+          "type": "string"
+        },
+        "StringMatches": {
+          "type": "string"
+        },
+        "IsString": {
+          "type": "boolean"
+        },
         "TimestampEquals": {
+          "type": "string"
+        },
+        "TimestampEqualsPath": {
           "type": "string"
         },
         "TimestampGreaterThan": {
           "type": "string"
         },
+        "TimestampGreaterThanPath": {
+          "type": "string"
+        },
         "TimestampGreaterThanEquals": {
+          "type": "string"
+        },
+        "TimestampGreaterThanEqualsPath": {
           "type": "string"
         },
         "TimestampLessThan": {
           "type": "string"
         },
+        "TimestampLessThanPath": {
+          "type": "string"
+        },
         "TimestampLessThanEquals": {
           "type": "string"
+        },
+        "TimestampLessThanEqualsPath": {
+          "type": "string"
+        },
+        "IsTimestamp": {
+          "type": "boolean"
         }
       },
       "oneOf": [{
@@ -82,22 +151,52 @@
           "required": ["BooleanEquals"]
         },
         {
+          "required": ["BooleanEqualsPath"]
+        },
+        {
+          "required": ["IsBoolean"]
+        },
+        {
           "required": ["Not"]
+        },
+        {
+          "required": ["IsNull"]
+        },
+        {
+          "required": ["IsPresent"]
         },
         {
           "required": ["NumericEquals"]
         },
         {
+          "required": ["NumericEqualsPath"]
+        },
+        {
           "required": ["NumericGreaterThan"]
+        },
+        {
+          "required": ["NumericGreaterThanPath"]
         },
         {
           "required": ["NumericGreaterThanEquals"]
         },
         {
+          "required": ["NumericGreaterThanEqualsPath"]
+        },
+        {
           "required": ["NumericLessThan"]
         },
         {
+          "required": ["NumericLessThanPath"]
+        },
+        {
           "required": ["NumericLessThanEquals"]
+        },
+        {
+          "required": ["NumericLessThanEqualsPath"]
+        },
+        {
+          "required": ["IsNumeric"]
         },
         {
           "required": ["Or"]
@@ -106,31 +205,70 @@
           "required": ["StringEquals"]
         },
         {
+          "required": ["StringEqualsPath"]
+        },
+        {
           "required": ["StringGreaterThan"]
+        },
+        {
+          "required": ["StringGreaterThanPath"]
         },
         {
           "required": ["StringGreaterThanEquals"]
         },
         {
+          "required": ["StringGreaterThanEqualsPath"]
+        },
+        {
           "required": ["StringLessThan"]
+        },
+        {
+          "required": ["StringLessThanPath"]
         },
         {
           "required": ["StringLessThanEquals"]
         },
         {
+          "required": ["StringLessThanEqualsPath"]
+        },
+        {
+          "required": ["StringMatches"]
+        },
+        {
+          "required": ["IsString"]
+        },
+        {
           "required": ["TimestampEquals"]
+        },
+        {
+          "required": ["TimestampEqualsPath"]
         },
         {
           "required": ["TimestampGreaterThan"]
         },
         {
+          "required": ["TimestampGreaterThanPath"]
+        },
+        {
           "required": ["TimestampGreaterThanEquals"]
+        },
+        {
+          "required": ["TimestampGreaterThanEqualsPath"]
         },
         {
           "required": ["TimestampLessThan"]
         },
         {
+          "required": ["TimestampLessThanPath"]
+        },
+        {
           "required": ["TimestampLessThanEquals"]
+        },
+        {
+          "required": ["TimestampLessThanEqualsPath"]
+        },
+        {
+          "required": ["IsTimestamp"]
         }
       ]
     }

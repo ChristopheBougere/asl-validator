@@ -71,6 +71,9 @@
           },
           "Next": {
             "type": "string"
+          },
+          "ResultPath": {
+            "type": ["string", "null"]
           }
         },
         "required": ["ErrorEquals", "Next"]
