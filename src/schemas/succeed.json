@@ -9,6 +9,12 @@
     },
     "Comment": {
       "type": "string"
+    },
+    "OutputPath": {
+      "type": ["string", "null"]
+    },
+    "InputPath": {
+      "type": ["string", "null"]
     }
   },
   "required": ["Type"],
