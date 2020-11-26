@@ -13,6 +13,10 @@ const map = require('./schemas/map');
 const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 
+function formatError(e) {
+  return e.Code ? `${e.Code}: ${e.Message}` : e.message;
+}
+
 function validator(definition) {
   const ajv = new Ajv({
     schemas: [
@@ -41,7 +45,15 @@ function validator(definition) {
   return {
     isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length,
     errors: jsonPathErrors.concat(ajv.errors || []).concat(missingTransitionTargetErrors || []),
-    errorsText: (separator = '\n') => `${jsonPathErrors.map((e) => `${e.Code}: ${e.Message}`).join(separator)}${separator}${ajv.errorsText(ajv.errors, { separator })}${separator}${missingTransitionTargetErrors.map((e) => `${e.Code}: ${e.Message}`).join(separator)}`,
+    errorsText: (separator = '\n') => {
+      const errors = [];
+      errors.push(jsonPathErrors.map(formatError).join(separator));
+      if (ajv.errors) {
+        errors.push(ajv.errorsText(ajv.errors, { separator }));
+      }
+      errors.push(missingTransitionTargetErrors.map(formatError).join(separator));
+      return errors.join(separator);
+    },
   };
 }
 
