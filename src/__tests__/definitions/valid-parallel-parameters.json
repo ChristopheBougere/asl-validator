@@ -1,0 +1,23 @@
+{
+  "StartAt": "Parallel State",
+  "States": {
+    "Parallel State": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "Pass",
+          "States": {
+            "Pass": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Parameters": {
+        "stateName.$": "$$.State.Name"
+      },
+      "End": true
+    }
+  }
+}

@@ -7,6 +7,9 @@
       "type": "string",
       "pattern": "^Parallel$"
     },
+    "Parameters": {
+      "type": "object"
+    },
     "Next": {
       "type": "string"
     },
