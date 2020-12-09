@@ -1,0 +1,22 @@
+{
+    "StartAt": "Map State",
+    "States": {
+      "Map State": {
+        "Type": "Map",
+        "MaxConcurrency": 0,
+        "ResultSelector": {
+            "output.$": "$"
+        },
+        "Iterator": {
+          "StartAt": "Pass State",
+          "States": {
+            "Pass State": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+        },
+        "End": true
+      }
+    }
+}
