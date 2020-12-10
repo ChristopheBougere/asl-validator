@@ -38,6 +38,9 @@
     "Parameters": {
       "type": "object"
     },
+    "ResultSelector": {
+      "type": "object"
+    },
     "Retry": {
       "type": "array",
       "items": {

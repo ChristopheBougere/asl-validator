@@ -1,0 +1,23 @@
+{
+    "StartAt": "Parallel State",
+    "States": {
+      "Parallel State": {
+        "Type": "Parallel",
+        "ResultSelector": {
+          "output.$": "$"
+        },
+        "Branches": [
+          {
+            "StartAt": "State",
+            "States": {
+              "State": {
+                "Type": "Pass",
+                "End": true
+              }
+            }
+          }
+        ],
+        "End": true
+      }
+    }
+}
