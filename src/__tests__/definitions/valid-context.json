@@ -1,0 +1,12 @@
+{
+  "Comment": "Testing getting Context Object from InputPath in Pass State",
+  "StartAt": "pass-execution-details",
+  "States": {
+    "pass-execution-details": {
+      "Type": "Pass",
+      "ResultPath": "$.AWS_STEP_FUNCTIONS_STARTED_BY_EXECUTION_ID",
+      "InputPath": "$$.Execution.Id",
+      "End": true
+    }
+  }
+}
