@@ -99,7 +99,10 @@
       "type": "object"
     },
     "Parameters": {
-      "type": "object"
+      "type": ["object", "array"],
+      "items": {
+        "type": "object"
+      }
     }
   },
   "oneOf": [{

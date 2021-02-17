@@ -36,7 +36,10 @@
       "$ref": "http://asl-validator.cloud/state-machine#"
     },
     "Parameters": {
-      "type": "object"
+      "type": ["object", "array"],
+      "items": {
+        "type": "object"
+      }
     },
     "ResultSelector": {
       "type": "object"
