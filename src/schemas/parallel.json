@@ -8,7 +8,10 @@
       "pattern": "^Parallel$"
     },
     "Parameters": {
-      "type": "object"
+      "type": ["object", "array"],
+      "items": {
+        "type": "object"
+      }
     },
     "ResultSelector": {
       "type": "object"
