@@ -1,0 +1,18 @@
+{
+  "Comment": "https://states-language.net/spec.html#parameters",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Task",
+      "Resource": "${lambdaArn",
+      "Parameters": {
+        "flagged": true,
+        "parts": {
+          "first.$": "$.vals[0]",
+          "last3.$": "$.vals[3:]"
+        }
+      },
+      "End": true
+    }
+  }
+}
