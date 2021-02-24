@@ -12,7 +12,7 @@
     "States": {
       "type": "object",
       "patternProperties": {
-        "^.{1,128}$": {
+        "^.{1,80}$": {
           "$ref": "http://asl-validator.cloud/state#"
         }
       },
