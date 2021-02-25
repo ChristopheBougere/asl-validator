@@ -31,7 +31,7 @@
   "homepage": "https://github.com/ChristopheBougere/asl-validator#readme",
   "dependencies": {
     "ajv": "^6.12.6",
-    "commander": "^7.1.0",
+    "commander": "^5.1.0",
     "jsonpath": "^1.1.0"
   },
   "devDependencies": {
