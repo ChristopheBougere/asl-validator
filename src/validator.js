@@ -14,7 +14,7 @@ const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 
 function formatError(e) {
-  const code = e.Code ?? e['Error code'];
+  const code = e.Code ? e.Code : e['Error code'];
   return code ? `${code}: ${e.Message}` : e.message;
 }
 
