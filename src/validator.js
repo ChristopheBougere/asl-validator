@@ -14,7 +14,8 @@ const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 
 function formatError(e) {
-  return e.Code ? `${e.Code}: ${e.Message}` : e.message;
+  const code = e.Code ?? e['Error code'];
+  return code ? `${code}: ${e.Message}` : e.message;
 }
 
 function validator(definition) {
