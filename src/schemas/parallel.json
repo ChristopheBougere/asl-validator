@@ -1,11 +1,11 @@
 {
-  "$id": "http://asl-validator.cloud/parallel#",
+  "$id": "http://asl-validator.cloud/parallel.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "Type": {
       "type": "string",
-      "pattern": "^Parallel$"
+      "enum": ["Parallel"]
     },
     "Parameters": {
       "type": ["object", "array"],
@@ -37,7 +37,7 @@
     "Branches": {
       "type": "array",
       "items": {
-        "$ref": "http://asl-validator.cloud/state-machine#"
+        "$ref": "state-machine.json#"
       }
     },
     "Retry": {
@@ -48,7 +48,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "IntervalSeconds": {
@@ -75,7 +75,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "Next": {

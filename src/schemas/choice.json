@@ -1,5 +1,5 @@
 {
-  "$id": "http://asl-validator.cloud/choice#",
+  "$id": "http://asl-validator.cloud/choice.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Operator": {
@@ -277,7 +277,7 @@
   "properties": {
     "Type": {
       "type": "string",
-      "pattern": "^Choice$"
+      "enum": ["Choice"]
     },
     "Next": {
       "type": "string"

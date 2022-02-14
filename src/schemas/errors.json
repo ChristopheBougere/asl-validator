@@ -1,0 +1,48 @@
+{
+    "$id": "http://asl-validator.cloud/errors.json#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "https://states-language.net/#appendix-a",
+    "anyOf": [{
+        "type": "string"
+    }, {
+        "type": "string",
+        "enum": ["States.ALL"],
+        "description": "A wildcard which matches any Error Name."
+    }, {
+        "type": "string",
+        "enum": ["States.HeartbeatTimeout"],
+        "description": "A Task State failed to heartbeat for a time longer than the \"HeartbeatSeconds\" value."
+    }, {
+        "type": "string",
+        "enum": ["States.Timeout"],
+        "description": "A Task State either ran longer than the \"TimeoutSeconds\" value, or failed to heartbeat for a time longer than the \"HeartbeatSeconds\" value."
+    }, {
+        "type": "string",
+        "enum": ["States.TaskFailed"],
+        "description": "A Task State failed during the execution."
+    }, {
+        "type": "string",
+        "enum": ["States.Permissions"],
+        "description": "A Task State failed because it had insufficient privileges to execute the specified code."
+    }, {
+        "type": "string",
+        "enum": ["States.ResultPathMatchFailure"],
+        "description": "A state's \"ResultPath\" field cannot be applied to the input the state received."
+    }, {
+        "type": "string",
+        "enum": ["States.ParameterPathFailure"],
+        "description": "Within a state's \"Parameters\" field, the attempt to replace a field whose name ends in \".$\" using a Path failed."
+    }, {
+        "type": "string",
+        "enum": ["States.BranchFailed"],
+        "description": "A branch of a Parallel State failed."
+    }, {
+        "type": "string",
+        "enum": ["States.NoChoiceMatched"],
+        "description": "A Choice State failed to find a match for the condition field extracted from its input."
+    }, {
+        "type": "string",
+        "enum": ["States.IntrinsicFailure"],
+        "description": "Within a Payload Template, the attempt to invoke an Intrinsic Function failed."
+    }]
+}
