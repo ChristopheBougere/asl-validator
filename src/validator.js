@@ -49,13 +49,13 @@ function validator(definition) {
     isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length,
     errors: jsonPathErrors.concat(ajv.errors || []).concat(missingTransitionTargetErrors || []),
     errorsText: (separator = '\n') => {
-      const errors = [];
-      errors.push(jsonPathErrors.map(formatError).join(separator));
+      const errorList = [];
+      errorList.push(jsonPathErrors.map(formatError).join(separator));
       if (ajv.errors) {
-        errors.push(ajv.errorsText(ajv.errors, { separator }));
+        errorList.push(ajv.errorsText(ajv.errors, { separator }));
       }
-      errors.push(missingTransitionTargetErrors.map(formatError).join(separator));
-      return errors.join(separator);
+      errorList.push(missingTransitionTargetErrors.map(formatError).join(separator));
+      return errorList.join(separator);
     },
   };
 }
