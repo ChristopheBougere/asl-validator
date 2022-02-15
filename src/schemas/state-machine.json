@@ -1,5 +1,5 @@
 {
-  "$id": "http://asl-validator.cloud/state-machine#",
+  "$id": "http://asl-validator.cloud/state-machine.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
@@ -13,7 +13,7 @@
       "type": "object",
       "patternProperties": {
         "^.{1,80}$": {
-          "$ref": "http://asl-validator.cloud/state#"
+          "$ref": "state.json#"
         }
       },
       "additionalProperties": false

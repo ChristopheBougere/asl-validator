@@ -10,6 +10,7 @@ const succeed = require('./schemas/succeed');
 const task = require('./schemas/task');
 const wait = require('./schemas/wait');
 const map = require('./schemas/map');
+const errors = require('./schemas/errors');
 const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 
@@ -31,6 +32,7 @@ function validator(definition) {
       task,
       wait,
       map,
+      errors,
     ],
   });
 
@@ -41,19 +43,19 @@ function validator(definition) {
   const missingTransitionTargetErrors = missingTransitionTarget(definition);
 
   // Validating JSON schemas
-  const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine#', definition);
+  const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
 
   return {
     isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length,
     errors: jsonPathErrors.concat(ajv.errors || []).concat(missingTransitionTargetErrors || []),
     errorsText: (separator = '\n') => {
-      const errors = [];
-      errors.push(jsonPathErrors.map(formatError).join(separator));
+      const errorList = [];
+      errorList.push(jsonPathErrors.map(formatError).join(separator));
       if (ajv.errors) {
-        errors.push(ajv.errorsText(ajv.errors, { separator }));
+        errorList.push(ajv.errorsText(ajv.errors, { separator }));
       }
-      errors.push(missingTransitionTargetErrors.map(formatError).join(separator));
-      return errors.join(separator);
+      errorList.push(missingTransitionTargetErrors.map(formatError).join(separator));
+      return errorList.join(separator);
     },
   };
 }

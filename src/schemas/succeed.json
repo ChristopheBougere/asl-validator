@@ -1,11 +1,11 @@
 {
-  "$id": "http://asl-validator.cloud/succeed#",
+  "$id": "http://asl-validator.cloud/succeed.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "Type": {
       "type": "string",
-      "pattern": "^Succeed$"
+      "enum": ["Succeed"]
     },
     "Comment": {
       "type": "string"

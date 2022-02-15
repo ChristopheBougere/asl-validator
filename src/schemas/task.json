@@ -1,11 +1,11 @@
 {
-  "$id": "http://asl-validator.cloud/task#",
+  "$id": "http://asl-validator.cloud/task.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "Type": {
       "type": "string",
-      "pattern": "^Task$"
+      "enum": ["Task"]
     },
     "Next": {
       "type": "string"
@@ -41,7 +41,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "IntervalSeconds": {
@@ -68,7 +68,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "Next": {

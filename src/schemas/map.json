@@ -1,11 +1,11 @@
 {
-  "$id": "http://asl-validator.cloud/map#",
+  "$id": "http://asl-validator.cloud/map.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
     "Type": {
       "type": "string",
-      "pattern": "^Map$"
+      "enum": ["Map"]
     },
     "Next": {
       "type": "string"
@@ -33,7 +33,7 @@
       "minimum": 0
     },
     "Iterator": {
-      "$ref": "http://asl-validator.cloud/state-machine#"
+      "$ref": "state-machine.json#"
     },
     "Parameters": {
       "type": ["object", "array"],
@@ -52,7 +52,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "IntervalSeconds": {
@@ -79,7 +79,7 @@
           "ErrorEquals": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "errors.json#"
             }
           },
           "Next": {
