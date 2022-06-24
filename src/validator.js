@@ -62,7 +62,7 @@ function validator(definition) {
         errorList.push(ajv.errorsText(ajv.errors, { separator }));
       }
       errorList.push(missingTransitionTargetErrors.map(formatError).join(separator));
-      errorList.push(transitionErrors.join(separator));
+      errorList.push(transitionErrors.map(formatError).join(separator));
       return errorList.join(separator);
     },
   };

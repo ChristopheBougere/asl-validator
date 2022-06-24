@@ -1,5 +1,5 @@
 {
-  "Comment": "An example of the Amazon States Language using a parallel state to execute two branches at the same time.",
+  "Comment": "The link to the \"Final State\" within the Choice is invalid because it targets a state outside of its parent branch",
   "StartAt": "Parallel",
   "States": {
     "Parallel": {

@@ -1,5 +1,5 @@
 {
-  "Comment": "An example of the Amazon States Language using a map state to map over items in parallel.",
+  "Comment": "The link to \"Final State\" from within the Iterator is invalid since the target state is defined outside of the Iterator",
   "StartAt": "Map",
   "States": {
     "Map": {
