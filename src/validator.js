@@ -14,6 +14,7 @@ const errors = require('./schemas/errors');
 const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 const stateTransitions = require('./lib/state-transitions');
+const stateNames = require('./lib/state-names');
 
 function formatError(e) {
   const code = e.Code ? e.Code : e['Error code'];
@@ -37,32 +38,26 @@ function validator(definition) {
     ],
   });
 
-  // Validating JSON paths
-  const jsonPathErrors = checkJsonPath(definition);
-
-  // Check unreachable states
-  const missingTransitionTargetErrors = missingTransitionTarget(definition);
-
   // Validating JSON schemas
   const isJsonSchemaValid = ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
 
-  // Check for Parallel states
-  const transitionErrors = isJsonSchemaValid ? stateTransitions(definition) : [];
+  const postSchemaValidationErrors = [];
+  if (isJsonSchemaValid) {
+    postSchemaValidationErrors.push(...checkJsonPath(definition));
+    postSchemaValidationErrors.push(...missingTransitionTarget(definition));
+    postSchemaValidationErrors.push(...stateTransitions(definition));
+    postSchemaValidationErrors.push(...stateNames(definition));
+  }
 
   return {
-    isValid: isJsonSchemaValid && !jsonPathErrors.length && !missingTransitionTargetErrors.length
-        && !transitionErrors.length,
-    errors: jsonPathErrors.concat(ajv.errors || [])
-      .concat(missingTransitionTargetErrors || [])
-      .concat(transitionErrors || []),
+    isValid: isJsonSchemaValid && !postSchemaValidationErrors.length,
+    errors: (ajv.errors || []).concat(postSchemaValidationErrors || []),
     errorsText: (separator = '\n') => {
       const errorList = [];
-      errorList.push(jsonPathErrors.map(formatError).join(separator));
       if (ajv.errors) {
         errorList.push(ajv.errorsText(ajv.errors, { separator }));
       }
-      errorList.push(missingTransitionTargetErrors.map(formatError).join(separator));
-      errorList.push(transitionErrors.map(formatError).join(separator));
+      errorList.push(postSchemaValidationErrors.map(formatError).join(separator));
       return errorList.join(separator);
     },
   };
