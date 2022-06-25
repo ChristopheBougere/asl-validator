@@ -1,0 +1,44 @@
+{
+  "Comment": "The link to \"Final State\" from within the Iterator is invalid since the target state is defined outside of the Iterator",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "Next": "Final State",
+      "InputPath": "$.input",
+      "ItemsPath": "$.items",
+      "MaxConcurrency": 0,
+      "Iterator": {
+        "StartAt": "ChoiceState",
+        "States": {
+          "ChoiceState": {
+            "Type": "Choice",
+            "Choices": [
+              {
+                "Variable": "$.foo",
+                "NumericEquals": 1,
+                "Next": "Wait 20s"
+              },
+              {
+                "Variable": "$.foo",
+                "NumericEquals": 2,
+                "Next": "Final State"
+              }
+            ],
+            "Default": "Wait 20s"
+          },
+          "Wait 20s": {
+            "Type": "Wait",
+            "Seconds": 20,
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.result"
+    },
+    "Final State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
