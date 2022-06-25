@@ -4,3 +4,5 @@ coverage
 reports
 **/junit.xml
 .idea
+bin/**/*.js
+src/**/*.js

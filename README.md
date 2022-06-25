@@ -28,7 +28,6 @@ $ asl-validator --help
 
   Options:
 
-    -v, --version                       output the version number
     --json-definition <jsonDefinition>  JSON definition
     --json-path <jsonPath>              JSON path
     --silent                            silent mode

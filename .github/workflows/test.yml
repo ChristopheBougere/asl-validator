@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Test
 
 on:
   push:
@@ -13,19 +13,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [14.x, 16.x]
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run lint
-    - run: npm test -- --collectCoverage --coverageReporters="lcov"
-    - name: Codecov
-      uses: codecov/codecov-action@v1.0.7
+    - name: Commit Lint
+      uses: wagoid/commitlint-github-action@v4
       with:
-        token: ${{secrets.codecov_token}}
-        fail_ci_if_error: false
+        failOnWarnings: true
+    - run: npm run build
+    - run: npm run lint
+    - run: npm test
