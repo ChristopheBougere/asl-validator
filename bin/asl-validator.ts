@@ -1,29 +1,12 @@
 #!/usr/bin/env node
-/* eslint-disable no-console, strict, prefer-destructuring */
+/* eslint-disable no-console, prefer-destructuring */
 
-'use strict';
+import fs from 'fs';
+import program from 'commander';
 
-const fs = require('fs');
-const program = require('commander');
+import validator from '../src/validator';
 
-const version = require('../package.json').version;
-const validator = require('../src/validator');
-
-function doneValid() {
-  if (!program.silent) {
-    console.log('✓ State machine definition is valid');
-  }
-  process.exit(0);
-}
-
-function doneInvalid(errors) {
-  if (!program.silent) {
-    console.error('✕ State machine definition is invalid:\n', errors);
-  }
-  process.exit(1);
-}
-
-function fail(message) {
+function fail(message: string) {
   if (!program.silent) {
     console.error(message);
   }
@@ -31,7 +14,6 @@ function fail(message) {
 }
 
 program
-  .version(version, '-v, --version')
   .description('Amazon States Language validator')
   .option('--json-definition <jsonDefinition>', 'JSON definition')
   .option('--json-path <jsonPath>', 'JSON path')
@@ -43,10 +25,10 @@ try {
   if (typeof program.jsonDefinition === 'string') {
     definition = JSON.parse(program.jsonDefinition);
   } else if (typeof program.jsonPath === 'string') {
-    definition = JSON.parse(fs.readFileSync(program.jsonPath));
+    definition = JSON.parse(fs.readFileSync(program.jsonPath).toString());
   } else {
+    console.log('--json-definition or --json-path is required.');
     program.help();
-    fail('--json-definition or --json-path is required.');
   }
 } catch (e) {
   fail(`Unable to read or parse state machine definition: ${e}`);
@@ -54,9 +36,15 @@ try {
 try {
   const result = validator(definition);
   if (result.isValid) {
-    doneValid();
+    if (!program.silent) {
+      console.log('✓ State machine definition is valid');
+    }
+    process.exit(0);
   } else {
-    doneInvalid(result.errorsText());
+    if (!program.silent) {
+      console.error('✕ State machine definition is invalid:\n', result.errorsText());
+    }
+    process.exit(1);
   }
 } catch (e) {
   fail(`Validator exception: ${e}`);

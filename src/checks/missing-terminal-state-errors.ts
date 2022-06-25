@@ -1,7 +1,8 @@
-const { JSONPath } = require('jsonpath-plus');
+import { JSONPath } from 'jsonpath-plus';
+import { StateMachineDefinition, StateMachineError, StateMachineErrorCode } from '../types';
 
-module.exports = (definition) => {
-  const errorMessages = [];
+export default function missingTerminalStateErrors(definition: StateMachineDefinition): StateMachineError[] {
+  const errorMessages: StateMachineError[] = [];
   // find each enclosed state machine and verify that
   // each state machine contains at least one of the following:
   // - state with End: true
@@ -10,7 +11,8 @@ module.exports = (definition) => {
   const terminals = new Map();
   let fsmId = 1;
   JSONPath({ json: definition, path: '$..[\'States\']' })
-    .forEach((states) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .forEach((states: any) => {
       const fsmKey = `fsm${fsmId}`;
       // initialize the nested fsm to have a terminal count of zero
       terminals.set(fsmKey, 0);
@@ -27,7 +29,7 @@ module.exports = (definition) => {
   terminals.forEach((value, key) => {
     if (value === 0) {
       errorMessages.push({
-        'Error code': 'MISSING_TERMINAL_STATE',
+        'Error code': StateMachineErrorCode.MissingTerminalState,
         // better to have a line number here
         Message: `State machine ${key} is missing a terminal state`,
       });
@@ -35,4 +37,4 @@ module.exports = (definition) => {
   });
 
   return errorMessages;
-};
+}
