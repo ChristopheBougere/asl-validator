@@ -9,15 +9,15 @@ module.exports = (definition) => {
         const current = names.get(stateName);
         names.set(stateName, current ? current + 1 : 1);
       });
-      names.forEach((value, key) => {
-        if (value > 1) {
-          errorMessages.push({
-            'Error code': 'DUPLICATE_STATE_NAMES',
-            Message: `A state with this name already exists: ${key}`,
-          });
-        }
-      });
     });
+  names.forEach((value, key) => {
+    if (value > 1) {
+      errorMessages.push({
+        'Error code': 'DUPLICATE_STATE_NAMES',
+        Message: `A state with this name already exists: ${key}`,
+      });
+    }
+  });
 
   return errorMessages;
 };
