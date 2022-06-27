@@ -1,5 +1,5 @@
 {
-  "Comment": "A simple minimal example of the States language",
+  "Comment": "The state machine is missing a terminal state",
   "StartAt": "Hello World",
   "States": {
     "Hello World": {
