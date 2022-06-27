@@ -1,0 +1,27 @@
+{
+  "Comment": "The state machine within the Map is missing a terminal state",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "Next": "Final State",
+      "InputPath": "$.input",
+      "ItemsPath": "$.items",
+      "MaxConcurrency": 0,
+      "Iterator": {
+        "StartAt": "Wait 20s",
+        "States": {
+          "Wait 20s": {
+            "Type": "Wait",
+            "Seconds": 20
+          }
+        }
+      },
+      "ResultPath": "$.result"
+    },
+    "Final State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

@@ -15,6 +15,7 @@ const checkJsonPath = require('./lib/json-path-errors');
 const missingTransitionTarget = require('./lib/missing-transition-target');
 const stateTransitions = require('./lib/state-transitions');
 const stateNames = require('./lib/state-names');
+const terminals = require('./lib/terminals');
 
 function formatError(e) {
   const code = e.Code ? e.Code : e['Error code'];
@@ -47,6 +48,7 @@ function validator(definition) {
     postSchemaValidationErrors.push(...missingTransitionTarget(definition));
     postSchemaValidationErrors.push(...stateTransitions(definition));
     postSchemaValidationErrors.push(...stateNames(definition));
+    postSchemaValidationErrors.push(...terminals(definition));
   }
 
   return {
