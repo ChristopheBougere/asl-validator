@@ -14,7 +14,7 @@ module.exports = (definition) => {
     Object.keys(nestedStateMachine.States).forEach((stateName) => {
       const nestedState = nestedStateMachine.States[stateName];
       const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type) >= 0;
-      const path = isContainer ? '$.[\'Next\',\'Default\']' : '$..[\'Next\',\'Default\']';
+      const path = isContainer ? '$.*[?(\'Next\',\'Default\')]' : '$..[\'Next\',\'Default\']';
       states.push(...jp.query(nestedState, path));
     });
     return states;
