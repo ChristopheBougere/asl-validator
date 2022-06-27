@@ -1,0 +1,21 @@
+{
+  "Comment": "The state machine is missing a terminal state",
+  "StartAt": "Hello World",
+  "States": {
+    "Hello World": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld",
+      "Next": "Hello World2"
+    },
+    "Hello World2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld",
+      "Next": "Hello World3"
+    },
+    "Hello World3": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:HelloWorld",
+      "Next": "Hello World"
+    }
+  }
+}

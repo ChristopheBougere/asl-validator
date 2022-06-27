@@ -1,0 +1,38 @@
+{
+  "Comment": "The first branch in the parallel state is missing a terminal state",
+  "StartAt": "Parallel",
+  "States": {
+    "Parallel": {
+      "Type": "Parallel",
+      "Next": "Final State",
+      "Branches": [{
+          "StartAt": "Wait 20s",
+          "States": {
+            "Wait 20s": {
+              "Type": "Wait",
+              "Seconds": 20
+            }
+          }
+        },
+        {
+          "StartAt": "Pass",
+          "States": {
+            "Pass": {
+              "Type": "Pass",
+              "Next": "Wait 10s"
+            },
+            "Wait 10s": {
+              "Type": "Wait",
+              "Seconds": 10,
+              "End": true
+            }
+          }
+        }
+      ]
+    },
+    "Final State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
