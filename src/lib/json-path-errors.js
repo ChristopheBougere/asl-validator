@@ -1,6 +1,6 @@
-const jp = require('jsonpath');
+const { JSONPath } = require('jsonpath-plus');
 
-module.exports = (definition) => jp.query(definition, '$..[\'InputPath\',\'OutputPath\',\'ResultPath\']')
+module.exports = (definition) => JSONPath({ json: definition, path: '$..[InputPath,OutputPath,ResultPath]' })
   .filter((path) => typeof path === 'string')
   .map((path) => {
     // Context object path starts with $$
@@ -12,7 +12,7 @@ module.exports = (definition) => jp.query(definition, '$..[\'InputPath\',\'Outpu
   })
   .map((path) => {
     try {
-      jp.parse(path);
+      JSONPath({ path, json: definition });
       return null;
     } catch (e) {
       return e;

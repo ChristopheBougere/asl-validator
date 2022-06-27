@@ -1,4 +1,4 @@
-const jp = require('jsonpath');
+const { JSONPath } = require('jsonpath-plus');
 
 module.exports = (definition) => {
   const errorMessages = [];
@@ -9,7 +9,7 @@ module.exports = (definition) => {
   // - state with Type: Fail
   const terminals = new Map();
   let fsmId = 1;
-  jp.query(definition, '$..[\'States\']')
+  JSONPath({ json: definition, path: '$..[\'States\']' })
     .forEach((states) => {
       const fsmKey = `fsm${fsmId}`;
       // initialize the nested fsm to have a terminal count of zero

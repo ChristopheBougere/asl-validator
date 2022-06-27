@@ -1,15 +1,15 @@
-const jp = require('jsonpath');
+const { JSONPath } = require('jsonpath-plus');
 
 module.exports = (definition) => {
   // retrieve all states
   let machineStates = [];
-  jp.query(definition, '$..[\'States\']')
+  JSONPath({ json: definition, path: '$..States' })
     .forEach((s) => {
       machineStates = machineStates.concat(Object.keys(s));
     });
 
   // retrieve all reachable states
-  const reachableStates = jp.query(definition, '$..[\'StartAt\',\'Next\',\'Default\']')
+  const reachableStates = JSONPath({ json: definition, path: '$..[StartAt,Next,Default]' })
     .filter((path) => typeof path === 'string')
     .filter((path, pos, array) => array.indexOf(path) === pos);
 
