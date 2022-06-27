@@ -1,0 +1,31 @@
+{
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "Next": "Final State",
+      "Iterator": {
+        "StartAt": "Map2",
+        "States": {
+          "Map2": {
+            "Type": "Map",
+            "End": true,
+            "Iterator": {
+              "StartAt": "Wait 20s",
+              "States": {
+                "Wait 20s": {
+                  "Type": "Wait",
+                  "Seconds": 20,
+                  "End": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Final State": {
+      "Type": "Succeed"
+    }
+  }
+}
