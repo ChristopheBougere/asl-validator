@@ -11,14 +11,15 @@ module.exports = (definition) => {
   let fsmId = 1;
   jp.query(definition, '$..[\'States\']')
     .forEach((states) => {
+      const fsmKey = `fsm${fsmId}`;
       // initialize the nested fsm to have a terminal count of zero
-      terminals.set(fsmId, 0);
+      terminals.set(fsmKey, 0);
       // check each of its states to see if the fsm terminates
       Object.keys(states).forEach((stateName) => {
         const state = states[stateName];
-        const count = terminals.get(`fsm${fsmId}`);
+        const count = terminals.get(fsmKey);
         if (['Succeed', 'Fail'].indexOf(state.Type) !== -1 || state.End) {
-          terminals.set(fsmId, count ? count + 1 : 1);
+          terminals.set(fsmKey, count ? count + 1 : 1);
         }
       });
       fsmId += 1;
