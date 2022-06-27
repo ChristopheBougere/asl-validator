@@ -1,0 +1,32 @@
+{
+  "Comment": "Contains a nested parallel state",
+  "StartAt": "Parallel",
+  "States": {
+    "Parallel": {
+      "Type": "Parallel",
+      "Next": "Final State",
+      "Branches": [
+        {
+          "StartAt": "NestedParallel",
+          "States": {
+            "NestedParallel": {
+              "Type": "Parallel",
+              "End": true,
+              "Branches": [{
+                "StartAt": "Inner Final",
+                "States": {
+                  "Inner Final": {
+                    "Type": "Succeed"
+                  }
+                }
+              }]
+            }
+          }
+        }
+      ]
+    },
+    "Final State": {
+      "Type": "Succeed"
+    }
+  }
+}
