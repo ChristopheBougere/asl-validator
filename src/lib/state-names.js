@@ -1,9 +1,9 @@
-const jp = require('jsonpath');
+const { JSONPath } = require('jsonpath-plus');
 
 module.exports = (definition) => {
   const errorMessages = [];
   const names = new Map();
-  jp.query(definition, '$..[\'States\']')
+  JSONPath({ json: definition, path: '$..[\'States\']' })
     .forEach((states) => {
       Object.keys(states).forEach((stateName) => {
         const current = names.get(stateName);
