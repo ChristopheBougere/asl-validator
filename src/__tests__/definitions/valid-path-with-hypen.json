@@ -1,5 +1,5 @@
 {
-    "Comment": "A simple example of the Amazon States Language using Succeed states",
+    "Comment": "Has a json path expression an identifier containing a hyphen",
     "StartAt": "Hello",
     "States": {
         "Hello": {
