@@ -1,11 +1,9 @@
 import { JSONPath } from 'jsonpath-plus';
-import { StateMachineDefinition, StateMachineError, StateMachineErrorCode } from '../types';
+import { StateMachine, StateMachineError, StateMachineErrorCode } from '../types';
 
-export default function jsonPathErrors(definition: StateMachineDefinition): StateMachineError[] {
-  return JSONPath({ json: definition, path: '$..[InputPath,OutputPath,ResultPath]' })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((path: any) => typeof path === 'string')
-    .map((path: string) => {
+export default function jsonPathErrors(definition: StateMachine): StateMachineError[] {
+  return JSONPath<string[]>({ json: definition, path: '$..[InputPath,OutputPath,ResultPath]' })
+    .map((path) => {
       // Context object path starts with $$
       // https://docs.aws.amazon.com/step-functions/latest/dg/input-output-contextobject.html#contextobject-access
       if (path.startsWith('$$')) {
@@ -13,7 +11,7 @@ export default function jsonPathErrors(definition: StateMachineDefinition): Stat
       }
       return path;
     })
-    .map((path: string) => {
+    .map((path) => {
       try {
         JSONPath({ path, json: definition });
         return null;

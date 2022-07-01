@@ -11,9 +11,9 @@ import task from  '../schemas/task.json';
 import wait from  '../schemas/wait.json';
 import map from  '../schemas/map.json';
 import errors from  '../schemas/errors.json';
-import { StateMachineDefinition, StateMachineError, StateMachineErrorCode } from '../types';
+import { StateMachine, StateMachineError, StateMachineErrorCode } from '../types';
 
-export default function jsonSchemaErrors(definition: StateMachineDefinition): StateMachineError[] {
+export default function jsonSchemaErrors(definition: StateMachine): StateMachineError[] {
   const ajv = new Ajv({
     schemas: [
       choice,
@@ -29,7 +29,7 @@ export default function jsonSchemaErrors(definition: StateMachineDefinition): St
       errors,
     ],
   });
-  ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
+  void ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
   return (ajv.errors ?? []).map(error => ({
     'Error code': StateMachineErrorCode.SchemaValidationFailed,
     Message: error.message as string,

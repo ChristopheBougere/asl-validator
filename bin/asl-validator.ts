@@ -5,13 +5,7 @@ import fs from 'fs';
 import program from 'commander';
 
 import validator from '../src/validator';
-
-function fail(message: string) {
-  if (!program.silent) {
-    console.error(message);
-  }
-  process.exit(2);
-}
+import { StateMachine } from '../src/types';
 
 program
   .description('Amazon States Language validator')
@@ -23,15 +17,18 @@ program
 let definition;
 try {
   if (typeof program.jsonDefinition === 'string') {
-    definition = JSON.parse(program.jsonDefinition);
+    definition = JSON.parse(program.jsonDefinition) as StateMachine;
   } else if (typeof program.jsonPath === 'string') {
-    definition = JSON.parse(fs.readFileSync(program.jsonPath).toString());
+    definition = JSON.parse(fs.readFileSync(program.jsonPath).toString()) as StateMachine;
   } else {
     console.log('--json-definition or --json-path is required.');
     program.help();
   }
 } catch (e) {
-  fail(`Unable to read or parse state machine definition: ${e}`);
+  if (!program.silent) {
+    console.error('Unable to read or parse state machine definition:', e);
+  }
+  process.exit(2);
 }
 try {
   const result = validator(definition);
@@ -47,5 +44,8 @@ try {
     process.exit(1);
   }
 } catch (e) {
-  fail(`Validator exception: ${e}`);
+  if (!program.silent) {
+    console.error('Validator exception:', e);
+  }
+  process.exit(2);
 }

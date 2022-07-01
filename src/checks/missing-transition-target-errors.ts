@@ -1,20 +1,17 @@
 import { JSONPath } from 'jsonpath-plus';
-import { StateMachineDefinition, StateMachineError, StateMachineErrorCode } from '../types';
+import { StateMachine, StateMachineError, StateMachineErrorCode, States } from '../types';
 
-export default function missingTransitionTargetErrors(definition: StateMachineDefinition): StateMachineError[] {
+export default function missingTransitionTargetErrors(definition: StateMachine): StateMachineError[] {
   // retrieve all states
   let machineStates: string[] = [];
-  JSONPath({ json: definition, path: '$..States' })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .forEach((s: any) => {
+  JSONPath<States[]>({ json: definition, path: '$..States' })
+    .forEach((s) => {
       machineStates = machineStates.concat(Object.keys(s));
     });
 
   // retrieve all reachable states
-  const reachableStates = (JSONPath({ json: definition, path: '$..[StartAt,Next,Default]' })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .filter((path: any) => typeof path === 'string') as string[])
-    .filter((path: string, pos, array) => array.indexOf(path) === pos);
+  const reachableStates = JSONPath<string[]>({ json: definition, path: '$..[StartAt,Next,Default]' })
+    .filter((path, pos, array) => array.indexOf(path) === pos);
 
   // check if all states are reachable
   const unreachable = machineStates.filter((state) => reachableStates.indexOf(state) === -1)

@@ -1,4 +1,8 @@
-export type StateMachineDefinition = Record<string, unknown>;
+export type State = Record<string, unknown>;
+export type States = Record<string, State>;
+export type StateMachine = {
+  States: States;
+}
 export enum StateMachineErrorCode {
   BranchOutboundTransitionTarget = 'BRANCH_OUTBOUND_TRANSITION_TARGET',
   DuplicateStateNames = 'DUPLICATE_STATE_NAMES',
