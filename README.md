@@ -85,7 +85,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/massfords"><img src="https://avatars.githubusercontent.com/u/569665?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mark Ford</b></sub></a><br /><a href="https://github.com/ChristopheBougere/asl-validator/commits?author=massfords" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/massfords"><img src="https://avatars.githubusercontent.com/u/569665?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mark Ford</b></sub></a><br /><a href="https://github.com/ChristopheBougere/asl-validator/commits?author=massfords" title="Code">💻</a> <a href="#ideas-massfords" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
