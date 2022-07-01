@@ -59,5 +59,11 @@
       "main"
     ],
     "tagFormat": "${version}"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testMatch": [
+      "<rootDir>/**/__tests__/**/*.test.ts"
+    ]
   }
 }

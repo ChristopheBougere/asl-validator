@@ -6,9 +6,9 @@ import missingTransitionTargetErrors from  './checks/missing-transition-target-e
 import stateTransitionsErrors from  './checks/state-transitions-errors';
 import duplicateStateNamesErrors from './checks/duplicate-state-names-errors';
 import missingTerminalStateErrors from './checks/missing-terminal-state-errors';
-import { StateMachineDefinition, StateMachineError } from './types';
+import { StateMachine, StateMachineError } from './types';
 
-export default function validator(definition: StateMachineDefinition): {
+export default function validator(definition: StateMachine): {
   isValid: boolean;
   errors: (Ajv.ErrorObject | StateMachineError)[];
   errorsText: (separator?: string) => string;
