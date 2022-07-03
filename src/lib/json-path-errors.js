@@ -15,6 +15,12 @@ module.exports = (definition) => JSONPath({ json: definition, path: '$..[InputPa
       JSONPath({ path, json: definition });
       return null;
     } catch (e) {
+      try {
+        JSONPath({ path, json: [{}] });
+        return null;
+      } catch (e2) {
+        // ignore, return first error
+      }
       return e;
     }
   })
