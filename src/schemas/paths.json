@@ -1,0 +1,36 @@
+{
+  "$id": "http://asl-validator.cloud/paths.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "asl_path": {
+      "type": "string",
+      "format": "asl_path"
+    },
+    "asl_ref_path": {
+      "type": "string",
+      "format": "asl_ref_path"
+    },
+    "asl_payload_template": {
+      "type": "object",
+      "patternProperties": {
+        "^.+\\.\\$$": {
+          "$comment": "matches fields ending in .$",
+          "type":  "string",
+          "nullable": true,
+          "format": "asl_payload_template"
+        },
+        "^.+(([^.][^$])|([^.][$]))$": {
+          "$comment": "matches fields NOT ending in .$",
+          "oneOf": [
+            {
+              "type": ["number", "boolean", "string", "null"]
+            },
+            {
+              "$ref": "#/definitions/asl_payload_template"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

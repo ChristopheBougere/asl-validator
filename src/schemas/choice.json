@@ -36,7 +36,7 @@
           "type": "boolean"
         },
         "BooleanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "IsBoolean": {
           "type": "boolean"
@@ -45,31 +45,31 @@
           "type": "number"
         },
         "NumericEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "NumericGreaterThan": {
           "type": "number"
         },
         "NumericGreaterThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "NumericGreaterThanEquals": {
           "type": "number"
         },
         "NumericGreaterThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "NumericLessThan": {
           "type": "number"
         },
         "NumericLessThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "NumericLessThanEquals": {
           "type": "number"
         },
         "NumericLessThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "IsNumeric": {
           "type": "boolean"
@@ -78,31 +78,31 @@
           "type": "string"
         },
         "StringEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "StringGreaterThan": {
           "type": "string"
         },
         "StringGreaterThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "StringGreaterThanEquals": {
           "type": "string"
         },
         "StringGreaterThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "StringLessThan": {
           "type": "string"
         },
         "StringLessThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "StringLessThanEquals": {
           "type": "string"
         },
         "StringLessThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "StringMatches": {
           "type": "string"
@@ -114,31 +114,31 @@
           "type": "string"
         },
         "TimestampEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "TimestampGreaterThan": {
           "type": "string"
         },
         "TimestampGreaterThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "TimestampGreaterThanEquals": {
           "type": "string"
         },
         "TimestampGreaterThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "TimestampLessThan": {
           "type": "string"
         },
         "TimestampLessThanPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "TimestampLessThanEquals": {
           "type": "string"
         },
         "TimestampLessThanEqualsPath": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_path"
         },
         "IsTimestamp": {
           "type": "boolean"
@@ -289,10 +289,10 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "InputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "Choices": {
       "type": "array",

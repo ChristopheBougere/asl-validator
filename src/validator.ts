@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import {ErrorObject} from 'ajv';
 
 import jsonSchemaErrors from './checks/json-schema-errors';
 import jsonPathErrors from  './checks/json-path-errors';
@@ -10,7 +10,7 @@ import { StateMachine, StateMachineError } from './types';
 
 export default function validator(definition: StateMachine): {
   isValid: boolean;
-  errors: (Ajv.ErrorObject | StateMachineError)[];
+  errors: (ErrorObject | StateMachineError)[];
   errorsText: (separator?: string) => string;
 } {
 
