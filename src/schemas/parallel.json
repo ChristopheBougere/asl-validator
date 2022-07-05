@@ -8,13 +8,10 @@
       "enum": ["Parallel"]
     },
     "Parameters": {
-      "type": ["object", "array"],
-      "items": {
-        "type": "object"
-      }
+      "$ref": "paths.json#/definitions/asl_payload_template"
     },
     "ResultSelector": {
-      "type": "object"
+      "$ref": "paths.json#/definitions/asl_payload_template"
     },
     "Next": {
       "type": "string"
@@ -26,13 +23,13 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "InputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "ResultPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "Branches": {
       "type": "array",
@@ -82,7 +79,7 @@
             "type": "string"
           },
           "ResultPath": {
-            "type": ["string", "null"]
+            "$ref": "paths.json#/definitions/asl_ref_path"
           }
         },
         "required": ["ErrorEquals", "Next"]

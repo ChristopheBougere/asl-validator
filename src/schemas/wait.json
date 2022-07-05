@@ -17,10 +17,10 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "InputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "Seconds": {
       "type": "number",
@@ -30,10 +30,10 @@
       "type": "string"
     },
     "SecondsPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "TimestampPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_ref_path"
     }
   },
   "oneOf": [{

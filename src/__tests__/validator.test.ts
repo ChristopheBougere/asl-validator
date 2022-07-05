@@ -15,6 +15,7 @@ describe('validator', () => {
         const { isValid, errors, errorsText } = validator(definition);
         const textErrors = errorsText();
         if (match[1] === 'valid') {
+          expect(errors ?? []).toStrictEqual([]);
           expect(isValid).toBeTruthy();
           expect(Array.isArray(errors)).toBeTruthy();
           expect(errors.length).toEqual(0);

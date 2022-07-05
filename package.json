@@ -2,7 +2,7 @@
   "name": "asl-validator",
   "version": "0.0.0-development",
   "description": "Amazon States Language validator",
-  "main": "./src/validator.js",
+  "main": "./dist/validator.js",
   "bin": {
     "asl-validator": "./bin/asl-validator.js"
   },
@@ -33,9 +33,10 @@
   },
   "homepage": "https://github.com/ChristopheBougere/asl-validator#readme",
   "dependencies": {
-    "ajv": "^6.12.6",
+    "ajv": "^8.11.0",
     "commander": "^5.1.0",
-    "jsonpath-plus": "^7.0.0"
+    "jsonpath-plus": "^7.0.0",
+    "asl-path-validator": "^0.9.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",

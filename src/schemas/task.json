@@ -17,21 +17,26 @@
       "type": "string"
     },
     "OutputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "InputPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_path"
     },
     "Resource": {
-      "oneOf": [{
-        "type": "string",
-        "pattern": "^(arn:aws:([a-z]|-)+:([a-z]|[0-9]|-)*:[0-9]*:([a-z]|-)+:[a-zA-Z0-9-_.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$)|(\\${.*\\})"
-      }, {
-        "type": "object"
-      }]
+      "type": "string",
+      "oneOf": [
+        {
+          "$comment": "defers validation to the registered formatter",
+          "format": "asl_arn"
+        },
+        {
+          "$comment": "allows for variable substitution",
+          "pattern": "^\\$\\{[^\\}]+\\}$"
+        }
+      ]
     },
     "ResultPath": {
-      "type": ["string", "null"]
+      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "Retry": {
       "type": "array",
@@ -75,7 +80,7 @@
             "type": "string"
           },
           "ResultPath": {
-            "type": ["string", "null"]
+            "$ref": "paths.json#/definitions/asl_ref_path"
           }
         },
         "required": ["ErrorEquals", "Next"]
@@ -86,23 +91,20 @@
       "minimum": 1
     },
     "TimeoutSecondsPath": {
-      "type": "string"
+      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "HeartbeatSeconds": {
       "type": "number",
       "minimum": 1
     },
     "HeartbeatSecondsPath": {
-      "type": "string"
+      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "ResultSelector": {
-      "type": "object"
+      "$ref": "paths.json#/definitions/asl_payload_template"
     },
     "Parameters": {
-      "type": ["object", "array"],
-      "items": {
-        "type": "object"
-      }
+      "$ref": "paths.json#/definitions/asl_payload_template"
     }
   },
   "oneOf": [{

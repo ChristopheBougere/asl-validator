@@ -1,5 +1,6 @@
 
 import Ajv from 'ajv';
+import paths from '../schemas/paths.json';
 import choice from '../schemas/choice.json';
 import fail from  '../schemas/fail.json';
 import parallel from  '../schemas/parallel.json';
@@ -12,10 +13,12 @@ import wait from  '../schemas/wait.json';
 import map from  '../schemas/map.json';
 import errors from  '../schemas/errors.json';
 import { StateMachine, StateMachineError, StateMachineErrorCode } from '../types';
+import {registerAll} from "asl-path-validator";
 
 export default function jsonSchemaErrors(definition: StateMachine): StateMachineError[] {
   const ajv = new Ajv({
     schemas: [
+      paths,
       choice,
       fail,
       parallel,
@@ -28,7 +31,13 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
       map,
       errors,
     ],
+    allowUnionTypes: true
   });
+  registerAll(ajv);
+  const arn = /^arn:(?<Partition>[^:\n]*):(?<Service>[^:\n]*):(?<Region>[^:\n]*):(?<AccountID>[^:\n]*):(?<ResourceType>[^:/\n]+)[:/](?<Resource>[^:]*[^:])(:(?<ResourceModifier>[^:]*[^:]))?$/ui
+  ajv.addFormat("asl_arn", (taskResource) => {
+    return arn.test(taskResource);
+  })
   void ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
   return (ajv.errors ?? []).map(error => ({
     'Error code': StateMachineErrorCode.SchemaValidationFailed,
