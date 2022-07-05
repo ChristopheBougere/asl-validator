@@ -1,6 +1,6 @@
 # asl-validator
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ChristopheBougere/asl-validator/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ChristopheBougere/asl-validator/blob/main/LICENSE)
 [![npm version](https://badge.fury.io/js/asl-validator.svg)](https://badge.fury.io/js/asl-validator)
 
 [![NPM](https://nodei.co/npm/asl-validator.png?stars=true)](https://www.npmjs.com/package/asl-validator)
