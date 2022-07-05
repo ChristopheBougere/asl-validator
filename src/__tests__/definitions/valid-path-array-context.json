@@ -1,0 +1,11 @@
+{
+  "Comment": "Expression contains an array operator",
+  "StartAt": "Pass",
+  "States": {
+    "Pass": {
+      "Type": "Pass",
+      "OutputPath": "$[(@.length-1)].bar",
+      "End": true
+    }
+  }
+}
