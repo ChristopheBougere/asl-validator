@@ -1,26 +1,8 @@
 {
-  "projectName": "asl-validator",
-  "projectOwner": "ChristopheBougere",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "imageSize": 100,
-  "commit": true,
-  "commitConvention": "angular",
-  "contributors": [
-    {
-      "login": "massfords",
-      "name": "Mark Ford",
-      "avatar_url": "https://avatars.githubusercontent.com/u/569665?v=4",
-      "profile": "https://github.com/massfords",
-      "contributions": [
-        "code",
-        "ideas",
-        "review"
-      ]
-    }
-  ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": false,
+  "skipCi": "true",
+  "contributors": []
 }
