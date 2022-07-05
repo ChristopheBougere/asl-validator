@@ -1,7 +1,6 @@
 import {ErrorObject} from 'ajv';
 
 import jsonSchemaErrors from './checks/json-schema-errors';
-import jsonPathErrors from  './checks/json-path-errors';
 import missingTransitionTargetErrors from  './checks/missing-transition-target-errors';
 import stateTransitionsErrors from  './checks/state-transitions-errors';
 import duplicateStateNamesErrors from './checks/duplicate-state-names-errors';
@@ -16,7 +15,6 @@ export default function validator(definition: StateMachine): {
 
   const errors = jsonSchemaErrors(definition);
   if (errors.length === 0) {
-    errors.push(...jsonPathErrors(definition));
     errors.push(...missingTransitionTargetErrors(definition));
     errors.push(...stateTransitionsErrors(definition));
     errors.push(...duplicateStateNamesErrors(definition));
