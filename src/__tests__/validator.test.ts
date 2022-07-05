@@ -1,7 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { StateMachine } from '../types';
 
-const validator = require('../validator');
+import validator from '../validator';
 
 describe('validator', () => {
   const files = fs.readdirSync(path.join(__dirname, 'definitions'));
@@ -10,7 +11,7 @@ describe('validator', () => {
     const match = regexp.exec(files[i]);
     if (match) {
       it(`${match[1]}-${match[2]}`, () => {
-        const definition = JSON.parse(fs.readFileSync(path.join(__dirname, 'definitions', files[i])));
+        const definition = JSON.parse(fs.readFileSync(path.join(__dirname, 'definitions', files[i])).toString()) as StateMachine;
         const { isValid, errors, errorsText } = validator(definition);
         const textErrors = errorsText();
         if (match[1] === 'valid') {
