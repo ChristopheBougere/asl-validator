@@ -23,15 +23,30 @@
       "$ref": "paths.json#/definitions/asl_path"
     },
     "Resource": {
-      "type": "string",
       "oneOf": [
         {
+          "type": "string",
           "$comment": "defers validation to the registered formatter",
           "format": "asl_arn"
         },
         {
-          "$comment": "allows for variable substitution",
+          "type": "string",
+          "$comment": "extension that allows for variable substitution before deployment",
           "pattern": "^\\$\\{[^\\}]+\\}$"
+        },
+        {
+          "type": "object",
+          "$comment": "extensions that allows for variable substitution via cloud function",
+          "properties": {
+            "Ref": {
+              "type": "string"
+            }
+          },
+          "patternProperties": {
+            "^Fn::[A-Za-z\\d]+$": {
+              "type": ["object", "string", "array"]
+            }
+          }
         }
       ]
     },
