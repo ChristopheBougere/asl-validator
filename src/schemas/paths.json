@@ -11,26 +11,47 @@
       "format": "asl_ref_path"
     },
     "asl_payload_template": {
-      "type": "object",
-      "patternProperties": {
-        "^.+\\.\\$$": {
-          "$comment": "matches fields ending in .$",
-          "type":  "string",
-          "nullable": true,
-          "format": "asl_payload_template"
-        },
-        "^.+(([^.][^$])|([^.][$]))$": {
-          "$comment": "matches fields NOT ending in .$",
-          "oneOf": [
-            {
-              "type": ["number", "boolean", "string", "null"]
+      "oneOf": [
+        {
+          "type": "object",
+          "patternProperties": {
+            "^.+\\.\\$$": {
+              "$comment": "matches fields ending in .$",
+              "type": "string",
+              "nullable": true,
+              "format": "asl_payload_template"
             },
-            {
-              "$ref": "#/definitions/asl_payload_template"
+            "^.+(([^.][^$])|([^.][$]))$": {
+              "$comment": "matches fields NOT ending in .$",
+              "oneOf": [
+                {
+                  "type": [
+                    "number",
+                    "boolean",
+                    "string",
+                    "null"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/asl_payload_template"
+                  }
+                },
+                {
+                  "$ref": "#/definitions/asl_payload_template"
+                }
+              ]
             }
-          ]
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/asl_payload_template"
+          }
         }
-      }
+      ]
     }
   }
 }
