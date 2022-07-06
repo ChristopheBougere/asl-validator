@@ -1,0 +1,15 @@
+{
+  "Comment": "Pass State with bad InputPath expression",
+  "StartAt": "PassState",
+  "States": {
+    "PassState": {
+      "Type": "Pass",
+      "InputPath": "bug$.library.movies",
+      "OutputPath": "$.store",
+      "Parameters": {
+        "fooList.$": "$.some.value"
+      },
+      "End": true
+    }
+  }
+}

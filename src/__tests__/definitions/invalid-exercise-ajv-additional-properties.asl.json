@@ -1,0 +1,15 @@
+{
+  "Comment": "Simple Pass State with typo for InputPath",
+  "StartAt": "PassState",
+  "States": {
+    "PassState": {
+      "Type": "Pass",
+      "bugInputPath": "$.library.movies",
+      "OutputPath": "$.store",
+      "Parameters": {
+        "fooList.$": "$.some.value"
+      },
+      "End": true
+    }
+  }
+}

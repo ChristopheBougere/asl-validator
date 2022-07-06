@@ -4,7 +4,7 @@
   "description": "Amazon States Language validator",
   "main": "./dist/validator.js",
   "bin": {
-    "asl-validator": "./bin/asl-validator.js"
+    "asl-validator": "./dist/bin/asl-validator.js"
   },
   "scripts": {
     "build": "npx tsc",
