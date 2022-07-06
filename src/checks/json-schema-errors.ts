@@ -14,6 +14,7 @@ import map from  '../schemas/map.json';
 import errors from  '../schemas/errors.json';
 import { StateMachine, StateMachineError, StateMachineErrorCode } from '../types';
 import {registerAll} from "asl-path-validator";
+import {isArnFormatValid} from "./formats";
 
 export default function jsonSchemaErrors(definition: StateMachine): StateMachineError[] {
   const ajv = new Ajv({
@@ -34,10 +35,7 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
     allowUnionTypes: true
   });
   registerAll(ajv);
-  const arn = /^arn:(?<Partition>[^:\n]*):(?<Service>[^:\n]*):(?<Region>[^:\n]*):(?<AccountID>[^:\n]*):(?<ResourceType>[^:/\n]+)[:/](?<Resource>[^:]*[^:])(:(?<ResourceModifier>[^:]*[^:]))?$/ui
-  ajv.addFormat("asl_arn", (taskResource) => {
-    return arn.test(taskResource);
-  })
+  ajv.addFormat("asl_arn", isArnFormatValid)
   void ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
   return (ajv.errors ?? []).map(error => ({
     'Error code': StateMachineErrorCode.SchemaValidationFailed,
