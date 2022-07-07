@@ -1,0 +1,16 @@
+{
+  "Comment": "Pass State with bad InputPath expression",
+  "StartAt": "PassState",
+  "States": {
+    "PassState": {
+      "Type": "Pass",
+      "Parameters": {
+        "dynamic": {
+          "conflict": "value",
+          "conflict.$": "$.value"
+        }
+      },
+      "End": true
+    }
+  }
+}
