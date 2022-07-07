@@ -15,4 +15,8 @@ export enum StateMachineErrorCode {
 export type StateMachineError = {
   'Error code': StateMachineErrorCode;
   Message: string;
+  schemaError?: {
+    instancePath: string;
+    schemaPath: string;
+  }
 };
