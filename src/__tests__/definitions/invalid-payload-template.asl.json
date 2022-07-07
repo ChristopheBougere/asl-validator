@@ -1,0 +1,16 @@
+{
+  "Comment": "This SFN Should Fail Validation but does not",
+  "StartAt": "Hello, World",
+  "States": {
+    "Hello, World": {
+      "Type": "Task",
+      "Parameters": {
+        "foo": "bar",
+        "lorem.$": "ipsum",
+        "dolor.$": "$.sit.amet"
+      },
+      "Resource": "arn:aws:states:us-east-1:12345:activity:hello-world",
+      "End": true
+    }
+  }
+}
