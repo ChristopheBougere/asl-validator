@@ -1,5 +1,5 @@
 {
-  "Comment": "Pass State with bad InputPath expression",
+  "Comment": "Duplicate field in Parameters after the .$ suffix is removed during evaluation",
   "StartAt": "PassState",
   "States": {
     "PassState": {
