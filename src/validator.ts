@@ -6,6 +6,7 @@ import stateTransitionsErrors from  './checks/state-transitions-errors';
 import duplicateStateNamesErrors from './checks/duplicate-state-names-errors';
 import missingTerminalStateErrors from './checks/missing-terminal-state-errors';
 import { StateMachine, StateMachineError } from './types';
+import {mustNotHaveDuplicateFieldNamesAfterEvaluation} from "./checks/duplicate-payload-template-fields";
 
 export default function validator(definition: StateMachine): {
   isValid: boolean;
@@ -19,6 +20,7 @@ export default function validator(definition: StateMachine): {
     errors.push(...stateTransitionsErrors(definition));
     errors.push(...duplicateStateNamesErrors(definition));
     errors.push(...missingTerminalStateErrors(definition));
+    errors.push(...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition))
   }
 
   return {

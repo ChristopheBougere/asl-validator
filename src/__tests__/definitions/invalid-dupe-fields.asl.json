@@ -1,0 +1,16 @@
+{
+  "Comment": "Duplicate field in Parameters after the .$ suffix is removed during evaluation",
+  "StartAt": "PassState",
+  "States": {
+    "PassState": {
+      "Type": "Pass",
+      "Parameters": {
+        "dynamic": {
+          "conflict": "value",
+          "conflict.$": "$.value"
+        }
+      },
+      "End": true
+    }
+  }
+}
