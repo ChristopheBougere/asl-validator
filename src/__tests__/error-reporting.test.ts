@@ -14,7 +14,7 @@ describe("tests with definitions containing errors to see what's reported", () =
             expected_errors: [
                 {
                     "Error code": StateMachineErrorCode.SchemaValidationFailed,
-                    Message: "must match format \"asl_path\"",
+                    Message: "/States/PassState/InputPath is invalid. must match format \"asl_path\"",
                     schemaError: {
                         instancePath: "/States/PassState/InputPath",
                         schemaPath: "paths.json#/definitions/asl_path/format"
@@ -27,14 +27,29 @@ describe("tests with definitions containing errors to see what's reported", () =
             expected_errors: [
                 {
                     "Error code": StateMachineErrorCode.SchemaValidationFailed,
-                    Message: "/States/PassState is invalid.",
+                    Message: "/States/PassState is invalid. must match exactly one schema in oneOf",
                     schemaError: {
                         instancePath: "/States/PassState",
                         schemaPath: "#/oneOf"
                     }
                 }
             ]
+        },
+        {
+            file: "invalid-payload-template.asl.json",
+            expected_errors: [
+                {
+                    "Error code": StateMachineErrorCode.SchemaValidationFailed,
+                    Message: "/States/Hello, World/Parameters/lorem.$ is invalid. must match format \"asl_payload_template\"",
+                    schemaError: {
+                        instancePath: "/States/Hello, World/Parameters/lorem.$",
+                        // the regular expression in the path is escaped by AJV when it reports the location of the error
+                        schemaPath: "#/oneOf/0/patternProperties/%5E.%2B%5C.%5C%24%24/format"
+                    }
+                }
+            ]
         }
+
     ];
 
     test.each(inputs)("$file", (input) => {

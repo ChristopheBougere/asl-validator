@@ -80,7 +80,7 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
         !instancePathsWithOneOfKeyword.has(error.instancePath))
         .map(error => ({
             'Error code': StateMachineErrorCode.SchemaValidationFailed,
-            Message: error.keyword === "oneOf" ? `${error.instancePath} is invalid.` : error.message as string,
+            Message: `${error.instancePath} is invalid. ${error.message ?? ""}`,
             schemaError: {
                 instancePath: error.instancePath,
                 schemaPath: error.schemaPath
