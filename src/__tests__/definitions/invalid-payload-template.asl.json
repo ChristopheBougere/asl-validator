@@ -1,5 +1,5 @@
 {
-  "Comment": "This SFN Should Fail Validation but does not",
+  "Comment": "The lorem.$ field in the payload Parameters field is not a valid path expression.",
   "StartAt": "Hello, World",
   "States": {
     "Hello, World": {
