@@ -1,0 +1,11 @@
+{
+  "Comment": "Shows valid use of negative offset in Path expression",
+  "StartAt": "PassState",
+  "States": {
+    "PassState": {
+      "Type": "Pass",
+      "InputPath": "$.books[-2]",
+      "End": true
+    }
+  }
+}
