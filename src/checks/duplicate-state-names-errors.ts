@@ -1,7 +1,7 @@
 import {JSONPath} from 'jsonpath-plus';
-import {AslChecker, StateMachine, StateMachineError, StateMachineErrorCode, States} from '../types';
+import {AslChecker, StateMachineError, StateMachineErrorCode, States} from '../types';
 
-export const duplicateStateNames: AslChecker = (definition: StateMachine) => {
+export const duplicateStateNames: AslChecker = (definition) => {
     const errorMessages: StateMachineError[] = [];
     const names: Record<string, number> = {};
     JSONPath<States[]>({json: definition, path: '$..[\'States\']'})
