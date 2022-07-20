@@ -1,7 +1,7 @@
 import { JSONPath } from 'jsonpath-plus';
-import { StateMachine, StateMachineError, StateMachineErrorCode, States } from '../types';
+import {AslChecker, StateMachine, StateMachineError, StateMachineErrorCode, States} from '../types';
 
-export default function stateTransitionsErrors(definition: StateMachine): StateMachineError[] {
+export const stateTransitionsErrors : AslChecker = (definition) => {
   const errorMessages: StateMachineError[] = [];
 
   // given a nested state machine, this function will examine

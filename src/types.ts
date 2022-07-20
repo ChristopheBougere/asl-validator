@@ -21,3 +21,10 @@ export type StateMachineError = {
     schemaPath: string;
   }
 };
+
+export interface ValidationOptions {
+  readonly checkPaths: boolean;
+  readonly checkArn: boolean;
+}
+
+export type AslChecker = (definition: StateMachine, options: ValidationOptions) => StateMachineError[];

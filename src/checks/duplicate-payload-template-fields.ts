@@ -1,10 +1,10 @@
 import {JSONPath} from 'jsonpath-plus';
-import {StateMachine, StateMachineError, StateMachineErrorCode} from '../types';
+import {AslChecker, StateMachineError, StateMachineErrorCode} from '../types';
 
 // From the ASL spec:
 // > A JSON object MUST NOT have duplicate field names after fields
 // > ending with the characters ".$" are renamed to strip the ".$" suffix.
-export const mustNotHaveDuplicateFieldNamesAfterEvaluation = (definition: StateMachine): StateMachineError[] => {
+export const mustNotHaveDuplicateFieldNamesAfterEvaluation: AslChecker = (definition) => {
     // find each `Parameters` or `ResultSelector` field
     // for each one, examine each node's children for field names
     // that will be in conflict after evaluation.
