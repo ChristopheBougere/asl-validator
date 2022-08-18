@@ -10,45 +10,64 @@
       "type": "string",
       "format": "asl_ref_path"
     },
+    "_payload_template_object": {
+      "type": "object",
+      "patternProperties": {
+        "^.+\\.\\$$": {
+          "$comment": "matches fields ending in .$",
+          "type": "string",
+          "nullable": true,
+          "format": "asl_payload_template"
+        },
+        "^.+(([^.][^$])|([^.][$]))$": {
+          "$comment": "matches fields NOT ending in .$",
+          "oneOf": [
+            {
+              "type": [
+                "number",
+                "boolean",
+                "string",
+                "null"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/asl_payload_template"
+              }
+            },
+            {
+              "$ref": "#/definitions/_asl_payload_template"
+            }
+          ]
+        }
+      }
+    },
     "asl_payload_template": {
       "oneOf": [
         {
-          "type": "object",
-          "patternProperties": {
-            "^.+\\.\\$$": {
-              "$comment": "matches fields ending in .$",
-              "type": "string",
-              "nullable": true,
-              "format": "asl_payload_template"
-            },
-            "^.+(([^.][^$])|([^.][$]))$": {
-              "$comment": "matches fields NOT ending in .$",
-              "oneOf": [
-                {
-                  "type": [
-                    "number",
-                    "boolean",
-                    "string",
-                    "null"
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/asl_payload_template"
-                  }
-                },
-                {
-                  "$ref": "#/definitions/asl_payload_template"
-                }
-              ]
-            }
-          }
+          "$ref": "#/definitions/_payload_template_object"
         },
         {
           "type": "array",
           "items": {
             "$ref": "#/definitions/asl_payload_template"
+          }
+        },
+        {
+          "type": ["string", "boolean", "number"]
+        }
+      ]
+    },
+    "_asl_payload_template": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/_payload_template_object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_asl_payload_template"
           }
         }
       ]
