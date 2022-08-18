@@ -1,0 +1,35 @@
+{
+  "StartAt": "Parallel 1",
+  "States": {
+    "Parallel 1": {
+      "Branches": [
+        {
+          "StartAt": "Parallel 2",
+          "States": {
+            "Parallel 2": {
+              "Branches": [
+                {
+                  "StartAt": "Task 1",
+                  "States": {
+                    "Task 1": {
+                      "Type": "Pass",
+                      "Next": "Task 2"
+                    },
+                    "Task 2": {
+                      "Type": "Pass",
+                      "End": true
+                    }
+                  }
+                }
+              ],
+              "Type": "Parallel",
+              "End": true
+            }
+          }
+        }
+      ],
+      "Type": "Parallel",
+      "End": true
+    }
+  }
+}
