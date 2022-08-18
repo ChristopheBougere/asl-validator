@@ -43,7 +43,7 @@ module.exports = (definition) => {
     // These are the only valid states to link to from within the branch
     JSONPath({
       json: nestedStateMachine,
-      path: '$.States'
+      path: '$.States',
     })
       .forEach((branchStates) => {
         availStateNames = availStateNames.concat(Object.keys(branchStates));
@@ -61,7 +61,7 @@ module.exports = (definition) => {
   // link outside its branch.
   JSONPath({
     json: definition,
-    path: '$..Branches'
+    path: '$..Branches',
   })
     .forEach((parallelBranches) => {
       parallelBranches.forEach((nestedStateMachine) => {
@@ -81,7 +81,7 @@ module.exports = (definition) => {
   // link outside its container.
   JSONPath({
     json: definition,
-    path: '$..Iterator'
+    path: '$..Iterator',
   })
     .forEach((nestedStateMachine) => {
       const errs = validateNestedStateMachine(nestedStateMachine)
