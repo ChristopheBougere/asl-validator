@@ -11,12 +11,26 @@ module.exports = (definition) => {
   // targets for states outside the containers.
   const nextAndDefaultTargets = (nestedStateMachine) => {
     const states = [];
-    Object.keys(nestedStateMachine.States).forEach((stateName) => {
-      const nestedState = nestedStateMachine.States[stateName];
-      const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type) >= 0;
-      const path = isContainer ? '$.[Next,Default]' : '$..[Next,Default]';
-      states.push(...JSONPath({ json: nestedState, path }));
-    });
+    Object.keys(nestedStateMachine.States)
+      .forEach((stateName) => {
+        const nestedState = nestedStateMachine.States[stateName];
+        const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type) >= 0;
+        if (isContainer) {
+          states.push(...JSONPath({
+            json: nestedState,
+            path: '$.Next',
+          }));
+          states.push(...JSONPath({
+            json: nestedState,
+            path: '$.Default',
+          }));
+        } else {
+          states.push(...JSONPath({
+            json: nestedState,
+            path: '$..[Next,Default]',
+          }));
+        }
+      });
     return states;
   };
 
@@ -27,9 +41,13 @@ module.exports = (definition) => {
     // don't traverse into any nested states. We only want to record the States
     // that are immediately under the Branch.
     // These are the only valid states to link to from within the branch
-    JSONPath({ json: nestedStateMachine, path: '$.States' }).forEach((branchStates) => {
-      availStateNames = availStateNames.concat(Object.keys(branchStates));
-    });
+    JSONPath({
+      json: nestedStateMachine,
+      path: '$.States',
+    })
+      .forEach((branchStates) => {
+        availStateNames = availStateNames.concat(Object.keys(branchStates));
+      });
 
     // check that there are no transitions outside this branch
     const targetedStates = nextAndDefaultTargets(nestedStateMachine);
@@ -41,13 +59,17 @@ module.exports = (definition) => {
   // we know that every `Parallel` state has its expected `Branches` field
   // we need to visit each Branch within a Parallel to ensure that it doesn't
   // link outside its branch.
-  JSONPath({ json: definition, path: '$..Branches' })
+  JSONPath({
+    json: definition,
+    path: '$..Branches',
+  })
     .forEach((parallelBranches) => {
       parallelBranches.forEach((nestedStateMachine) => {
-        const errs = validateNestedStateMachine(nestedStateMachine).map((state) => ({
-          'Error code': 'BRANCH_OUTBOUND_TRANSITION_TARGET',
-          Message: `Parallel branch state cannot transition to target: ${state}`,
-        }));
+        const errs = validateNestedStateMachine(nestedStateMachine)
+          .map((state) => ({
+            'Error code': 'BRANCH_OUTBOUND_TRANSITION_TARGET',
+            Message: `Parallel branch state cannot transition to target: ${state}`,
+          }));
 
         errorMessages.push(...errs);
       });
@@ -57,12 +79,16 @@ module.exports = (definition) => {
   // we know that every `Map` state has its expected `Iterator` field
   // we need to visit the Iterator within a Map to ensure that it doesn't
   // link outside its container.
-  JSONPath({ json: definition, path: '$..Iterator' })
+  JSONPath({
+    json: definition,
+    path: '$..Iterator',
+  })
     .forEach((nestedStateMachine) => {
-      const errs = validateNestedStateMachine(nestedStateMachine).map((state) => ({
-        'Error code': 'MAP_OUTBOUND_TRANSITION_TARGET',
-        Message: `Map branch state cannot transition to target: ${state}`,
-      }));
+      const errs = validateNestedStateMachine(nestedStateMachine)
+        .map((state) => ({
+          'Error code': 'MAP_OUTBOUND_TRANSITION_TARGET',
+          Message: `Map branch state cannot transition to target: ${state}`,
+        }));
 
       errorMessages.push(...errs);
     });
