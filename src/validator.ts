@@ -13,7 +13,7 @@ const DefaultOptions: ValidationOptions = {
     checkArn: true,
 }
 
-export default function validator(definition: StateMachine, opts?: ValidationOptions): {
+export = function validator(definition: StateMachine, opts?: ValidationOptions): {
     isValid: boolean;
     errors: (ErrorObject | StateMachineError)[];
     errorsText: (separator?: string) => string;

@@ -2,7 +2,7 @@
   "name": "asl-validator",
   "version": "0.0.0-development",
   "description": "Amazon States Language validator",
-  "main": "./dist/validator.js",
+  "main": "./dist/src/validator.js",
   "bin": {
     "asl-validator": "./dist/bin/asl-validator.js"
   },
