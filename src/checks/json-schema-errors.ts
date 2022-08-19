@@ -93,7 +93,7 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
             Message: `${error.instancePath} is invalid. ${error.message ?? ""}`,
             schemaError: {
                 instancePath: error.instancePath,
-                schemaPath: error.schemaPath
+                schemaPath: decodeURIComponent(error.schemaPath)
             }
         }));
 }

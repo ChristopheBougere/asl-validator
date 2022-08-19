@@ -1,0 +1,28 @@
+{
+  "StartAt": "Publish to Slack",
+  "States": {
+    "Publish to Slack": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:::function:publish-to-slack-lambda",
+      "Parameters": {
+        "slackMessage": {
+          "channel.$": "$.slackErrorChannel",
+          "text.$": "$.slackMessage.title",
+          "blocks": [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text.$": "$.slackMessage.errorMessage"
+              }
+            }
+          ]
+        }
+      },
+      "Next": "Failure"
+    },
+    "Failure": {
+      "Type": "Fail"
+    }
+  }
+}
