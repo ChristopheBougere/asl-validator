@@ -7,7 +7,7 @@
       "format": "asl_path"
     },
     "asl_ref_path": {
-      "type": "string",
+      "type": ["string", "null"],
       "format": "asl_ref_path"
     },
     "_payload_template_object": {
