@@ -15,8 +15,13 @@
           "Next": "FirstMatchState"
         },
         {
-          "Variable": "$.foo",
-          "NumericEquals": 2,
+          "Or": [{
+            "Variable": "$.foo",
+            "NumericEquals": 2
+          }, {
+            "Variable": "$.foo",
+            "NumericEquals": 3
+          }],
           "Next": "SecondMatchState"
         }
       ],
