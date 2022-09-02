@@ -1,0 +1,30 @@
+{
+  "Comment": "Validates all intrinsic functions",
+  "StartAt": "EmptyState",
+  "States": {
+    "EmptyState": {
+      "Type": "Pass",
+      "Parameters": {
+        "Format.$": "States.Format('Welcome to {} {}\\'s playlist.', $.firstName, $.lastName)",
+        "StringToJson.$": "States.StringToJson($.someString)",
+        "JsonToString.$": "States.JsonToString($.someJson)",
+        "Array.$": "States.Array('Foo', 2020, $.someJson, null)",
+        "ArrayPartition.$": "States.ArrayPartition($.inputArray,4)",
+        "ArrayContains.$": "States.ArrayContains($.inputArray, $.lookingFor)",
+        "ArrayRange.$": "States.ArrayRange(1, 9, 2)",
+        "ArrayGetItem.$": "States.ArrayGetItem($.inputArray, $.index)",
+        "ArrayLength.$": "States.ArrayLength($.inputArray)",
+        "ArrayUnique.$": "States.ArrayUnique($.inputArray)",
+        "Base64Encode.$": "States.Base64Encode($.input)",
+        "Base64Decode.$": "States.Base64Decode($.base64)",
+        "Hash.$": "States.Hash($.Data, $.Algorithm)",
+        "JsonMerge.$": "States.JsonMerge($.json1, $.json2, false)",
+        "MathRandom.$": "States.MathRandom($.start, $.end)",
+        "MathAdd.$": "States.MathAdd($.value1, $.step)",
+        "StringSplit.$": "States.StringSplit($.inputString, $.splitter)",
+        "UUID.$": "States.UUID()"
+      },
+      "End": true
+    }
+  }
+}
