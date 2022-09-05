@@ -26,7 +26,7 @@ export const mustNotHaveDuplicateFieldNamesAfterEvaluation: AslChecker = (defini
                 });
             }
             keys[keyPostEval] = current ? current + 1 : 1;
-            if (typeof parent[key] === "object") {
+            if (!!parent[key] && typeof parent[key] === "object") {
                 inspectKeys(parent[key] as Record<string, unknown>);
             }
         });
