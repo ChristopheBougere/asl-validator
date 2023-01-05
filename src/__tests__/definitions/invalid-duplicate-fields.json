@@ -1,0 +1,26 @@
+{
+  "Comment": "Contains a duplicate field in the payload template. channel.$ and channel are in conflict.",
+  "StartAt": "Publish to Slack",
+  "States": {
+    "Publish to Slack": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:::function:publish-to-slack-lambda",
+      "Parameters": {
+        "slackMessage": {
+          "channel.$": "$.slackErrorChannel",
+          "channel": "conflicting field",
+          "blocks": [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text.$": "$.slackMessage.errorMessage"
+              }
+            }
+          ]
+        }
+      },
+      "End": true
+    }
+  }
+}

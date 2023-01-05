@@ -1,0 +1,16 @@
+{
+  "Comment": "The lorem.$ field in the payload Parameters field is not a valid path expression.",
+  "StartAt": "Hello, World",
+  "States": {
+    "Hello, World": {
+      "Type": "Task",
+      "Parameters": {
+        "foo": "bar",
+        "lorem.$": "ipsum",
+        "dolor.$": "$.sit.amet"
+      },
+      "Resource": "arn:aws:states:us-east-1:12345:activity:hello-world",
+      "End": true
+    }
+  }
+}

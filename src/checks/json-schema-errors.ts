@@ -12,11 +12,11 @@ import task from '../schemas/task.json';
 import wait from '../schemas/wait.json';
 import map from '../schemas/map.json';
 import errors from '../schemas/errors.json';
-import {StateMachine, StateMachineError, StateMachineErrorCode} from '../types';
+import {AslChecker, StateMachineErrorCode} from '../types';
 import {registerAll} from "asl-path-validator";
 import {isArnFormatValid} from "./formats";
 
-export default function jsonSchemaErrors(definition: StateMachine): StateMachineError[] {
+export const jsonSchemaErrors: AslChecker = (definition, options) => {
     const ajv = new Ajv({
         schemas: [
             paths,
@@ -35,8 +35,18 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
         ],
         allowUnionTypes: true
     });
-    registerAll(ajv);
-    ajv.addFormat("asl_arn", isArnFormatValid)
+    if (options.checkPaths) {
+        registerAll(ajv);
+    } else {
+        ajv.addFormat("asl_path", () => true);
+        ajv.addFormat("asl_ref_path", () => true);
+        ajv.addFormat("asl_payload_template", () => true);
+    }
+    if (options.checkArn) {
+        ajv.addFormat("asl_arn", isArnFormatValid)
+    } else {
+        ajv.addFormat("asl_arn", () => true);
+    }
     ajv.validate('http://asl-validator.cloud/state-machine.json#', definition);
 
     // the use of oneOf can generate a lot of errors since it'll test
@@ -46,8 +56,8 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
     // these for us in their errors. The challenge is which to show when there
     // are multiple.
     //
-    // for example, given the simplest example with a one step definition with only
-    // a single Pass state. Introducing a typo for the OutputPath expression generates
+    // for example, given the simplest example with a one-step definition with only
+    // a Pass state. Introducing a typo for the OutputPath expression generates
     // 9 errors from AJV.
     //
     if (!ajv.errors) {
@@ -69,7 +79,7 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
         deepest = Math.max(deepest, depth);
     });
 
-    // if there is a oneOf keyword error, then remove all
+    // if there is a oneOf keyword error, then remove the
     // other non-format related errors before proceeding
     const instancePathsWithOneOfKeyword = new Set<string>();
     selectedErrors
@@ -82,10 +92,10 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
         !instancePathsWithOneOfKeyword.has(error.instancePath))
         .map(error => ({
             'Error code': StateMachineErrorCode.SchemaValidationFailed,
-            Message: error.keyword === "oneOf" ? `${error.instancePath} is invalid.` : error.message as string,
+            Message: `${error.instancePath} is invalid. ${error.message ?? ""}`,
             schemaError: {
                 instancePath: error.instancePath,
-                schemaPath: error.schemaPath
+                schemaPath: decodeURIComponent(error.schemaPath)
             }
         }))
         .filter((v: StateMachineError,i,a)=>a.findIndex(v2=>(v2.schemaError.schemaPath===v.schemaError?.schemaPath && v2.schemaError.instancePath===v.schemaError?.instancePath))===i);

@@ -8,9 +8,6 @@
         "Variable": {
           "type": "string"
         },
-        "Next": {
-          "type": "string"
-        },
         "And": {
           "type": "array",
           "items": {
@@ -297,7 +294,17 @@
     "Choices": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Operator"
+        "allOf": [{
+          "type": "object",
+          "properties": {
+            "Next": {
+              "type": "string"
+            }
+          },
+          "required": ["Next"]
+        }, {
+          "$ref": "#/definitions/Operator"
+        }]
       }
     },
     "Default": {

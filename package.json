@@ -2,7 +2,7 @@
   "name": "asl-validator",
   "version": "0.0.0-development",
   "description": "Amazon States Language validator",
-  "main": "./dist/validator.js",
+  "main": "./dist/src/validator.js",
   "bin": {
     "asl-validator": "./dist/bin/asl-validator.js"
   },
@@ -36,7 +36,7 @@
     "ajv": "^8.11.0",
     "commander": "^5.1.0",
     "jsonpath-plus": "^7.0.0",
-    "asl-path-validator": "^0.9.0"
+    "asl-path-validator": "^0.11.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",

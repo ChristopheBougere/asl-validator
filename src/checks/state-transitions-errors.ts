@@ -1,7 +1,7 @@
 import { JSONPath } from 'jsonpath-plus';
-import { StateMachine, StateMachineError, StateMachineErrorCode, States } from '../types';
+import {AslChecker, StateMachine, StateMachineError, StateMachineErrorCode, States} from '../types';
 
-export default function stateTransitionsErrors(definition: StateMachine): StateMachineError[] {
+export const stateTransitionsErrors : AslChecker = (definition) => {
   const errorMessages: StateMachineError[] = [];
 
   // given a nested state machine, this function will examine
@@ -12,12 +12,26 @@ export default function stateTransitionsErrors(definition: StateMachine): StateM
   // targets for states outside the containers.
   const nextAndDefaultTargets = (nestedStateMachine: StateMachine) => {
     const states: string[] = [];
-    Object.keys(nestedStateMachine.States).forEach((stateName) => {
-      const nestedState = nestedStateMachine.States[stateName];
-      const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type as string) >= 0;
-      const path = isContainer ? '$.[Next,Default]' : '$..[Next,Default]';
-      states.push(...JSONPath<string[]>({ json: nestedState, path }));
-    });
+    Object.keys(nestedStateMachine.States)
+      .forEach((stateName) => {
+        const nestedState = nestedStateMachine.States[stateName];
+        const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type as string) >= 0;
+        if (isContainer) {
+          states.push(...JSONPath<string[]>({
+            json: nestedState,
+            path: '$.Next',
+          }));
+          states.push(...JSONPath<string[]>({
+            json: nestedState,
+            path: '$.Default',
+          }));
+        } else {
+          states.push(...JSONPath<string[]>({
+            json: nestedState,
+            path: '$..[Next,Default]',
+          }));
+        }
+      });
     return states;
   };
 
@@ -28,7 +42,10 @@ export default function stateTransitionsErrors(definition: StateMachine): StateM
     // don't traverse into any nested states. We only want to record the States
     // that are immediately under the Branch.
     // These are the only valid states to link to from within the branch
-    JSONPath<States[]>({ json: nestedStateMachine, path: '$.States' })
+    JSONPath<States[]>({
+      json: nestedStateMachine,
+      path: '$.States',
+    })
       .forEach((branchStates) => {
         availStateNames = availStateNames.concat(Object.keys(branchStates));
       });
@@ -43,7 +60,10 @@ export default function stateTransitionsErrors(definition: StateMachine): StateM
   // we know that every `Parallel` state has its expected `Branches` field
   // we need to visit each Branch within a Parallel to ensure that it doesn't
   // link outside its branch.
-  JSONPath<StateMachine[][]>({ json: definition, path: '$..Branches' })
+  JSONPath<StateMachine[][]>({
+    json: definition,
+    path: '$..Branches',
+  })
     .forEach((parallelBranches) => {
       parallelBranches.forEach((nestedStateMachine) => {
         const errs = validateNestedStateMachine(nestedStateMachine).map((state) => ({
@@ -59,12 +79,16 @@ export default function stateTransitionsErrors(definition: StateMachine): StateM
   // we know that every `Map` state has its expected `Iterator` field
   // we need to visit the Iterator within a Map to ensure that it doesn't
   // link outside its container.
-  JSONPath<StateMachine[]>({ json: definition, path: '$..Iterator' })
+  JSONPath<StateMachine[]>({
+    json: definition,
+    path: '$..Iterator',
+  })
     .forEach((nestedStateMachine) => {
-      const errs = validateNestedStateMachine(nestedStateMachine).map((state) => ({
-        'Error code': StateMachineErrorCode.MapOutboundTransitionTarget,
-        Message: `Map branch state cannot transition to target: ${state}`,
-      }));
+      const errs = validateNestedStateMachine(nestedStateMachine)
+        .map((state) => ({
+          'Error code': StateMachineErrorCode.MapOutboundTransitionTarget,
+          Message: `Map branch state cannot transition to target: ${state}`,
+        }));
 
       errorMessages.push(...errs);
     });
