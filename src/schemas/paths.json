@@ -3,52 +3,71 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "asl_path": {
-      "type": "string",
+      "type": ["string", "null"],
       "format": "asl_path"
     },
     "asl_ref_path": {
-      "type": "string",
+      "type": ["string", "null"],
       "format": "asl_ref_path"
+    },
+    "_payload_template_object": {
+      "type": "object",
+      "patternProperties": {
+        "^.+\\.\\$$": {
+          "$comment": "matches fields ending in .$",
+          "type": "string",
+          "nullable": true,
+          "format": "asl_payload_template"
+        },
+        "^.+(([^.][^$])|([^.][$]))$": {
+          "$comment": "matches fields NOT ending in .$",
+          "oneOf": [
+            {
+              "type": [
+                "number",
+                "boolean",
+                "string",
+                "null"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/asl_payload_template"
+              }
+            },
+            {
+              "$ref": "#/definitions/_payload_template_object"
+            }
+          ]
+        }
+      }
     },
     "asl_payload_template": {
       "oneOf": [
         {
-          "type": "object",
-          "patternProperties": {
-            "^.+\\.\\$$": {
-              "$comment": "matches fields ending in .$",
-              "type": "string",
-              "nullable": true,
-              "format": "asl_payload_template"
-            },
-            "^.+(([^.][^$])|([^.][$]))$": {
-              "$comment": "matches fields NOT ending in .$",
-              "oneOf": [
-                {
-                  "type": [
-                    "number",
-                    "boolean",
-                    "string",
-                    "null"
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/asl_payload_template"
-                  }
-                },
-                {
-                  "$ref": "#/definitions/asl_payload_template"
-                }
-              ]
-            }
-          }
+          "$ref": "#/definitions/_payload_template_object"
         },
         {
           "type": "array",
           "items": {
             "$ref": "#/definitions/asl_payload_template"
+          }
+        },
+        {
+          "type": ["string", "boolean", "number"]
+        }
+      ]
+    },
+    "_asl_payload_template": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/_payload_template_object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_asl_payload_template"
           }
         }
       ]

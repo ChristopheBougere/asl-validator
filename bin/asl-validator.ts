@@ -5,13 +5,15 @@ import fs from 'fs';
 import program from 'commander';
 
 import validator from '../src/validator';
-import { StateMachine } from '../src/types';
+import {StateMachine, ValidationOptions} from '../src/types';
 
 program
   .description('Amazon States Language validator')
   .option('--json-definition <jsonDefinition>', 'JSON definition')
   .option('--json-path <jsonPath>', 'JSON path')
   .option('--silent', 'silent mode')
+  .option('--no-path-check', 'skips checking path expressions')
+  .option('--no-arn-check', 'skips the arn check for Resource values')
   .parse(process.argv);
 
 let definition;
@@ -31,7 +33,11 @@ try {
   process.exit(2);
 }
 try {
-  const result = validator(definition);
+  const validationOpts: ValidationOptions = {
+    checkArn: !program.noArnCheck,
+    checkPaths: !program.noPathCheck
+  }
+  const result = validator(definition, validationOpts);
   if (result.isValid) {
     if (!program.silent) {
       console.log('✓ State machine definition is valid');

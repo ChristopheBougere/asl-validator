@@ -1,0 +1,11 @@
+{
+  "StartAt": "EmptyState",
+  "States": {
+    "EmptyState": {
+      "Type": "Pass",
+      "Parameters": ["abc"],
+      "ResultPath": "$.emptyState",
+      "End": true
+    }
+  }
+}

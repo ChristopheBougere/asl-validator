@@ -1,0 +1,20 @@
+{
+  "Comment": "An example showing that choice states are not allowed to go directly to the end of state machine",
+  "StartAt": "ChoiceState",
+  "States": {
+    "ChoiceState": {
+      "Type": "Choice",
+      "Choices": [{
+          "Variable": "$.foo",
+          "NumericEquals": 1,
+          "End": true
+        }
+      ],
+      "Default": "DefaultState"
+    },
+    "DefaultState": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

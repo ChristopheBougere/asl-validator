@@ -6,6 +6,7 @@ export type StateMachine = {
 export enum StateMachineErrorCode {
   BranchOutboundTransitionTarget = 'BRANCH_OUTBOUND_TRANSITION_TARGET',
   DuplicateStateNames = 'DUPLICATE_STATE_NAMES',
+  DuplicateFieldName = 'DUPLICATE_FIELD_NAME',
   InvalidJsonPath = 'INVALID_JSON_PATH',
   MapOutboundTransitionTarget = 'MAP_OUTBOUND_TRANSITION_TARGET',
   MissingTerminalState = 'MISSING_TERMINAL_STATE',
@@ -20,3 +21,10 @@ export type StateMachineError = {
     schemaPath: string;
   }
 };
+
+export interface ValidationOptions {
+  readonly checkPaths: boolean;
+  readonly checkArn: boolean;
+}
+
+export type AslChecker = (definition: StateMachine, options: ValidationOptions) => StateMachineError[];
