@@ -4,6 +4,7 @@ import choice from '../schemas/choice.json';
 import fail from '../schemas/fail.json';
 import parallel from '../schemas/parallel.json';
 import pass from '../schemas/pass.json';
+import baseStateMachine from '../schemas/base-state-machine.json';
 import stateMachine from '../schemas/state-machine.json';
 import state from '../schemas/state.json';
 import succeed from '../schemas/succeed.json';
@@ -23,6 +24,7 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
             fail,
             parallel,
             pass,
+            baseStateMachine,
             stateMachine,
             state,
             succeed,
@@ -67,7 +69,7 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
         deepest = Math.max(deepest, depth);
     });
 
-    // if there is a oneOf keyword error, then remove all of the
+    // if there is a oneOf keyword error, then remove all
     // other non-format related errors before proceeding
     const instancePathsWithOneOfKeyword = new Set<string>();
     selectedErrors
@@ -85,5 +87,6 @@ export default function jsonSchemaErrors(definition: StateMachine): StateMachine
                 instancePath: error.instancePath,
                 schemaPath: error.schemaPath
             }
-        }));
+        }))
+        .filter((v: StateMachineError,i,a)=>a.findIndex(v2=>(v2.schemaError.schemaPath===v.schemaError?.schemaPath && v2.schemaError.instancePath===v.schemaError?.instancePath))===i);
 }
