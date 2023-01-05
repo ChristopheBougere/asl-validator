@@ -12,7 +12,7 @@ import task from '../schemas/task.json';
 import wait from '../schemas/wait.json';
 import map from '../schemas/map.json';
 import errors from '../schemas/errors.json';
-import {AslChecker, StateMachineErrorCode} from '../types';
+import {AslChecker, StateMachineError, StateMachineErrorCode} from '../types';
 import {registerAll} from "asl-path-validator";
 import {isArnFormatValid} from "./formats";
 
