@@ -36,7 +36,7 @@
       "minimum": 0
     },
     "ItemReader": {
-      "$comment": "need to improve this type",
+      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other input sources",
       "type": "object"
     },
     "ItemProcessor": {
@@ -109,6 +109,7 @@
       "$ref": "paths.json#/definitions/asl_payload_template"
     },
     "ResultWriter": {
+      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other outputs",
       "type": "object"
     },
     "Retry": {

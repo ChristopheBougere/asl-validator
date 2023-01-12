@@ -98,5 +98,13 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
                 schemaPath: decodeURIComponent(error.schemaPath)
             }
         }))
-        .filter((v: StateMachineError,i,a)=>a.findIndex(v2=>(v2.schemaError.schemaPath===v.schemaError?.schemaPath && v2.schemaError.instancePath===v.schemaError?.instancePath))===i);
+        // avoid returning a list of errors with duplicates
+        // this filter will only return items if they don't already appear in an earlier position in the array
+        .filter((v: StateMachineError, i, a) => {
+            return a.findIndex(v2 => {
+                // duplicates are based on the schemaPath and instancePath
+                return v2.schemaError.schemaPath === v.schemaError?.schemaPath &&
+                v2.schemaError.instancePath === v.schemaError?.instancePath
+            }) === i
+        });
 }
