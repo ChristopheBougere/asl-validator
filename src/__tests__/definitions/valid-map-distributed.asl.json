@@ -1,0 +1,48 @@
+{
+  "Comment": "Using Map state in Distributed mode",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "ItemReader": {
+        "ReaderConfig": {
+          "InputType": "CSV",
+          "CSVHeaderLocation": "FIRST_ROW"
+        },
+        "Resource": "arn:aws:states:::s3:getObject",
+        "Parameters": {
+          "Bucket": "Database",
+          "Key": "csv-dataset/ratings.csv"
+        }
+      },
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "DISTRIBUTED",
+          "ExecutionType": "EXPRESS"
+        },
+        "StartAt": "LambdaTask",
+        "States": {
+          "LambdaTask": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "OutputPath": "$.Payload",
+            "Parameters": {
+              "Payload.$": "$",
+              "FunctionName": "arn:aws:lambda:us-east-2:123456789012:function:processCSVData"
+            },
+            "End": true
+          }
+        }
+      },
+      "Label": "Map",
+      "End": true,
+      "ResultWriter": {
+        "Resource": "arn:aws:states:::s3:putObject",
+        "Parameters": {
+          "Bucket": "myOutputBucket",
+          "Prefix": "csvProcessJobs"
+        }
+      }
+    }
+  }
+}

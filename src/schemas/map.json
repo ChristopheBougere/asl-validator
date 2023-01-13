@@ -28,18 +28,89 @@
     "ItemsPath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
     },
+    "Label": {
+      "type": "string"
+    },
     "MaxConcurrency": {
       "type": "number",
       "minimum": 0
     },
+    "ItemReader": {
+      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other input sources",
+      "type": "object"
+    },
+    "ItemProcessor": {
+      "type": "object",
+      "allOf": [{ "$ref": "base-state-machine.json#" }],
+      "oneOf": [
+        {
+          "properties": {
+            "ProcessorConfig": {
+              "type": "object",
+              "properties": {
+                "Mode": {
+                  "type": "string",
+                  "enum": ["INLINE"]
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "ProcessorConfig": {
+              "type": "object",
+              "properties": {
+                "Mode": {
+                  "type": "string",
+                  "enum": ["DISTRIBUTED"]
+                },
+                "ExecutionType": {
+                  "type": "string",
+                  "enum": ["EXPRESS", "STANDARD"]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "Iterator": {
-      "$ref": "state-machine.json#"
+      "$ref": "base-state-machine.json#"
     },
     "Parameters": {
       "$ref": "paths.json#/definitions/asl_payload_template"
     },
+    "ItemSelector": {
+      "$ref": "paths.json#/definitions/asl_payload_template"
+    },
+    "ItemBatcher":{
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "MaxItemsPerBatch": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "MaxItemsPerBatchPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
+        }
+      ]
+    },
     "ResultSelector": {
       "$ref": "paths.json#/definitions/asl_payload_template"
+    },
+    "ResultWriter": {
+      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other outputs",
+      "type": "object"
     },
     "Retry": {
       "type": "array",
@@ -87,11 +158,32 @@
       }
     }
   },
-  "oneOf": [{
-    "required": ["Next"]
-  }, {
-    "required": ["End"]
-  }],
-  "required": ["Type", "Iterator"],
+  "oneOf": [
+    {
+      "required": [
+        "Next",
+        "ItemProcessor"
+      ]
+    },
+    {
+      "required": [
+        "Next",
+        "Iterator"
+      ]
+    },
+    {
+      "required": [
+        "End",
+        "Iterator"
+      ]
+    },
+    {
+      "required": [
+        "End",
+        "ItemProcessor"
+      ]
+    }
+  ],
+  "required": ["Type"],
   "additionalProperties": false
 }

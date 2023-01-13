@@ -4,6 +4,7 @@ import choice from '../schemas/choice.json';
 import fail from '../schemas/fail.json';
 import parallel from '../schemas/parallel.json';
 import pass from '../schemas/pass.json';
+import baseStateMachine from '../schemas/base-state-machine.json';
 import stateMachine from '../schemas/state-machine.json';
 import state from '../schemas/state.json';
 import succeed from '../schemas/succeed.json';
@@ -11,7 +12,7 @@ import task from '../schemas/task.json';
 import wait from '../schemas/wait.json';
 import map from '../schemas/map.json';
 import errors from '../schemas/errors.json';
-import {AslChecker, StateMachineErrorCode} from '../types';
+import {AslChecker, StateMachineError, StateMachineErrorCode} from '../types';
 import {registerAll} from "asl-path-validator";
 import {isArnFormatValid} from "./formats";
 
@@ -23,6 +24,7 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
             fail,
             parallel,
             pass,
+            baseStateMachine,
             stateMachine,
             state,
             succeed,
@@ -95,5 +97,14 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
                 instancePath: error.instancePath,
                 schemaPath: decodeURIComponent(error.schemaPath)
             }
-        }));
+        }))
+        // avoid returning a list of errors with duplicates
+        // this filter will only return items if they don't already appear in an earlier position in the array
+        .filter((v: StateMachineError, i, a) => {
+            return a.findIndex(v2 => {
+                // duplicates are based on the schemaPath and instancePath
+                return v2.schemaError.schemaPath === v.schemaError?.schemaPath &&
+                v2.schemaError.instancePath === v.schemaError?.instancePath
+            }) === i
+        });
 }
