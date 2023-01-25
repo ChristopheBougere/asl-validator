@@ -120,6 +120,9 @@
     },
     "Parameters": {
       "$ref": "paths.json#/definitions/asl_payload_template"
+    },
+    "Credentials": {
+      "$ref": "paths.json#/definitions/asl_payload_template"
     }
   },
   "oneOf": [{
