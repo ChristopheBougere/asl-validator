@@ -1,0 +1,78 @@
+{
+  "Comment": "An example of the Amazon States Language using wait states",
+  "StartAt": "wait_all_time_fields",
+  "States": {
+    "wait_all_time_fields": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "SecondsPath": "$.expiryseconds",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_all_time_fields_without_seconds"
+    },
+    "wait_all_time_fields_without_seconds": {
+      "Type": "Wait",
+      "SecondsPath": "$.expiryseconds",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_all_time_fields_without_seconds_path"
+    },
+    "wait_all_time_fields_without_seconds_path": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_all_time_fields_without_timestamp"
+    },
+    "wait_all_time_fields_without_timestamp": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "SecondsPath": "$.expiryseconds",
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_all_time_fields_without_timestamp_path"
+    },
+    "wait_all_time_fields_without_timestamp_path": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "SecondsPath": "$.expiryseconds",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "Next": "wait_both_path_fields"
+    },
+    "wait_both_path_fields": {
+      "Type": "Wait",
+      "SecondsPath": "$.expiryseconds",
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_seconds_timestamp"
+    },
+    "wait_seconds_timestamp": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "Next": "wait_seconds_seconds_path"
+    },
+    "wait_seconds_seconds_path": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "SecondsPath": "$.expiryseconds",
+      "Next": "wait_seconds_timestamp_path"
+    },
+    "wait_seconds_timestamp_path": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "TimestampPath": "$.expirydate",
+      "Next": "wait_timestamp_seconds_path"
+    },
+    "wait_timestamp_seconds_path": {
+      "Type": "Wait",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "SecondsPath": "$.expiryseconds",
+      "Next": "wait_timestamp_timestamp_path"
+    },
+    "wait_timestamp_timestamp_path": {
+      "Type": "Wait",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "TimestampPath": "$.expirydate",
+      "End": true
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "Comment": "Example of invalid configuration for TimeoutSeconds and HeartbeatSeconds",
+  "StartAt": "TimeoutSecondsAndTimeoutSecondsPath",
+  "States": {
+    "TimeoutSecondsAndTimeoutSecondsPath": {
+      "Type": "Task",
+      "Resource": "arn:aws:swf:us-east-1:123456789012:task:X",
+      "Parameters": {
+        "flagged": true,
+        "parts": {
+          "first.$": "$.vals[0]",
+          "last3.$": "$.vals[3:]"
+        }
+      },
+      "TimeoutSeconds": 10,
+      "TimeoutSecondsPath": "$.pathToSeconds",
+      "Next": "HeartbeatSecondsAndHeartbeatSecondsPath"
+    },
+    "HeartbeatSecondsAndHeartbeatSecondsPath": {
+      "Type": "Task",
+      "Resource": "arn:aws:swf:us-east-1:123456789012:task:X",
+      "Parameters": {
+        "flagged": true,
+        "parts": {
+          "first.$": "$.vals[0]",
+          "last3.$": "$.vals[3:]"
+        }
+      },
+      "HeartbeatSeconds": 10,
+      "HeartbeatSecondsPath": "$.pathToSeconds",
+      "End": true
+    }
+  }
+}

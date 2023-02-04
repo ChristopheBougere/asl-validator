@@ -36,10 +36,23 @@
       "$ref": "paths.json#/definitions/asl_ref_path"
     }
   },
-  "oneOf": [{
-    "required": ["Next"]
+
+  "allOf": [{
+    "oneOf": [{
+      "required": ["Next"]
+    }, {
+      "required": ["End"]
+    }]
   }, {
-    "required": ["End"]
+    "oneOf": [{
+      "required": ["Seconds"]
+    }, {
+      "required": ["SecondsPath"]
+    }, {
+      "required": ["Timestamp"]
+    }, {
+      "required": ["TimestampPath"]
+    }]
   }],
   "required": ["Type"],
   "additionalProperties": false

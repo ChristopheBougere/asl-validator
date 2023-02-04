@@ -125,10 +125,30 @@
       "$ref": "paths.json#/definitions/asl_payload_template"
     }
   },
-  "oneOf": [{
-    "required": ["Next"]
+  "allOf": [{
+    "oneOf": [{
+      "required": ["Next"]
+    }, {
+      "required": ["End"]
+    }]
   }, {
-    "required": ["End"]
+    "not": {
+      "allOf": [{
+          "required": ["TimeoutSeconds"]
+        }, {
+          "required": ["TimeoutSecondsPath"]
+        }
+      ]
+    }
+  }, {
+    "not": {
+      "allOf": [{
+         "required": ["HeartbeatSeconds"]
+        }, {
+         "required": ["HeartbeatSecondsPath"]
+        }
+      ]
+    }
   }],
   "required": ["Type", "Resource"],
   "additionalProperties": false
