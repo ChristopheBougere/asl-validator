@@ -1,5 +1,5 @@
-import {JSONPath} from 'jsonpath-plus';
-import {AslChecker, StateMachineError, StateMachineErrorCode, States} from '../types';
+import {AslChecker, StateMachineError, StateMachineErrorCode} from '../types';
+import {getStatesContainer} from "./get-states";
 
 export const missingTerminalStateErrors: AslChecker = (definition) => {
     const errorMessages: StateMachineError[] = [];
@@ -10,14 +10,13 @@ export const missingTerminalStateErrors: AslChecker = (definition) => {
     // - state with Type: Fail
     const terminals: Record<string, number> = {};
     let fsmId = 1;
-    JSONPath<States[]>({json: definition, path: '$..[\'States\']'})
+    getStatesContainer(definition)
         .forEach((states) => {
             const fsmKey = `fsm${fsmId}`;
             // initialize the nested fsm to have a terminal count of zero
             terminals[fsmKey] = 0;
             // check each of its states to see if the fsm terminates
-            Object.keys(states).forEach((stateName) => {
-                const state = states[stateName];
+            Object.values(states).forEach((state) => {
                 const count = terminals[fsmKey];
                 if (['Succeed', 'Fail'].indexOf(state.Type as string) !== -1 || state.End) {
                     terminals[fsmKey] = count ? count + 1 : 1;
