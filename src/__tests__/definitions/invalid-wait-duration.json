@@ -1,0 +1,28 @@
+{
+  "Comment": "An example Wait with multiple duration definitions",
+  "StartAt": "FirstState",
+  "States": {
+    "FirstState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:FUNCTION_NAME",
+      "Next": "wait_using_seconds"
+    },
+    "wait_using_seconds": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "SecondsPath": "$.expiryseconds",
+      "Next": "wait_using_timestamp"
+    },
+    "wait_using_timestamp": {
+      "Type": "Wait",
+      "Timestamp": "2015-09-04T01:59:00Z",
+      "TimestampPath": "$.expirydate",
+      "Next": "FinalState"
+    },
+    "FinalState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:region-1:1234567890:function:FUNCTION_NAME",
+      "End": true
+    }
+  }
+}

@@ -13,6 +13,7 @@ export enum StateMachineErrorCode {
   MissingTransitionTarget = 'MISSING_TRANSITION_TARGET',
   SchemaValidationFailed = 'SCHEMA_VALIDATION_FAILED',
   TerminalStateWithNextError = 'TERMINAL_STATE_WITH_NEXT',
+  WaitDurationError = 'WAIT_DURATION',
 }
 export type StateMachineError = {
   'Error code': StateMachineErrorCode;
