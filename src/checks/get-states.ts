@@ -8,7 +8,9 @@ export const getStatesContainer = (definition: StateMachine) : States[] => {
     })
 }
 
-export const getStates = (states: States): Array<{stateName: string, state: State & {Type: string}}> => {
+export type StateEntry = {stateName: string, state: State & {Type: string}}
+
+export const getStates = (states: States): Array<StateEntry> => {
     return Object.keys(states).map((stateName) => {
         const state = states[stateName]
         return {stateName, state}
