@@ -7,6 +7,7 @@ import {duplicateStateNames} from './checks/duplicate-state-names-errors';
 import {missingTerminalStateErrors} from './checks/missing-terminal-state-errors';
 import {StateMachine, StateMachineError, ValidationOptions} from './types';
 import {mustNotHaveDuplicateFieldNamesAfterEvaluation} from "./checks/duplicate-payload-template-fields";
+import {terminalStateWithNext} from "./checks/terminalStateWithNext";
 
 const DefaultOptions: ValidationOptions = {
     checkPaths: true,
@@ -26,6 +27,7 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
         errors.push(...duplicateStateNames(definition, options));
         errors.push(...missingTerminalStateErrors(definition, options));
         errors.push(...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition, options))
+        errors.push(...terminalStateWithNext(definition, options));
     }
 
     return {

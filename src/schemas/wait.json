@@ -36,11 +36,6 @@
       "$ref": "paths.json#/definitions/asl_ref_path"
     }
   },
-  "oneOf": [{
-    "required": ["Next"]
-  }, {
-    "required": ["End"]
-  }],
   "required": ["Type"],
   "additionalProperties": false
 }

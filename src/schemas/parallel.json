@@ -86,11 +86,6 @@
       }
     }
   },
-  "oneOf": [{
-    "required": ["Next"]
-  }, {
-    "required": ["End"]
-  }],
   "required": ["Type", "Branches"],
   "additionalProperties": false
 }

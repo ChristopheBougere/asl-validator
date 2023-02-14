@@ -30,11 +30,6 @@
     },
     "Result": {}
   },
-  "oneOf": [{
-    "required": ["Next"]
-  }, {
-    "required": ["End"]
-  }],
   "required": ["Type"],
   "additionalProperties": false
 }

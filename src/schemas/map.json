@@ -161,26 +161,12 @@
   "oneOf": [
     {
       "required": [
-        "Next",
         "ItemProcessor"
       ]
     },
     {
       "required": [
-        "Next",
         "Iterator"
-      ]
-    },
-    {
-      "required": [
-        "End",
-        "Iterator"
-      ]
-    },
-    {
-      "required": [
-        "End",
-        "ItemProcessor"
       ]
     }
   ],
