@@ -1,5 +1,5 @@
 import {AslChecker, StateMachineErrorCode} from "../types";
-import {exactlyOneOfPropertyWorkflow} from "./exactlyOneOfProperty";
+import {checkPropertyWorkflow} from "./checkProperty";
 
 // performs the check that non-Terminal states do not contain a `Next` field.
 // This replaces the following schema snippet:
@@ -9,7 +9,7 @@ import {exactlyOneOfPropertyWorkflow} from "./exactlyOneOfProperty";
 //     "required": ["End"]
 //   }],
 export const terminalStateWithNext: AslChecker = (definition) => {
-    return exactlyOneOfPropertyWorkflow({
+    return checkPropertyWorkflow({
         props: ['End', 'Next'],
         errorCode: StateMachineErrorCode.TerminalStateWithNextError,
         definition,
@@ -17,6 +17,7 @@ export const terminalStateWithNext: AslChecker = (definition) => {
             return state.Type !== 'Succeed' &&
                 state.Type !== 'Fail' &&
                 state.Type !== 'Choice'
-        }
+        },
+        propCheck: 'exactlyOne'
     })
 }

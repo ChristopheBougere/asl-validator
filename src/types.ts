@@ -14,6 +14,8 @@ export enum StateMachineErrorCode {
   SchemaValidationFailed = 'SCHEMA_VALIDATION_FAILED',
   TerminalStateWithNextError = 'TERMINAL_STATE_WITH_NEXT',
   WaitDurationError = 'WAIT_DURATION',
+  TaskTimeoutError = 'TASK_TIMEOUT',
+  TaskHeartbeatError = 'TASK_HEARTBEAT',
 }
 export type StateMachineError = {
   'Error code': StateMachineErrorCode;
