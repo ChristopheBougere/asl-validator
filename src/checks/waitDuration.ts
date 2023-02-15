@@ -1,13 +1,14 @@
 import {AslChecker, StateMachineErrorCode} from "../types";
-import {exactlyOneOfPropertyWorkflow} from "./exactlyOneOfProperty";
+import {checkPropertyWorkflow} from "./checkProperty";
 
 export const waitDuration: AslChecker = (definition) => {
-    return exactlyOneOfPropertyWorkflow({
+    return checkPropertyWorkflow({
         props: ["Seconds", "SecondsPath", "Timestamp", "TimestampPath"],
         errorCode: StateMachineErrorCode.WaitDurationError,
         definition,
         filter: ({state}) => {
             return state.Type === 'Wait'
-        }
+        },
+        propCheck: 'exactlyOne'
     })
 }

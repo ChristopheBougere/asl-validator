@@ -1,0 +1,20 @@
+{
+  "Comment": "Task contains both HeartbeatSeconds and HeartbeatSecondsPath",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Task",
+      "Resource": "arn:aws:swf:us-east-1:123456789012:task:X",
+      "Parameters": {
+        "flagged": true,
+        "parts": {
+          "first.$": "$.vals[0]",
+          "last3.$": "$.vals[3:]"
+        }
+      },
+      "HeartbeatSeconds": 20,
+      "HeartbeatSecondsPath": "$.foo",
+      "End": true
+    }
+  }
+}
