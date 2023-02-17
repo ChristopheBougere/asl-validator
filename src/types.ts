@@ -16,6 +16,8 @@ export enum StateMachineErrorCode {
   WaitDurationError = 'WAIT_DURATION',
   TaskTimeoutError = 'TASK_TIMEOUT',
   TaskHeartbeatError = 'TASK_HEARTBEAT',
+  MapItemProcessorError = 'MAP_ITEM_PROCESSOR',
+   MapItemSelectorError = 'MAP_ITEM_SELECTOR'
 }
 export type StateMachineError = {
   'Error code': StateMachineErrorCode;
