@@ -158,18 +158,6 @@
       }
     }
   },
-  "oneOf": [
-    {
-      "required": [
-        "ItemProcessor"
-      ]
-    },
-    {
-      "required": [
-        "Iterator"
-      ]
-    }
-  ],
   "required": ["Type"],
   "additionalProperties": false
 }

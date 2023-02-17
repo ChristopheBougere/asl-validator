@@ -10,6 +10,7 @@ import {mustNotHaveDuplicateFieldNamesAfterEvaluation} from "./checks/duplicate-
 import {terminalStateWithNext} from "./checks/terminalStateWithNext";
 import {waitDuration} from "./checks/waitDuration";
 import {taskChecks} from "./checks/taskChecks";
+import {mapChecks} from "./checks/mapChecks";
 
 const DefaultOptions: ValidationOptions = {
     checkPaths: true,
@@ -32,6 +33,7 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
         errors.push(...terminalStateWithNext(definition, options));
         errors.push(...waitDuration(definition, options));
         errors.push(...taskChecks(definition, options));
+        errors.push(...mapChecks(definition, options));
     }
 
     return {
