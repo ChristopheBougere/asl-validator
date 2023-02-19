@@ -5,12 +5,19 @@ import {missingTransitionTargetErrors} from './checks/missing-transition-target-
 import {stateTransitionsErrors} from './checks/state-transitions-errors';
 import {duplicateStateNames} from './checks/duplicate-state-names-errors';
 import {missingTerminalStateErrors} from './checks/missing-terminal-state-errors';
-import {StateMachine, StateMachineError, ValidationOptions} from './types';
+import {StateMachine, StateMachineError, StateMachineErrorCode, ValidationOptions} from './types';
 import {mustNotHaveDuplicateFieldNamesAfterEvaluation} from "./checks/duplicate-payload-template-fields";
-import {terminalStateWithNext} from "./checks/terminalStateWithNext";
-import {waitDuration} from "./checks/waitDuration";
-import {taskChecks} from "./checks/taskChecks";
-import {mapChecks} from "./checks/mapChecks";
+import {
+    AtMostOne,
+    ExactlyOne,
+    IsChoice,
+    IsFail,
+    IsMap,
+    IsSucceed,
+    IsTask,
+    IsWait,
+    stateChecks
+} from "./checks/state-checks";
 
 const DefaultOptions: ValidationOptions = {
     checkPaths: true,
@@ -30,10 +37,54 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
         errors.push(...duplicateStateNames(definition, options));
         errors.push(...missingTerminalStateErrors(definition, options));
         errors.push(...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition, options))
-        errors.push(...terminalStateWithNext(definition, options));
-        errors.push(...waitDuration(definition, options));
-        errors.push(...taskChecks(definition, options));
-        errors.push(...mapChecks(definition, options));
+        errors.push(...stateChecks(definition, options, [
+            {
+                filter: IsTask,
+                checker: AtMostOne({
+                    props: ["TimeoutSeconds", "TimeoutSecondsPath"],
+                    errorCode: StateMachineErrorCode.TaskTimeoutError})
+            },
+            {
+                filter: IsTask,
+                checker: AtMostOne({
+                    props: ["HeartbeatSeconds", "HeartbeatSecondsPath"],
+                    errorCode: StateMachineErrorCode.TaskHeartbeatError})
+            },
+            {
+                filter: IsMap,
+                checker: ExactlyOne({
+                    props: ["ItemProcessor", "Iterator"],
+                    errorCode: StateMachineErrorCode.MapItemProcessorError})
+            },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["ItemSelector", "Parameters"],
+                    errorCode: StateMachineErrorCode.MapItemSelectorError})
+            },
+            {
+                filter: IsWait,
+                checker: ExactlyOne({
+                    props: ["Seconds", "SecondsPath", "Timestamp", "TimestampPath"],
+                    errorCode: StateMachineErrorCode.WaitDurationError})
+            },
+            {
+                // performs the check that non-Terminal states do not contain a `Next` field.
+                // This replaces the following schema snippet:
+                // "oneOf": [{
+                //     "required": ["Next"]
+                //   }, {
+                //     "required": ["End"]
+                //   }],
+                filter: (entry) => {
+                    return !(IsSucceed(entry) || IsFail(entry) || IsChoice(entry))
+                },
+                checker: ExactlyOne({
+                    props: ['End', 'Next'],
+                    errorCode: StateMachineErrorCode.TerminalStateWithNextError})
+            },
+
+        ]))
     }
 
     return {
