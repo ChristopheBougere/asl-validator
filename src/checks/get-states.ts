@@ -9,6 +9,7 @@ export const getStatesContainer = (definition: StateMachine) : States[] => {
 }
 
 export type StateEntry = {stateName: string, state: State & {Type: string}}
+export type StateFilter = (entry: StateEntry) => boolean
 
 export const getStates = (states: States): Array<StateEntry> => {
     return Object.keys(states).map((stateName) => {
