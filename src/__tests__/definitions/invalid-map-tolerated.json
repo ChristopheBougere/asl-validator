@@ -1,0 +1,30 @@
+{
+  "Comment": "Map cannot have both ToleratedFailureCount and ToleratedFailureCountPath",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "Next": "Final State",
+      "ToleratedFailureCount": 0,
+      "ToleratedFailureCountPath": "$.foo",
+      "InputPath": "$.input",
+      "ItemsPath": "$.items",
+      "MaxConcurrency": 0,
+      "Iterator": {
+        "StartAt": "Wait 20s",
+        "States": {
+          "Wait 20s": {
+            "Type": "Wait",
+            "Seconds": 20,
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.result"
+    },
+    "Final State": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

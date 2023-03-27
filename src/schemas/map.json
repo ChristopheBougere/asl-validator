@@ -156,6 +156,21 @@
         },
         "required": ["ErrorEquals", "Next"]
       }
+    },
+    "ToleratedFailureCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ToleratedFailurePath": {
+      "$ref": "paths.json#/definitions/asl_ref_path"
+    },
+    "ToleratedFailurePercentage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "ToleratedFailurePercentagePath": {
+      "$ref": "paths.json#/definitions/asl_ref_path"
     }
   },
   "required": ["Type"],
