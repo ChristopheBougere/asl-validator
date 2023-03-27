@@ -83,7 +83,18 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
                     props: ['End', 'Next'],
                     errorCode: StateMachineErrorCode.TerminalStateWithNextError})
             },
-
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["ToleratedFailureCount", "ToleratedFailureCountPath"],
+                    errorCode: StateMachineErrorCode.MapToleratedFailureError})
+            },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["ToleratedFailurePercentage", "ToleratedFailurePercentagePath"],
+                    errorCode: StateMachineErrorCode.MapToleratedFailureError})
+            },
         ]))
     }
 
