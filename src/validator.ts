@@ -95,6 +95,21 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
                     props: ["ToleratedFailurePercentage", "ToleratedFailurePercentagePath"],
                     errorCode: StateMachineErrorCode.MapToleratedFailureError})
             },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["MaxConcurrency", "MaxConcurrencyPath"],
+                    errorCode: StateMachineErrorCode.MapMaxConcurrencyError
+                })
+            },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["MaxItems", "MaxItemsPath"],
+                    path: "$.ItemReader.ReaderConfig",
+                    errorCode: StateMachineErrorCode.MapItemReaderMaxItemsError
+                })
+            },
         ]))
     }
 

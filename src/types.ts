@@ -19,6 +19,8 @@ export enum StateMachineErrorCode {
   MapItemProcessorError = 'MAP_ITEM_PROCESSOR',
   MapItemSelectorError = 'MAP_ITEM_SELECTOR',
   MapToleratedFailureError = 'MAP_TOLERATED_FAILURE',
+  MapMaxConcurrencyError = 'MAP_CONCURRENCY_ERROR',
+  MapItemReaderMaxItemsError = 'MAP_ITEMREADER_MAXITEM'
 }
 export type StateMachineError = {
   'Error code': StateMachineErrorCode;

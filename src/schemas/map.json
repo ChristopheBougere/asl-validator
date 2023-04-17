@@ -35,9 +35,39 @@
       "type": "number",
       "minimum": 0
     },
+    "MaxConcurrencyPath": {
+      "$ref": "paths.json#/definitions/asl_ref_path"
+    },
     "ItemReader": {
-      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other input sources",
-      "type": "object"
+      "$comment": "A Map State MAY have an \"ItemReader\" field, whose value MUST be a JSON object and is called the ItemReader Configuration",
+      "type": "object",
+      "properties": {
+        "Resource": {
+          "$comment": "The ItemReader Configuration MUST have a \"Resource\" field, whose value MUST be a URI that uniquely identifies the specific task to execute. The States language does not constrain the URI scheme nor any other part of the URI.",
+          "type": "string"
+        },
+        "Parameters": {
+          "$comment": "The ItemReader Configuration MAY have a \"Parameters\" field, whose value MUST be a Payload Template.",
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "ReaderConfig": {
+          "$comment": "The ItemReader Configuration MAY have a \"ReaderConfig\" field whose value is a JSON object which MAY have a \"MaxItems\" field which MUST be a positive integer.",
+          "type": "object",
+          "properties": {
+            "MaxItems": {
+              "$comment": "MAY have a \"MaxItems\" field which MUST be a positive integer",
+              "type": "integer",
+              "minimum": 1
+            },
+            "MaxItemsPath": {
+              "$comment": "A \"ReaderConfig\" field MAY have \"MaxItemsPath\" field which MUST be a Reference Path which, when resolved, MUST select a field whose value is a positive integer.",
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "required": ["Resource"]
     },
     "ItemProcessor": {
       "type": "object",
@@ -161,7 +191,7 @@
       "type": "integer",
       "minimum": 0
     },
-    "ToleratedFailurePath": {
+    "ToleratedFailureCountPath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "ToleratedFailurePercentage": {
