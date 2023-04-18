@@ -1,5 +1,5 @@
 {
-  "Comment": "Using Map state in Distributed mode",
+  "Comment": "Invalid item reader with both MaxItems and MaxItemsPath defined",
   "StartAt": "Map",
   "States": {
     "Map": {
@@ -8,7 +8,8 @@
         "ReaderConfig": {
           "InputType": "CSV",
           "CSVHeaderLocation": "FIRST_ROW",
-          "MaxItems": 1
+          "MaxItems": 1,
+          "MaxItemsPath": "$.foo"
         },
         "Resource": "arn:aws:states:::s3:getObject",
         "Parameters": {

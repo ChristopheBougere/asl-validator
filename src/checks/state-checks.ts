@@ -1,5 +1,6 @@
 import {getStates, getStatesContainer, StateEntry, StateFilter} from "./get-states";
-import {State, StateMachine, StateMachineError, StateMachineErrorCode, ValidationOptions} from "../types";
+import {StateMachine, StateMachineError, StateMachineErrorCode, ValidationOptions} from "../types";
+import {JSONPath} from "jsonpath-plus";
 
 export const IsMap = ({state}: StateEntry): boolean => {
     return state.Type === 'Map'
@@ -51,18 +52,36 @@ export const stateChecks = (
     return errorMessages;
 }
 
-const getPropertyCount = ({props, state}: {
+const getPropertyCount = ({props, object}: {
     props: string[],
-    state: State,
-}) : number => {
-    return props.map((prop) => prop in state ? 1 : 0)
+    object: Record<string, unknown>,
+}): number => {
+    return props.map((prop) => prop in object ? 1 : 0)
         .map((val) => Number(val))
         .reduce((prev, curr) => prev + curr, 0)
 }
 
-export const AtMostOne = ({props, errorCode}:{props: string[], errorCode: StateMachineErrorCode}): StateChecker => {
+export const AtMostOne = ({props, errorCode, path}: {
+    props: string[],
+    errorCode: StateMachineErrorCode,
+    // path to a sub-property within the state to use as the
+    // context for the property checks. This is intended to
+    // support enforcement of constraints on nested properties
+    // within a State.
+    // See the Map's ItemReader.ReaderConfiguration at most one
+    // rule for MaxItems and MaxItemsPath.
+    path?: string
+}): StateChecker => {
     return ({state, stateName}) => {
-        const count = getPropertyCount({state, props})
+        const object = path ? JSONPath<Record<string, unknown>>({
+            path,
+            json: state,
+            wrap: false,
+        }) : state
+        if (!object) {
+            return null
+        }
+        const count = getPropertyCount({object, props})
         if (count > 1) {
             return {
                 "Error code": errorCode,
@@ -78,9 +97,9 @@ export const AtMostOne = ({props, errorCode}:{props: string[], errorCode: StateM
     }
 }
 
-export const ExactlyOne = ({props, errorCode}:{props: string[], errorCode: StateMachineErrorCode}): StateChecker => {
+export const ExactlyOne = ({props, errorCode}: { props: string[], errorCode: StateMachineErrorCode }): StateChecker => {
     return ({state, stateName}) => {
-        const count = getPropertyCount({state, props})
+        const count = getPropertyCount({object: state, props})
         if (count !== 1) {
             return {
                 "Error code": errorCode,
