@@ -18,6 +18,7 @@ export enum StateMachineErrorCode {
   TaskHeartbeatError = 'TASK_HEARTBEAT',
   MapItemProcessorError = 'MAP_ITEM_PROCESSOR',
   MapItemSelectorError = 'MAP_ITEM_SELECTOR',
+  MapItemBatcherError = 'MAP_ITEM_BATCHER',
   MapToleratedFailureError = 'MAP_TOLERATED_FAILURE',
   MapMaxConcurrencyError = 'MAP_CONCURRENCY_ERROR',
   MapItemReaderMaxItemsError = 'MAP_ITEMREADER_MAXITEM'
