@@ -114,26 +114,28 @@
     "ItemSelector": {
       "$ref": "paths.json#/definitions/asl_payload_template"
     },
-    "ItemBatcher":{
+    "ItemBatcher": {
       "type": "object",
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "MaxItemsPerBatch": {
-              "type": "number"
-            }
-          }
+      "properties": {
+        "MaxItemsPerBatch": {
+          "type": "number",
+          "minimum": 0
         },
-        {
-          "type": "object",
-          "properties": {
-            "MaxItemsPerBatchPath": {
-              "$ref": "paths.json#/definitions/asl_ref_path"
-            }
-          }
+        "MaxItemsPerBatchPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "MaxInputBytesPerBatch": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 262144
+        },
+        "MaxInputBytesPerBatchPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "BatchInput": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
         }
-      ]
+      }
     },
     "ResultSelector": {
       "$ref": "paths.json#/definitions/asl_payload_template"
