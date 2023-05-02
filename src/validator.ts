@@ -110,6 +110,20 @@ export = function validator(definition: StateMachine, opts?: ValidationOptions):
                     errorCode: StateMachineErrorCode.MapItemReaderMaxItemsError
                 })
             },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["MaxItemsPerBatch", "MaxItemsPerBatchPath"],
+                    path: "$.ItemBatcher",
+                    errorCode: StateMachineErrorCode.MapItemBatcherError})
+            },
+            {
+                filter: IsMap,
+                checker: AtMostOne({
+                    props: ["MaxInputBytesPerBatch", "MaxInputBytesPerBatchPath"],
+                    path: "$.ItemBatcher",
+                    errorCode: StateMachineErrorCode.MapItemBatcherError})
+            },
         ]))
     }
 
