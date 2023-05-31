@@ -22,22 +22,24 @@ npm install asl-validator
 
 ```bash
 $ asl-validator --help
+Usage: asl-validator [options]
 
-  Usage: asl-validator [options]
+Amazon States Language validator
 
-  Amazon States Language validator
-
-
-  Options:
-
-    --json-definition <jsonDefinition>  JSON definition
-    --json-path <jsonPath>              JSON path
-    --silent                            silent mode
-    -h, --help                          output usage information
+Options:
+  --json-definition <jsonDefinition>  JSON definition (default: [])
+  --json-path <jsonPath>              JSON path (default: [])
+  --silent                            silent mode
+  --no-path-check                     skips checking path expressions
+  --no-arn-check                      skips the arn check for Resource values
+  -h, --help                          display help for command
 ```
+
+You can validate multiple state machines at once by passing multiple `--json-definition` and/or `--json-path` arguments.
+
 Return status:
-- `0` if state machine definition is valid
-- `1` if state machine definition is invalid
+- `0` if state machine definitions are valid
+- `1` if at least one state machine definition is invalid
 - `2` if an exception occurs
 
 ## In your code
