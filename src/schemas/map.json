@@ -72,24 +72,21 @@
     "ItemProcessor": {
       "type": "object",
       "allOf": [{ "$ref": "base-state-machine.json#" }],
-      "oneOf": [
-        {
-          "properties": {
-            "ProcessorConfig": {
-              "type": "object",
+      "$comment": "The \"ItemProcessor\" field MAY contain a field named \"ProcessorConfig\", whose value MUST be a JSON object whose value is defined by the interpreter.",
+      "properties": {
+        "ProcessorConfig": {
+          "type": "object",
+          "oneOf": [
+            {
               "properties": {
                 "Mode": {
                   "type": "string",
                   "enum": ["INLINE"]
                 }
-              }
-            }
-          }
-        },
-        {
-          "properties": {
-            "ProcessorConfig": {
-              "type": "object",
+              },
+              "required": ["Mode"]
+            },
+            {
               "properties": {
                 "Mode": {
                   "type": "string",
@@ -99,11 +96,12 @@
                   "type": "string",
                   "enum": ["EXPRESS", "STANDARD"]
                 }
-              }
+              },
+              "required": ["Mode", "ExecutionType"]
             }
-          }
+          ]
         }
-      ]
+      }
     },
     "Iterator": {
       "$ref": "base-state-machine.json#"
