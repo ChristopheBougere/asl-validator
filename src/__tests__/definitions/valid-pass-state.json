@@ -10,7 +10,8 @@
     },
     "ForLoopCondition": {
       "Type": "Choice",
-      "Choices": [{
+      "Choices": [
+        {
           "Not": {
             "Variable": "$.fooList[0]",
             "StringEquals": "DONE"

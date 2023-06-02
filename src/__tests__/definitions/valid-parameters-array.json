@@ -3,10 +3,12 @@
   "States": {
     "pass-execution-details": {
       "Type": "Pass",
-      "Parameters": [{
-        "execution_id.$": "$$.Execution.Id",
-        "timestamp.$": "$$.Execution.StartTime"
-      }],
+      "Parameters": [
+        {
+          "execution_id.$": "$$.Execution.Id",
+          "timestamp.$": "$$.Execution.StartTime"
+        }
+      ],
       "ResultPath": "$.execution_details",
       "End": true
     }

@@ -1,6 +1,6 @@
 {
   "StartAt": "Steps Start",
-  "States":{
+  "States": {
     "Steps Start": {
       "Type": "Parallel",
       "Branches": [

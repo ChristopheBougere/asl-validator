@@ -7,7 +7,7 @@
       "Next": "Final State",
       "InputPath": "$.input",
       "ItemsPath": "$.items",
-      "MaxConcurrency": 0,      
+      "MaxConcurrency": 0,
       "ResultPath": "$.result"
     },
     "Final State": {

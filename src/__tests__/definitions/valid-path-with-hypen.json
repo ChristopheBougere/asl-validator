@@ -1,11 +1,11 @@
 {
-    "Comment": "Has a json path expression an identifier containing a hyphen",
-    "StartAt": "Hello",
-    "States": {
-        "Hello": {
-            "InputPath": "$.input-foo-bar",
-            "OutputPath": "$.output",
-            "Type": "Succeed"
-        }
+  "Comment": "Has a json path expression an identifier containing a hyphen",
+  "StartAt": "Hello",
+  "States": {
+    "Hello": {
+      "InputPath": "$.input-foo-bar",
+      "OutputPath": "$.output",
+      "Type": "Succeed"
     }
+  }
 }

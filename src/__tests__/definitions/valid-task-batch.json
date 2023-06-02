@@ -5,7 +5,7 @@
     "BATCH_JOB": {
       "Type": "Task",
       "Resource": "arn:aws:states:::batch:submitJob.sync",
-      "Parameters": {  
+      "Parameters": {
         "JobDefinition": "preprocessing",
         "JobName": "PreprocessingBatchJob",
         "JobQueue": "SecondaryQueue",
