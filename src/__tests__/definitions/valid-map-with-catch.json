@@ -19,12 +19,12 @@
         }
       },
       "ResultPath": "$.result",
-      "Catch": [{
-        "ErrorEquals": [
-          "States.ALL"
-        ],
-        "Next": "D"
-      }]
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "D"
+        }
+      ]
     },
     "Final State": {
       "Type": "Pass",

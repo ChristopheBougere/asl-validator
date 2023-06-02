@@ -4,7 +4,8 @@
     "A": {
       "Type": "Parallel",
       "Next": "D",
-      "Branches": [{
+      "Branches": [
+        {
           "StartAt": "B",
           "States": {
             "B": {
@@ -22,12 +23,12 @@
           }
         }
       ],
-      "Catch": [{
-        "ErrorEquals": [
-          "States.ALL"
-        ],
-        "Next": "D"
-      }]
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "D"
+        }
+      ]
     },
     "D": {
       "Type": "Fail"

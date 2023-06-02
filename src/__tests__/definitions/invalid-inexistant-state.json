@@ -1,6 +1,6 @@
 {
   "StartAt": "Start State",
-  "States":{
+  "States": {
     "Start State": {
       "Type": "Pass",
       "Next": "Finished"

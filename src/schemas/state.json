@@ -2,7 +2,8 @@
   "$id": "http://asl-validator.cloud/state.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "oneOf": [{
+  "oneOf": [
+    {
       "$ref": "choice.json#"
     },
     {

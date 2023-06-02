@@ -5,7 +5,8 @@
     "HelloWorld": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:region-1:1234567890:function:FUNCTION_NAME",
-      "Retry": [{
+      "Retry": [
+        {
           "ErrorEquals": ["CustomError"],
           "IntervalSeconds": 1,
           "MaxAttempts": 2,

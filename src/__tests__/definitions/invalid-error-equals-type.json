@@ -4,12 +4,12 @@
     "Testing": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:us-west-2:111126812102:function:some-dev-function",
-      "Catch": [{
-        "ErrorEquals": [
-          true
-        ],
-        "Next": "Success"
-      }],
+      "Catch": [
+        {
+          "ErrorEquals": [true],
+          "Next": "Success"
+        }
+      ],
       "Next": "Success"
     },
     "Success": {

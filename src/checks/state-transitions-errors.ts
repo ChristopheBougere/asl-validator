@@ -1,7 +1,13 @@
-import { JSONPath } from 'jsonpath-plus';
-import {AslChecker, StateMachine, StateMachineError, StateMachineErrorCode, States} from '../types';
+import { JSONPath } from "jsonpath-plus";
+import {
+  AslChecker,
+  StateMachine,
+  StateMachineError,
+  StateMachineErrorCode,
+  States,
+} from "../types";
 
-export const stateTransitionsErrors : AslChecker = (definition) => {
+export const stateTransitionsErrors: AslChecker = (definition) => {
   const errorMessages: StateMachineError[] = [];
 
   // given a nested state machine, this function will examine
@@ -12,26 +18,32 @@ export const stateTransitionsErrors : AslChecker = (definition) => {
   // targets for states outside the containers.
   const nextAndDefaultTargets = (nestedStateMachine: StateMachine) => {
     const states: string[] = [];
-    Object.keys(nestedStateMachine.States)
-      .forEach((stateName) => {
-        const nestedState = nestedStateMachine.States[stateName];
-        const isContainer = ['Map', 'Parallel'].indexOf(nestedState.Type as string) >= 0;
-        if (isContainer) {
-          states.push(...JSONPath<string[]>({
+    Object.keys(nestedStateMachine.States).forEach((stateName) => {
+      const nestedState = nestedStateMachine.States[stateName];
+      const isContainer =
+        ["Map", "Parallel"].indexOf(nestedState.Type as string) >= 0;
+      if (isContainer) {
+        states.push(
+          ...JSONPath<string[]>({
             json: nestedState,
-            path: '$.Next',
-          }));
-          states.push(...JSONPath<string[]>({
+            path: "$.Next",
+          })
+        );
+        states.push(
+          ...JSONPath<string[]>({
             json: nestedState,
-            path: '$.Default',
-          }));
-        } else {
-          states.push(...JSONPath<string[]>({
+            path: "$.Default",
+          })
+        );
+      } else {
+        states.push(
+          ...JSONPath<string[]>({
             json: nestedState,
-            path: '$..[Next,Default]',
-          }));
-        }
-      });
+            path: "$..[Next,Default]",
+          })
+        );
+      }
+    });
     return states;
   };
 
@@ -44,16 +56,17 @@ export const stateTransitionsErrors : AslChecker = (definition) => {
     // These are the only valid states to link to from within the branch
     JSONPath<States[]>({
       json: nestedStateMachine,
-      path: '$.States',
-    })
-      .forEach((branchStates) => {
-        availStateNames = availStateNames.concat(Object.keys(branchStates));
-      });
+      path: "$.States",
+    }).forEach((branchStates) => {
+      availStateNames = availStateNames.concat(Object.keys(branchStates));
+    });
 
     // check that there are no transitions outside this branch
     const targetedStates = nextAndDefaultTargets(nestedStateMachine);
 
-    return targetedStates.filter((state) => availStateNames.indexOf(state) === -1);
+    return targetedStates.filter(
+      (state) => availStateNames.indexOf(state) === -1
+    );
   };
 
   // we know the step function is schema valid
@@ -62,18 +75,19 @@ export const stateTransitionsErrors : AslChecker = (definition) => {
   // link outside its branch.
   JSONPath<StateMachine[][]>({
     json: definition,
-    path: '$..Branches',
-  })
-    .forEach((parallelBranches) => {
-      parallelBranches.forEach((nestedStateMachine) => {
-        const errs = validateNestedStateMachine(nestedStateMachine).map((state) => ({
-          'Error code': StateMachineErrorCode.BranchOutboundTransitionTarget,
+    path: "$..Branches",
+  }).forEach((parallelBranches) => {
+    parallelBranches.forEach((nestedStateMachine) => {
+      const errs = validateNestedStateMachine(nestedStateMachine).map(
+        (state) => ({
+          "Error code": StateMachineErrorCode.BranchOutboundTransitionTarget,
           Message: `Parallel branch state cannot transition to target: ${state}`,
-        }));
+        })
+      );
 
-        errorMessages.push(...errs);
-      });
+      errorMessages.push(...errs);
     });
+  });
 
   // we know the step function is schema valid
   // we know that every `Map` state has its expected `Iterator` field
@@ -81,17 +95,17 @@ export const stateTransitionsErrors : AslChecker = (definition) => {
   // link outside its container.
   JSONPath<StateMachine[]>({
     json: definition,
-    path: '$..Iterator',
-  })
-    .forEach((nestedStateMachine) => {
-      const errs = validateNestedStateMachine(nestedStateMachine)
-        .map((state) => ({
-          'Error code': StateMachineErrorCode.MapOutboundTransitionTarget,
-          Message: `Map branch state cannot transition to target: ${state}`,
-        }));
+    path: "$..Iterator",
+  }).forEach((nestedStateMachine) => {
+    const errs = validateNestedStateMachine(nestedStateMachine).map(
+      (state) => ({
+        "Error code": StateMachineErrorCode.MapOutboundTransitionTarget,
+        Message: `Map branch state cannot transition to target: ${state}`,
+      })
+    );
 
-      errorMessages.push(...errs);
-    });
+    errorMessages.push(...errs);
+  });
 
   return errorMessages;
-}
+};

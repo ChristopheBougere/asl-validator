@@ -40,6 +40,7 @@ Options:
 You can validate multiple state machines at once by passing multiple `--json-definition`, `--json-path`, `--yaml-definition` and `--yaml-path` arguments.
 
 Return status:
+
 - `0` if state machine definitions are valid
 - `1` if at least one state machine definition is invalid
 - `2` if an exception occurs
@@ -47,16 +48,19 @@ Return status:
 ## In your code
 
 ```javascript
-const aslValidator = require('asl-validator');
-const definition = require('./path/to/my/state/machine/json/definition');
+const aslValidator = require("asl-validator");
+const definition = require("./path/to/my/state/machine/json/definition");
 const { isValid, errors, errorsText } = aslValidator(definition);
 if (isValid) {
-  console.log('✓ State machine definition is valid')
+  console.log("✓ State machine definition is valid");
 } else {
   // Either go through the errors object
-  console.error('✕ State machine definition is invalid:', errors.map(({ message }) => message).join('\n'));
+  console.error(
+    "✕ State machine definition is invalid:",
+    errors.map(({ message }) => message).join("\n")
+  );
   // Or display the preformatted errors text
-  console.error('✕ State machine definition is invalid:', errorsText('\n'));
+  console.error("✕ State machine definition is invalid:", errorsText("\n"));
 }
 ```
 
@@ -77,7 +81,6 @@ npm run lint
 - [ASL specifications](https://states-language.net/spec.html)
 - [ASL documentation on AWS website](http://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [Blog post](https://www.tbray.org/ongoing/When/201x/2016/12/01/J2119-Validator) from the creator of ASL explaining the pros and cons of a JSON schema based validator. An RFC based looks really interesting, but still the JSON schema approach seems more flexible and evolutive.
-
 
 ## License
 

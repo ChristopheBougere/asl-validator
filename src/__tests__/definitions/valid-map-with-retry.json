@@ -19,12 +19,14 @@
         }
       },
       "ResultPath": "$.result",
-      "Retry": [{
-        "ErrorEquals": ["States.ALL"],
-        "IntervalSeconds": 1,
-        "MaxAttempts": 3,
-        "BackoffRate": 2.0
-      }]
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ]
     },
     "Final State": {
       "Type": "Pass",

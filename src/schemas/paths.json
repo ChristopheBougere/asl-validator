@@ -23,12 +23,7 @@
           "$comment": "matches fields NOT ending in .$",
           "oneOf": [
             {
-              "type": [
-                "number",
-                "boolean",
-                "string",
-                "null"
-              ]
+              "type": ["number", "boolean", "string", "null"]
             },
             {
               "type": "array",

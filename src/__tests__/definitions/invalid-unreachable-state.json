@@ -1,12 +1,12 @@
 {
   "StartAt": "Start State",
-  "States":{
+  "States": {
     "Start State": {
       "Type": "Pass",
       "Next": "Finished"
     },
-    "Finished Choice":{
-      "Type":"Choice",
+    "Finished Choice": {
+      "Type": "Choice",
       "Choices": [
         {
           "Variable": "$.x",

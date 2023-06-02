@@ -9,19 +9,23 @@
     },
     "ChoiceState": {
       "Type": "Choice",
-      "Choices": [{
+      "Choices": [
+        {
           "Variable": "$.foo",
           "NumericEquals": 1,
           "Next": "FirstMatchState"
         },
         {
-          "Or": [{
-            "Variable": "$.foo",
-            "NumericEquals": 2
-          }, {
-            "Variable": "$.foo",
-            "NumericEquals": 3
-          }],
+          "Or": [
+            {
+              "Variable": "$.foo",
+              "NumericEquals": 2
+            },
+            {
+              "Variable": "$.foo",
+              "NumericEquals": 3
+            }
+          ],
           "Next": "SecondMatchState"
         }
       ],

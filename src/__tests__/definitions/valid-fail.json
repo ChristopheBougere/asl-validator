@@ -1,9 +1,9 @@
 {
-    "Comment": "Contrived example with a Fail state to show it satisfies the terminal state requirement",
-    "StartAt": "Hello",
-    "States": {
-        "Hello": {
-            "Type": "Fail"
-        }
+  "Comment": "Contrived example with a Fail state to show it satisfies the terminal state requirement",
+  "StartAt": "Hello",
+  "States": {
+    "Hello": {
+      "Type": "Fail"
     }
+  }
 }

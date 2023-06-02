@@ -12,14 +12,16 @@
             "NestedParallel": {
               "Type": "Parallel",
               "End": true,
-              "Branches": [{
-                "StartAt": "Inner Final",
-                "States": {
-                  "Inner Final": {
-                    "Type": "Succeed"
+              "Branches": [
+                {
+                  "StartAt": "Inner Final",
+                  "States": {
+                    "Inner Final": {
+                      "Type": "Succeed"
+                    }
                   }
                 }
-              }]
+              ]
             }
           }
         }
