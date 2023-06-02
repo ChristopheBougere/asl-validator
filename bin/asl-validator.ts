@@ -2,6 +2,7 @@
 
 import fs from 'fs';
 import { program } from 'commander';
+import YAML from 'yaml';
 
 import validator from '../src/validator';
 import {StateMachine, ValidationOptions} from '../src/types';
@@ -24,6 +25,8 @@ program
   .description('Amazon States Language validator')
   .option('--json-definition <jsonDefinition>', 'JSON definition', collect, [])
   .option('--json-path <jsonPath>', 'JSON path', collect, [])
+  .option('--yaml-definition <yamlDefinition>', 'YAML definition', collect, [])
+  .option('--yaml-path <yamlPath>', 'YAML path', collect, [])
   .option('--silent', 'silent mode')
   .option('--no-path-check', 'skips checking path expressions')
   .option('--no-arn-check', 'skips the arn check for Resource values')
@@ -70,8 +73,13 @@ function main() {
   try {
     const jsonDefinitions = (options.jsonDefinition ?? []) as string[];
     const jsonPaths = (options.jsonPath ?? []) as string[];
-    if (jsonDefinitions.length === 0 && jsonPaths.length === 0) {
-      log('--json-definition or --json-path is required.');
+    const yamlDefinitions = (options.yamlDefinition ?? []) as string[];
+    const yamlPaths = (options.yamlPath ?? []) as string[];
+    if (jsonDefinitions.length === 0
+      && jsonPaths.length === 0
+      && yamlDefinitions.length === 0
+      && yamlPaths.length === 0) {
+      log('No state machine to validate.');
       program.help();
     }
 
@@ -79,7 +87,7 @@ function main() {
 
     // Validate JSON definitions
     jsonDefinitions.forEach((jsonDefinition: string, index: number) => {
-      const name = `json definition #${index + 1}`;
+      const name = `JSON definition #${index + 1}`;
       let definition;
       try {
         definition = JSON.parse(jsonDefinition) as StateMachine;
@@ -94,6 +102,25 @@ function main() {
       const definition = JSON.parse(fs.readFileSync(jsonPath).toString()) as StateMachine;
       exitCode = Math.max(exitCode, validate(jsonPath, definition));
     });
+
+    // Validate YAML definitions
+    yamlDefinitions.forEach((yamlDefinition: string, index: number) => {
+      const name = `YAML definition #${index + 1}`;
+      let definition;
+      try {
+        definition = YAML.parse(yamlDefinition) as StateMachine;
+        exitCode = Math.max(validate(name, definition));
+      } catch (err) {
+        error(`Unable to parse ${name}`);
+      }
+    });
+
+    // Validate YAML paths
+    yamlPaths.forEach((yamlPath: string) => {
+      const definition = YAML.parse(fs.readFileSync(yamlPath).toString()) as StateMachine;
+      exitCode = Math.max(exitCode, validate(yamlPath, definition));
+    });
+
     exit(exitCode);
   } catch (err) {
     error(err);
