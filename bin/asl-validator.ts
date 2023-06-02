@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import fs from 'fs';
-import program from 'commander';
+import { program } from 'commander';
 
 import validator from '../src/validator';
 import {StateMachine, ValidationOptions} from '../src/types';
@@ -27,11 +27,13 @@ program
   .option('--silent', 'silent mode')
   .option('--no-path-check', 'skips checking path expressions')
   .option('--no-arn-check', 'skips the arn check for Resource values')
-  .parse(process.argv);
+  .parse();
+
+const options = program.opts();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function log(...args: any[]) {
-  if (!program.silent) {
+  if (!options.silent) {
     // eslint-disable-next-line no-console, @typescript-eslint/no-unsafe-argument
     console.log(...args);
   }
@@ -39,7 +41,7 @@ function log(...args: any[]) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function error(...args: any[]) {
-  if (!program.silent) {
+  if (!options.silent) {
     // eslint-disable-next-line no-console, @typescript-eslint/no-unsafe-argument
     console.error(...args);
   }
@@ -48,8 +50,8 @@ function error(...args: any[]) {
 function validate(name: string, definition: StateMachine) {
   try {
     const validationOpts: ValidationOptions = {
-      checkArn: !program.noArnCheck,
-      checkPaths: !program.noPathCheck
+      checkArn: !options.noArnCheck,
+      checkPaths: !options.noPathCheck
     }
     const result = validator(definition, validationOpts);
     if (result.isValid) {
@@ -66,8 +68,8 @@ function validate(name: string, definition: StateMachine) {
 
 function main() {
   try {
-    const jsonDefinitions = (program.jsonDefinition ?? []) as string[];
-    const jsonPaths = (program.jsonPath ?? []) as string[];
+    const jsonDefinitions = (options.jsonDefinition ?? []) as string[];
+    const jsonPaths = (options.jsonPath ?? []) as string[];
     if (jsonDefinitions.length === 0 && jsonPaths.length === 0) {
       log('--json-definition or --json-path is required.');
       program.help();
