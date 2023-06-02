@@ -1,12 +1,13 @@
 root: true
-parser: '@typescript-eslint/parser'
+parser: "@typescript-eslint/parser"
 plugins:
-  - '@typescript-eslint'
+  - "@typescript-eslint"
   - jest
 extends:
   - eslint:recommended
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - prettier
 env:
   jest/globals: true
 parserOptions:
