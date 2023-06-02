@@ -29,13 +29,15 @@ Amazon States Language validator
 Options:
   --json-definition <jsonDefinition>  JSON definition (default: [])
   --json-path <jsonPath>              JSON path (default: [])
+  --yaml-definition <yamlDefinition>  YAML definition (default: [])
+  --yaml-path <yamlPath>              YAML path (default: [])
   --silent                            silent mode
   --no-path-check                     skips checking path expressions
   --no-arn-check                      skips the arn check for Resource values
   -h, --help                          display help for command
 ```
 
-You can validate multiple state machines at once by passing multiple `--json-definition` and/or `--json-path` arguments.
+You can validate multiple state machines at once by passing multiple `--json-definition`, `--json-path`, `--yaml-definition` and `--yaml-path` arguments.
 
 Return status:
 - `0` if state machine definitions are valid
