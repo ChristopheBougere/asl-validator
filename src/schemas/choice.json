@@ -141,7 +141,8 @@
           "type": "boolean"
         }
       },
-      "oneOf": [{
+      "oneOf": [
+        {
           "required": ["And"]
         },
         {
@@ -294,17 +295,20 @@
     "Choices": {
       "type": "array",
       "items": {
-        "allOf": [{
-          "type": "object",
-          "properties": {
-            "Next": {
-              "type": "string"
-            }
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "Next": {
+                "type": "string"
+              }
+            },
+            "required": ["Next"]
           },
-          "required": ["Next"]
-        }, {
-          "$ref": "#/definitions/Operator"
-        }]
+          {
+            "$ref": "#/definitions/Operator"
+          }
+        ]
       }
     },
     "Default": {

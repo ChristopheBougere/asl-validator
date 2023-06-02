@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import { program } from 'commander';
-import YAML from 'yaml';
+import fs from "fs";
+import { program } from "commander";
+import YAML from "yaml";
 
-import validator from '../src/validator';
-import {StateMachine, ValidationOptions} from '../src/types';
+import validator from "../src/validator";
+import { StateMachine, ValidationOptions } from "../src/types";
 
 enum ExitCode {
   Success = 0,
@@ -22,14 +22,14 @@ function collect(value: string, previous: string[]) {
 }
 
 program
-  .description('Amazon States Language validator')
-  .option('--json-definition <jsonDefinition>', 'JSON definition', collect, [])
-  .option('--json-path <jsonPath>', 'JSON path', collect, [])
-  .option('--yaml-definition <yamlDefinition>', 'YAML definition', collect, [])
-  .option('--yaml-path <yamlPath>', 'YAML path', collect, [])
-  .option('--silent', 'silent mode')
-  .option('--no-path-check', 'skips checking path expressions')
-  .option('--no-arn-check', 'skips the arn check for Resource values')
+  .description("Amazon States Language validator")
+  .option("--json-definition <jsonDefinition>", "JSON definition", collect, [])
+  .option("--json-path <jsonPath>", "JSON path", collect, [])
+  .option("--yaml-definition <yamlDefinition>", "YAML definition", collect, [])
+  .option("--yaml-path <yamlPath>", "YAML path", collect, [])
+  .option("--silent", "silent mode")
+  .option("--no-path-check", "skips checking path expressions")
+  .option("--no-arn-check", "skips the arn check for Resource values")
   .parse();
 
 const options = program.opts();
@@ -54,17 +54,20 @@ function validate(name: string, definition: StateMachine) {
   try {
     const validationOpts: ValidationOptions = {
       checkArn: !options.noArnCheck,
-      checkPaths: !options.noPathCheck
-    }
+      checkPaths: !options.noPathCheck,
+    };
     const result = validator(definition, validationOpts);
     if (result.isValid) {
       log(`✓ State machine definition "${name}" is valid`);
       return ExitCode.Success;
     }
-    error(`✕ State machine definition "${name}" is invalid:\n`, result.errorsText());
+    error(
+      `✕ State machine definition "${name}" is invalid:\n`,
+      result.errorsText()
+    );
     return ExitCode.ValidationError;
   } catch (err) {
-    error('Validator exception:', err);
+    error("Validator exception:", err);
     return ExitCode.ProgramError;
   }
 }
@@ -75,11 +78,13 @@ function main() {
     const jsonPaths = (options.jsonPath ?? []) as string[];
     const yamlDefinitions = (options.yamlDefinition ?? []) as string[];
     const yamlPaths = (options.yamlPath ?? []) as string[];
-    if (jsonDefinitions.length === 0
-      && jsonPaths.length === 0
-      && yamlDefinitions.length === 0
-      && yamlPaths.length === 0) {
-      log('No state machine to validate.');
+    if (
+      jsonDefinitions.length === 0 &&
+      jsonPaths.length === 0 &&
+      yamlDefinitions.length === 0 &&
+      yamlPaths.length === 0
+    ) {
+      log("No state machine to validate.");
       program.help();
     }
 
@@ -99,7 +104,9 @@ function main() {
 
     // Validate JSON paths
     jsonPaths.forEach((jsonPath: string) => {
-      const definition = JSON.parse(fs.readFileSync(jsonPath).toString()) as StateMachine;
+      const definition = JSON.parse(
+        fs.readFileSync(jsonPath).toString()
+      ) as StateMachine;
       exitCode = Math.max(exitCode, validate(jsonPath, definition));
     });
 
@@ -117,7 +124,9 @@ function main() {
 
     // Validate YAML paths
     yamlPaths.forEach((yamlPath: string) => {
-      const definition = YAML.parse(fs.readFileSync(yamlPath).toString()) as StateMachine;
+      const definition = YAML.parse(
+        fs.readFileSync(yamlPath).toString()
+      ) as StateMachine;
       exitCode = Math.max(exitCode, validate(yamlPath, definition));
     });
 

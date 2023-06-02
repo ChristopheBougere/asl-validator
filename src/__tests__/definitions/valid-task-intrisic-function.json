@@ -5,10 +5,7 @@
     "GetAttResource": {
       "Type": "Task",
       "Resource": {
-        "Fn::GetAtt": [
-          "lambda-name_GetAtt",
-          "Arn"
-        ]
+        "Fn::GetAtt": ["lambda-name_GetAtt", "Arn"]
       },
       "Next": "RefResource"
     },

@@ -4,7 +4,8 @@
   "States": {
     "ChoiceState": {
       "Type": "Choice",
-      "Choices": [{
+      "Choices": [
+        {
           "Variable": "$.foo",
           "NumericEquals": 1,
           "End": true

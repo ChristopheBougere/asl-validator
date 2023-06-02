@@ -1,6 +1,6 @@
 {
   "StartAt": "Steps Start",
-  "States":{
+  "States": {
     "Steps Start": {
       "Type": "Parallel",
       "Branches": [
@@ -27,12 +27,14 @@
           }
         }
       ],
-      "Retry": [{
-        "ErrorEquals": ["States.ALL"],
-        "IntervalSeconds": 1,
-        "MaxAttempts": 3,
-        "BackoffRate": 2.0
-      }],
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
       "Next": "End State"
     },
     "End State": {

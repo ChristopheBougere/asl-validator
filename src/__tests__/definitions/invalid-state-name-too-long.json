@@ -1,14 +1,14 @@
 {
-	"Comment": "Passing asl-validator but fails to deploy.",
-	"StartAt": "Hello",
-	"States": {
-		"Hello": {
-			"Type": "Pass",
-			"Next": "This is an exceptionally long state name that I know will fail when I try to deploy to AWS"
-		},
-		"This is an exceptionally long state name that I know will fail when I try to deploy to AWS": {
-			"Type": "Pass",
-			"End": true
-		}
-	}
+  "Comment": "Passing asl-validator but fails to deploy.",
+  "StartAt": "Hello",
+  "States": {
+    "Hello": {
+      "Type": "Pass",
+      "Next": "This is an exceptionally long state name that I know will fail when I try to deploy to AWS"
+    },
+    "This is an exceptionally long state name that I know will fail when I try to deploy to AWS": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
 }

@@ -1,15 +1,15 @@
 {
-    "StartAt": "Hello",
-    "States": {
-        "Hello": {
-            "Type": "Task",
-            "Resource": "arn:aws:lambda:us-east-1:123456789012:function:foo",
-            "InputPath": null,
-            "ResultPath": "$.foo",
-            "Next": "Goodbye"
-        },
-        "Goodbye": {
-            "Type": "Succeed"
-        }
+  "StartAt": "Hello",
+  "States": {
+    "Hello": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:foo",
+      "InputPath": null,
+      "ResultPath": "$.foo",
+      "Next": "Goodbye"
+    },
+    "Goodbye": {
+      "Type": "Succeed"
     }
+  }
 }

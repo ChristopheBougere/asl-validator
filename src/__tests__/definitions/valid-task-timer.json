@@ -10,12 +10,14 @@
     "Send SNS Message": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:region-1:1234567890:function:SendToSNS",
-      "Retry": [{
-        "ErrorEquals": ["States.ALL"],
-        "IntervalSeconds": 1,
-        "MaxAttempts": 3,
-        "BackoffRate": 2.0
-      }],
+      "Retry": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
       "End": true
     }
   }

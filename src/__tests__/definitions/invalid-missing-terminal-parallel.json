@@ -5,7 +5,8 @@
     "Parallel": {
       "Type": "Parallel",
       "Next": "Final State",
-      "Branches": [{
+      "Branches": [
+        {
           "StartAt": "Wait 20s",
           "States": {
             "Wait 20s": {

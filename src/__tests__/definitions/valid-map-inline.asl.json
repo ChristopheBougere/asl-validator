@@ -7,13 +7,7 @@
       "Next": "Map demo",
       "Result": {
         "foo": "bar",
-        "colors": [
-          "red",
-          "green",
-          "blue",
-          "yellow",
-          "white"
-        ]
+        "colors": ["red", "green", "blue", "yellow", "white"]
       }
     },
     "Map demo": {
