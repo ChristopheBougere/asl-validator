@@ -27,6 +27,7 @@ Usage: asl-validator [options]
 Amazon States Language validator
 
 Options:
+  -V, --version                       output the version number
   --json-definition <jsonDefinition>  JSON definition (default: [])
   --json-path <jsonPath>              JSON path (default: [])
   --yaml-definition <yamlDefinition>  YAML definition (default: [])

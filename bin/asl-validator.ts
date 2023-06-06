@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from "fs";
+import path from "path";
 import { program } from "commander";
 import YAML from "yaml";
 
@@ -21,8 +22,26 @@ function collect(value: string, previous: string[]) {
   return previous.concat([value]);
 }
 
+function getVersion(packageJsonPath: string): string | null {
+  if (!fs.existsSync(packageJsonPath)) {
+    return null;
+  }
+  const { version } = JSON.parse(
+    fs.readFileSync(packageJsonPath).toString()
+  ) as {
+    version: string;
+  };
+  return version;
+}
+
 program
   .description("Amazon States Language validator")
+  // make it work wether it is compiled or not
+  .version(
+    getVersion(path.join(__dirname, "../package.json")) ??
+      getVersion(path.join(__dirname, "../../package.json")) ??
+      ""
+  )
   .option("--json-definition <jsonDefinition>", "JSON definition", collect, [])
   .option("--json-path <jsonPath>", "JSON path", collect, [])
   .option("--yaml-definition <yamlDefinition>", "YAML definition", collect, [])
