@@ -6,7 +6,7 @@
       "type": "object",
       "properties": {
         "Variable": {
-          "type": "string"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "And": {
           "type": "array",
@@ -33,7 +33,7 @@
           "type": "boolean"
         },
         "BooleanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "IsBoolean": {
           "type": "boolean"
@@ -42,31 +42,31 @@
           "type": "number"
         },
         "NumericEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "NumericGreaterThan": {
           "type": "number"
         },
         "NumericGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "NumericGreaterThanEquals": {
           "type": "number"
         },
         "NumericGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "NumericLessThan": {
           "type": "number"
         },
         "NumericLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "NumericLessThanEquals": {
           "type": "number"
         },
         "NumericLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "IsNumeric": {
           "type": "boolean"
@@ -75,31 +75,31 @@
           "type": "string"
         },
         "StringEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "StringGreaterThan": {
           "type": "string"
         },
         "StringGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "StringGreaterThanEquals": {
           "type": "string"
         },
         "StringGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "StringLessThan": {
           "type": "string"
         },
         "StringLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "StringLessThanEquals": {
           "type": "string"
         },
         "StringLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "StringMatches": {
           "type": "string"
@@ -111,31 +111,31 @@
           "type": "string"
         },
         "TimestampEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "TimestampGreaterThan": {
           "type": "string"
         },
         "TimestampGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "TimestampGreaterThanEquals": {
           "type": "string"
         },
         "TimestampGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "TimestampLessThan": {
           "type": "string"
         },
         "TimestampLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "TimestampLessThanEquals": {
           "type": "string"
         },
         "TimestampLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_path"
+          "$ref": "paths.json#/definitions/asl_ref_path"
         },
         "IsTimestamp": {
           "type": "boolean"
