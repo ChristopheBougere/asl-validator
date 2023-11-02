@@ -1,0 +1,11 @@
+{
+  "Comment": "Contains both Error and ErrorPath when only one is allowed",
+  "StartAt": "Hello",
+  "States": {
+    "Hello": {
+      "Type": "Fail",
+      "Error": "CauseExample",
+      "ErrorPath": "$.error"
+    }
+  }
+}

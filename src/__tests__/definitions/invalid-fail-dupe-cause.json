@@ -1,10 +1,11 @@
 {
-  "Comment": "Contrived example with a Fail state to show it satisfies the terminal state requirement",
+  "Comment": "Contains both Cause and CausePath when only one is allowed",
   "StartAt": "Hello",
   "States": {
     "Hello": {
       "Type": "Fail",
       "Cause": "CauseExample",
+      "CausePath": "$.cause",
       "Error": "ErrorExample"
     }
   }

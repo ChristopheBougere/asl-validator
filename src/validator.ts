@@ -148,6 +148,20 @@ export = function validator(
             errorCode: StateMachineErrorCode.MapItemBatcherError,
           }),
         },
+        {
+          filter: IsFail,
+          checker: AtMostOne({
+            props: ["Cause", "CausePath"],
+            errorCode: StateMachineErrorCode.FailCauseProperty,
+          }),
+        },
+        {
+          filter: IsFail,
+          checker: AtMostOne({
+            props: ["Error", "ErrorPath"],
+            errorCode: StateMachineErrorCode.FailErrorProperty,
+          }),
+        },
       ])
     );
   }

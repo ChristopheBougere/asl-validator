@@ -4,8 +4,8 @@
   "States": {
     "Hello": {
       "Type": "Fail",
-      "Cause": "CauseExample",
-      "Error": "ErrorExample"
+      "CausePath": "$.path",
+      "ErrorPath": "States.Format('{}{}', $.field1, $field2)"
     }
   }
 }
