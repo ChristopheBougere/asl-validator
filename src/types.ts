@@ -22,6 +22,8 @@ export enum StateMachineErrorCode {
   MapToleratedFailureError = "MAP_TOLERATED_FAILURE",
   MapMaxConcurrencyError = "MAP_CONCURRENCY_ERROR",
   MapItemReaderMaxItemsError = "MAP_ITEMREADER_MAXITEM",
+  FailCauseProperty = "FAIL_CAUSE_PROPERTY",
+  FailErrorProperty = "FAIL_ERROR_PROPERTY",
 }
 export type StateMachineError = {
   "Error code": StateMachineErrorCode;

@@ -13,7 +13,15 @@
     "Cause": {
       "type": "string"
     },
+    "CausePath": {
+      "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
+      "type": "string"
+    },
     "Error": {
+      "type": "string"
+    },
+    "ErrorPath": {
+      "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
       "type": "string"
     }
   },
