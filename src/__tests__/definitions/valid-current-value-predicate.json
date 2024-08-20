@@ -1,0 +1,40 @@
+{
+  "StartAt": "Mock Service Catalog Describe Record",
+  "States": {
+    "Mock Service Catalog Describe Record": {
+      "Type": "Pass",
+      "Parameters": {
+        "DescribeRecord": {
+          "RecordDetail": {
+            "RecordId": "rec-abcdefghijklm",
+            "Status": "SUCCEEDED",
+            "COMMENT": "there are more properties, limited for brevity"
+          },
+          "RecordOutputs": [
+            {
+              "Description": "Foo Bar",
+              "OutputKey": "FooBar",
+              "OutputValue": "0123456789"
+            },
+            {
+              "Description": "Fizz Buzz",
+              "OutputKey": "FizzBuzz",
+              "OutputValue": "fizzbuzz@example.com"
+            }
+          ]
+        }
+      },
+      "ResultPath": "$",
+      "Next": "Get Record Outputs"
+    },
+    "Get Record Outputs": {
+      "Type": "Pass",
+      "Parameters": {
+        "FooBar.$": "States.ArrayGetItem($.DescribeRecord.RecordOutputs[?(@.OutputKey == FooBar)].OutputValue, 0)",
+        "FizzBuzz.$": "States.ArrayGetItem($.DescribeRecord.RecordOutputs[?(@.OutputKey == FizzBuzz)].OutputValue, 0)"
+      },
+      "ResultPath": "$",
+      "End": true
+    }
+  }
+}
