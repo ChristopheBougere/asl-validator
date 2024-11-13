@@ -34,7 +34,7 @@
   "homepage": "https://github.com/ChristopheBougere/asl-validator#readme",
   "dependencies": {
     "ajv": "^8.12.0",
-    "asl-path-validator": "^0.14.1",
+    "asl-path-validator": "^0.14.2",
     "commander": "^10.0.1",
     "jsonpath-plus": "^10.0.0",
     "yaml": "^2.3.1"
