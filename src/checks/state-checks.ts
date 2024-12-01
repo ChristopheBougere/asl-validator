@@ -79,13 +79,17 @@ const getPropertyCount = ({
     .reduce((prev, curr) => prev + curr, 0);
 };
 
-export const AtMostOne = ({
+const enforceMaxCount = ({
   props,
   errorCode,
   path,
+  maxCount,
+  errorMessage,
 }: {
   props: string[];
   errorCode: StateMachineErrorCode;
+  maxCount: number;
+  errorMessage: string;
   // path to a sub-property within the state to use as the
   // context for the property checks. This is intended to
   // support enforcement of constraints on nested properties
@@ -106,12 +110,12 @@ export const AtMostOne = ({
       return null;
     }
     const count = getPropertyCount({ object, props });
-    if (count > 1) {
+    if (count > maxCount) {
       return {
         "Error code": errorCode,
         // Use of JSONPath within the error message is unnecessary
         // since the state names are unique.
-        Message: `State "${stateName}" MUST contain at most one of ${props
+        Message: `State "${stateName}" ${errorMessage} ${props
           .map((p) => {
             return `"${p}"`;
           })
@@ -120,6 +124,54 @@ export const AtMostOne = ({
     }
     return null;
   };
+};
+
+export const AtMostOne = ({
+  props,
+  errorCode,
+  path,
+}: {
+  props: string[];
+  errorCode: StateMachineErrorCode;
+  // path to a sub-property within the state to use as the
+  // context for the property checks. This is intended to
+  // support enforcement of constraints on nested properties
+  // within a State.
+  // See the Map's ItemReader.ReaderConfiguration at most one
+  // rule for MaxItems and MaxItemsPath.
+  path?: string;
+}): StateChecker => {
+  return enforceMaxCount({
+    maxCount: 1,
+    props,
+    errorCode,
+    path,
+    errorMessage: "MUST contain at most one of",
+  });
+};
+
+export const None = ({
+  props,
+  errorCode,
+  path,
+}: {
+  props: string[];
+  errorCode: StateMachineErrorCode;
+  // path to a sub-property within the state to use as the
+  // context for the property checks. This is intended to
+  // support enforcement of constraints on nested properties
+  // within a State.
+  // See the Map's ItemReader.ReaderConfiguration at most one
+  // rule for MaxItems and MaxItemsPath.
+  path?: string;
+}): StateChecker => {
+  return enforceMaxCount({
+    maxCount: 0,
+    props,
+    errorCode,
+    path,
+    errorMessage: "MUST NOT contain any of",
+  });
 };
 
 export const ExactlyOne = ({

@@ -24,6 +24,9 @@
     "TimeoutSeconds": {
       "type": "integer",
       "minimum": 0
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "additionalProperties": false,

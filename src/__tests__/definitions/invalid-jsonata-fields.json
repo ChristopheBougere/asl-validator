@@ -1,0 +1,13 @@
+{
+  "Comment": "QueryLanguage is JSONata but has JSONPath fields",
+  "StartAt": "EmptyState",
+  "QueryLanguage": "JSONata",
+  "States": {
+    "EmptyState": {
+      "Type": "Pass",
+      "Parameters": ["abc"],
+      "ResultPath": "$.emptyState",
+      "End": true
+    }
+  }
+}

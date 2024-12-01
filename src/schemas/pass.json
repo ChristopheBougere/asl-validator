@@ -23,12 +23,21 @@
       "$ref": "paths.json#/definitions/asl_path"
     },
     "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
+      "$ref": "paths.json#/definitions/asl_result_path"
     },
     "Parameters": {
       "$ref": "paths.json#/definitions/asl_payload_template"
     },
-    "Result": {}
+    "Result": {},
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
+    }
   },
   "required": ["Type"],
   "additionalProperties": false

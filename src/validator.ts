@@ -21,8 +21,10 @@ import {
   IsSucceed,
   IsTask,
   IsWait,
+  None,
   stateChecks,
 } from "./checks/state-checks";
+import { StateEntry } from "./checks/get-states";
 
 const DefaultOptions: ValidationOptions = {
   checkPaths: true,
@@ -37,6 +39,20 @@ export = function validator(
   errors: (ErrorObject | StateMachineError)[];
   errorsText: (separator?: string) => string;
 } {
+  // A state machine's query language defaults to JSONPath.
+  // The interpreter MUST support JSONPath and JSONata, and
+  // MAY support others.
+  const defaultQueryLanguage = definition.QueryLanguage ?? "JSONPath";
+
+  const IsJsonPath = ({ state }: StateEntry): boolean => {
+    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
+    return queryLanguage === "JSONPath";
+  };
+  const IsJsonNata = ({ state }: StateEntry): boolean => {
+    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
+    return queryLanguage === "JSONata";
+  };
+
   const options = opts ?? DefaultOptions;
   const errors = jsonSchemaErrors(definition, options);
   if (errors.length === 0) {
@@ -160,6 +176,36 @@ export = function validator(
           checker: AtMostOne({
             props: ["Error", "ErrorPath"],
             errorCode: StateMachineErrorCode.FailErrorProperty,
+          }),
+        },
+        {
+          filter: IsJsonNata,
+          checker: None({
+            props: [
+              "InputPath",
+              "OutputPath",
+              "ResultPath",
+              "Parameters",
+              "ResultSelector",
+            ],
+            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
+          }),
+        },
+        {
+          filter: IsJsonPath,
+          checker: None({
+            props: ["Arguments", "Output"],
+            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
+          }),
+        },
+        {
+          filter: (entry) => {
+            return IsMap(entry) && IsJsonPath(entry);
+          },
+          checker: None({
+            props: ["Arguments"],
+            path: "$.ItemReader",
+            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
           }),
         },
       ])

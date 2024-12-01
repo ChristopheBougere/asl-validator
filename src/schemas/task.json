@@ -51,7 +51,7 @@
       ]
     },
     "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
+      "$ref": "paths.json#/definitions/asl_result_path"
     },
     "Retry": {
       "type": "array",
@@ -95,7 +95,7 @@
             "type": "string"
           },
           "ResultPath": {
-            "$ref": "paths.json#/definitions/asl_ref_path"
+            "$ref": "paths.json#/definitions/asl_result_path"
           }
         },
         "required": ["ErrorEquals", "Next"]
@@ -123,6 +123,18 @@
     },
     "Credentials": {
       "$ref": "paths.json#/definitions/asl_payload_template"
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
+    },
+    "Arguments": {
+      "$ref": "jsonata.json#/definitions/arguments"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type", "Resource"],

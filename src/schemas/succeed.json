@@ -15,6 +15,12 @@
     },
     "InputPath": {
       "$ref": "paths.json#/definitions/asl_path"
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type"],

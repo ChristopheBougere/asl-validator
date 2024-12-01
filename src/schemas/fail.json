@@ -23,6 +23,9 @@
     "ErrorPath": {
       "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
       "type": "string"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type"],

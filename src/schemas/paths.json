@@ -10,6 +10,10 @@
       "type": ["string", "null"],
       "format": "asl_ref_path"
     },
+    "asl_result_path": {
+      "type": ["string", "null"],
+      "format": "asl_result_path"
+    },
     "_payload_template_object": {
       "type": "object",
       "patternProperties": {

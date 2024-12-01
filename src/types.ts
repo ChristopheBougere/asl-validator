@@ -1,6 +1,7 @@
 export type State = Record<string, unknown>;
 export type States = Record<string, State>;
 export type StateMachine = {
+  QueryLanguage?: string | null;
   States: States;
 };
 export enum StateMachineErrorCode {
@@ -24,6 +25,7 @@ export enum StateMachineErrorCode {
   MapItemReaderMaxItemsError = "MAP_ITEMREADER_MAXITEM",
   FailCauseProperty = "FAIL_CAUSE_PROPERTY",
   FailErrorProperty = "FAIL_ERROR_PROPERTY",
+  QueryLanguageFieldError = "QUERY_LANGUAGE_FIELD",
 }
 export type StateMachineError = {
   "Error code": StateMachineErrorCode;
