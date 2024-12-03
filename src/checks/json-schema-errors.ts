@@ -1,5 +1,6 @@
 import Ajv, { ErrorObject } from "ajv";
 import paths from "../schemas/paths.json";
+import jsonata from "../schemas/jsonata.json";
 import choice from "../schemas/choice.json";
 import fail from "../schemas/fail.json";
 import parallel from "../schemas/parallel.json";
@@ -20,6 +21,7 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
   const ajv = new Ajv({
     schemas: [
       paths,
+      jsonata,
       choice,
       fail,
       parallel,
@@ -41,6 +43,8 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
     ajv.addFormat("asl_path", () => true);
     ajv.addFormat("asl_ref_path", () => true);
     ajv.addFormat("asl_payload_template", () => true);
+    // An ASL ResultPath is a ReferencePath that cannot have variables.
+    ajv.addFormat("asl_result_path", () => true);
   }
   if (options.checkArn) {
     ajv.addFormat("asl_arn", isArnFormatValid);

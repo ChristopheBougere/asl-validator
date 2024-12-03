@@ -1,0 +1,36 @@
+{
+  "$id": "http://asl-validator.cloud/jsonata.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "output": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "assign": {
+      "type": "object"
+    },
+    "arguments": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "queryLanguage": {
+      "type": "string",
+      "enum": ["JSONata", "JSONPath"]
+    },
+    "condition": {
+      "type": "string"
+    }
+  }
+}

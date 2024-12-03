@@ -29,7 +29,7 @@
       "$ref": "paths.json#/definitions/asl_path"
     },
     "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
+      "$ref": "paths.json#/definitions/asl_result_path"
     },
     "Branches": {
       "type": "array",
@@ -79,11 +79,23 @@
             "type": "string"
           },
           "ResultPath": {
-            "$ref": "paths.json#/definitions/asl_ref_path"
+            "$ref": "paths.json#/definitions/asl_result_path"
           }
         },
         "required": ["ErrorEquals", "Next"]
       }
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
+    },
+    "Arguments": {
+      "$ref": "jsonata.json#/definitions/arguments"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type", "Branches"],

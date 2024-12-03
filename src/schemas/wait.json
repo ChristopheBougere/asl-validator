@@ -34,6 +34,15 @@
     },
     "TimestampPath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type"],

@@ -23,7 +23,7 @@
       "$ref": "paths.json#/definitions/asl_path"
     },
     "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
+      "$ref": "paths.json#/definitions/asl_result_path"
     },
     "ItemsPath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
@@ -62,6 +62,9 @@
             "MaxItemsPath": {
               "$comment": "A \"ReaderConfig\" field MAY have \"MaxItemsPath\" field which MUST be a Reference Path which, when resolved, MUST select a field whose value is a positive integer.",
               "$ref": "paths.json#/definitions/asl_ref_path"
+            },
+            "Arguments": {
+              "$ref": "jsonata.json#/definitions/arguments"
             }
           },
           "additionalProperties": true
@@ -201,6 +204,15 @@
     },
     "ToleratedFailurePercentagePath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
   "required": ["Type"],

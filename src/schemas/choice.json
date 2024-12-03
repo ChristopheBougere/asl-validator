@@ -139,6 +139,9 @@
         },
         "IsTimestamp": {
           "type": "boolean"
+        },
+        "Condition": {
+          "$ref": "jsonata.json#/definitions/condition"
         }
       },
       "oneOf": [
@@ -267,6 +270,9 @@
         },
         {
           "required": ["IsTimestamp"]
+        },
+        {
+          "required": ["Condition"]
         }
       ]
     }
@@ -313,6 +319,12 @@
     },
     "Default": {
       "type": "string"
+    },
+    "QueryLanguage": {
+      "$ref": "jsonata.json#/definitions/queryLanguage"
+    },
+    "Output": {
+      "$ref": "jsonata.json#/definitions/output"
     }
   },
   "required": ["Type", "Choices"],
