@@ -1,0 +1,14 @@
+{
+  "Comment": "MathAdd arguments must be paths or numbers",
+  "StartAt": "validate input",
+  "States": {
+    "validate input": {
+      "Type": "Pass",
+      "Parameters": {
+        "foo.$": "States.MathAdd(States.ArrayLength($$.Execution.Input.machines),-1)"
+      },
+      "ResultPath": "$.input",
+      "End": true
+    }
+  }
+}
