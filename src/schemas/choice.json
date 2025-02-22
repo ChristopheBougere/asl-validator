@@ -307,6 +307,9 @@
             "properties": {
               "Next": {
                 "type": "string"
+              },
+              "Assign": {
+                "$ref": "jsonata.json#/definitions/assign"
               }
             },
             "required": ["Next"]
@@ -319,6 +322,9 @@
     },
     "Default": {
       "type": "string"
+    },
+    "Assign": {
+      "$ref": "jsonata.json#/definitions/assign"
     },
     "QueryLanguage": {
       "$ref": "jsonata.json#/definitions/queryLanguage"
