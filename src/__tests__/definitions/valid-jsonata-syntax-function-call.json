@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata function calls",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% $sum($states.input.numbers) %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

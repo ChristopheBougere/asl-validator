@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata path expression",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% $states.input.data.items %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

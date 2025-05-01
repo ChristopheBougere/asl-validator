@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata Expressions should be surrounded like so: \"{% <JSONata expression> %}\"",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% $sum($states.input.items.numbers %",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

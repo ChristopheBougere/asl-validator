@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata simple arithmetic",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% 1+2 %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

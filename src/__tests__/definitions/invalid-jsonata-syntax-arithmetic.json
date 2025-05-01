@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata bad arithmetic error",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% 10 + * 2 %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

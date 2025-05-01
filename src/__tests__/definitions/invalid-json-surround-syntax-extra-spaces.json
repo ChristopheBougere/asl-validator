@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata Expressions shouldn't have extra spaces",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% \n10         %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

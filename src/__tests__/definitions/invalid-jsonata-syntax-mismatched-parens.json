@@ -1,0 +1,12 @@
+{
+  "Comment": "Missing the closing paren on `sum` function call",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% $sum($states.input.items.numbers %",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

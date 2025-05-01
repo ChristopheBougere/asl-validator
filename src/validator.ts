@@ -25,6 +25,7 @@ import {
   stateChecks,
 } from "./checks/state-checks";
 import { StateEntry } from "./checks/get-states";
+import { validateJsonataSyntax } from "./checks/jsonata-syntax-validator";
 
 const DefaultOptions: ValidationOptions = {
   checkPaths: true,
@@ -63,6 +64,7 @@ export = function validator(
     errors.push(
       ...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition, options)
     );
+    errors.push(...validateJsonataSyntax(definition));
     errors.push(
       ...stateChecks(definition, options, [
         {
