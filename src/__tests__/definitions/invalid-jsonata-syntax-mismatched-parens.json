@@ -4,7 +4,7 @@
   "States": {
     "X": {
       "Type": "Pass",
-      "Output": "{% $sum($states.input.items.numbers %",
+      "Output": "{% $sum($states.input.items.numbers %}",
       "QueryLanguage": "JSONata",
       "End": true
     }
