@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONata Expressions should be surrounded like so: \"{% <JSONata expression> %}\"",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{%10%}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

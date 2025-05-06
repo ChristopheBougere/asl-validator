@@ -1,0 +1,12 @@
+{
+  "Comment": "JSONPath Syntax inside of a JSONata surround should not be valid",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Pass",
+      "Output": "{% $.store.book[?(@.price < 10)].title %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

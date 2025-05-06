@@ -26,6 +26,7 @@ export enum StateMachineErrorCode {
   FailCauseProperty = "FAIL_CAUSE_PROPERTY",
   FailErrorProperty = "FAIL_ERROR_PROPERTY",
   QueryLanguageFieldError = "QUERY_LANGUAGE_FIELD",
+  InvalidJsonataSyntax = "INVALID_JSONATA_SYNTAX",
 }
 export type StateMachineError = {
   "Error code": StateMachineErrorCode;
