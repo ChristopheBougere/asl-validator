@@ -1,0 +1,16 @@
+{
+  "QueryLanguage": "JSONata",
+  "StartAt": "SetupWait",
+  "States": {
+    "SetupWait": {
+      "Type": "Pass",
+      "Next": "DoWait",
+      "Output": { "waitTime": "{% $round($random() * 10) %}" }
+    },
+    "DoWait": {
+      "Type": "Wait",
+      "Seconds": "{% $states.input.waitTime %}",
+      "End": true
+    }
+  }
+}
