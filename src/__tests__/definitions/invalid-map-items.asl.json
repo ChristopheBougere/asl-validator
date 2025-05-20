@@ -1,0 +1,35 @@
+{
+  "QueryLanguage": "JSONata",
+  "Comment": "Items and ItemsPath are mutually exclusive in Map state.",
+  "StartAt": "SetupAnimals",
+  "States": {
+    "SetupAnimals": {
+      "Type": "Pass",
+      "Output": {
+        "animals": ["Lion", "Cheetah", "Elephant"]
+      },
+      "Next": "ProcessAnimals"
+    },
+    "ProcessAnimals": {
+      "Type": "Map",
+      "Items": "{% $states.input.animals %}",
+      "ItemsPath": "$.foo",
+      "ItemSelector": {
+        "animalName": "{% $states.context.Map.Item.Value %}"
+      },
+      "ItemProcessor": {
+        "StartAt": "NoOp",
+        "States": {
+          "NoOp": {
+            "Type": "Pass",
+            "End": true
+          }
+        }
+      },
+      "Output": {
+        "processResults": "{% $states.result %}"
+      },
+      "End": true
+    }
+  }
+}

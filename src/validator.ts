@@ -145,6 +145,13 @@ export = function validator(
         {
           filter: IsMap,
           checker: AtMostOne({
+            props: ["Items", "ItemsPath"],
+            errorCode: StateMachineErrorCode.MapItemsError,
+          }),
+        },
+        {
+          filter: IsMap,
+          checker: AtMostOne({
             props: ["MaxItems", "MaxItemsPath"],
             path: "$.ItemReader.ReaderConfig",
             errorCode: StateMachineErrorCode.MapItemReaderMaxItemsError,

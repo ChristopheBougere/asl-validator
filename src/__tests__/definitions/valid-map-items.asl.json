@@ -1,0 +1,34 @@
+{
+  "QueryLanguage": "JSONata",
+  "Comment": "A test for valid map items in JSONata",
+  "StartAt": "SetupAnimals",
+  "States": {
+    "SetupAnimals": {
+      "Type": "Pass",
+      "Output": {
+        "animals": ["Lion", "Cheetah", "Elephant"]
+      },
+      "Next": "ProcessAnimals"
+    },
+    "ProcessAnimals": {
+      "Type": "Map",
+      "Items": "{% $states.input.animals %}",
+      "ItemSelector": {
+        "animalName": "{% $states.context.Map.Item.Value %}"
+      },
+      "ItemProcessor": {
+        "StartAt": "NoOp",
+        "States": {
+          "NoOp": {
+            "Type": "Pass",
+            "End": true
+          }
+        }
+      },
+      "Output": {
+        "processResults": "{% $states.result %}"
+      },
+      "End": true
+    }
+  }
+}
