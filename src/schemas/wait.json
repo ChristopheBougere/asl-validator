@@ -23,8 +23,15 @@
       "$ref": "paths.json#/definitions/asl_path"
     },
     "Seconds": {
-      "type": "number",
-      "minimum": 0
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 0
+        },
+        {
+          "type": "string"
+        }
+      ]
     },
     "Timestamp": {
       "type": "string"
