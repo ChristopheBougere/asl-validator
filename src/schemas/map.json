@@ -25,6 +25,9 @@
     "ResultPath": {
       "$ref": "paths.json#/definitions/asl_result_path"
     },
+    "Items": {
+      "type": ["array", "string"]
+    },
     "ItemsPath": {
       "$ref": "paths.json#/definitions/asl_ref_path"
     },
