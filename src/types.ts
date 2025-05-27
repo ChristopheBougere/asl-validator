@@ -8,7 +8,6 @@ export enum StateMachineErrorCode {
   BranchOutboundTransitionTarget = "BRANCH_OUTBOUND_TRANSITION_TARGET",
   DuplicateStateNames = "DUPLICATE_STATE_NAMES",
   DuplicateFieldName = "DUPLICATE_FIELD_NAME",
-  InvalidJsonPath = "INVALID_JSON_PATH",
   MapOutboundTransitionTarget = "MAP_OUTBOUND_TRANSITION_TARGET",
   MissingTerminalState = "MISSING_TERMINAL_STATE",
   MissingTransitionTarget = "MISSING_TRANSITION_TARGET",
@@ -27,7 +26,6 @@ export enum StateMachineErrorCode {
   FailCauseProperty = "FAIL_CAUSE_PROPERTY",
   FailErrorProperty = "FAIL_ERROR_PROPERTY",
   QueryLanguageFieldError = "QUERY_LANGUAGE_FIELD",
-  InvalidJsonataSyntax = "INVALID_JSONATA_SYNTAX",
 }
 export type StateMachineError = {
   "Error code": StateMachineErrorCode;

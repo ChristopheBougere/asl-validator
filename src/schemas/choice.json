@@ -2,337 +2,705 @@
   "$id": "http://asl-validator.cloud/choice.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Operator": {
-      "type": "object",
-      "properties": {
-        "Variable": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
+    "ChoiceRules": {
+      "Boolean": {
         "And": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Operator"
+          "type": "object",
+          "required": ["And"],
+          "properties": {
+            "And": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/ChoiceRules/Boolean/_BooleanExpression"
+                  },
+                  {
+                    "$ref": "#/definitions/ChoiceRules/DataTest/_DataTestExpression"
+                  }
+                ]
+              }
+            }
           }
         },
         "Or": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Operator"
+          "type": "object",
+          "required": ["Or"],
+          "properties": {
+            "Or": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/ChoiceRules/Boolean/_BooleanExpression"
+                  },
+                  {
+                    "$ref": "#/definitions/ChoiceRules/DataTest/_DataTestExpression"
+                  }
+                ]
+              }
+            }
           }
         },
         "Not": {
-          "$ref": "#/definitions/Operator"
+          "type": "object",
+          "required": ["Not"],
+          "properties": {
+            "Not": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/ChoiceRules/Boolean/_BooleanExpression"
+                },
+                {
+                  "$ref": "#/definitions/ChoiceRules/DataTest/_DataTestExpression"
+                }
+              ]
+            }
+          }
         },
-        "IsNull": {
-          "type": "boolean"
+        "_BooleanExpression": {
+          "$comment": "A nested BooleanExpression MUST NOT have a Next or Assign",
+          "type": "object",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/And"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/Or"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/Not"
+            }
+          ]
         },
-        "IsPresent": {
-          "type": "boolean"
-        },
-        "BooleanEquals": {
-          "type": "boolean"
-        },
-        "BooleanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "IsBoolean": {
-          "type": "boolean"
-        },
-        "NumericEquals": {
-          "type": "number"
-        },
-        "NumericEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "NumericGreaterThan": {
-          "type": "number"
-        },
-        "NumericGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "NumericGreaterThanEquals": {
-          "type": "number"
-        },
-        "NumericGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "NumericLessThan": {
-          "type": "number"
-        },
-        "NumericLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "NumericLessThanEquals": {
-          "type": "number"
-        },
-        "NumericLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "IsNumeric": {
-          "type": "boolean"
-        },
-        "StringEquals": {
-          "type": "string"
-        },
-        "StringEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "StringGreaterThan": {
-          "type": "string"
-        },
-        "StringGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "StringGreaterThanEquals": {
-          "type": "string"
-        },
-        "StringGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "StringLessThan": {
-          "type": "string"
-        },
-        "StringLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "StringLessThanEquals": {
-          "type": "string"
-        },
-        "StringLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "StringMatches": {
-          "type": "string"
-        },
-        "IsString": {
-          "type": "boolean"
-        },
-        "TimestampEquals": {
-          "type": "string"
-        },
-        "TimestampEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "TimestampGreaterThan": {
-          "type": "string"
-        },
-        "TimestampGreaterThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "TimestampGreaterThanEquals": {
-          "type": "string"
-        },
-        "TimestampGreaterThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "TimestampLessThan": {
-          "type": "string"
-        },
-        "TimestampLessThanPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "TimestampLessThanEquals": {
-          "type": "string"
-        },
-        "TimestampLessThanEqualsPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "IsTimestamp": {
-          "type": "boolean"
-        },
-        "Condition": {
-          "$ref": "jsonata.json#/definitions/condition"
+        "BooleanExpression": {
+          "$comment": "Top level BooleanExpression MUST have a Next and MAY have an Assign",
+          "type": "object",
+          "required": ["Next"],
+          "properties": {
+            "Assign": {
+              "$ref": "paths.json#/definitions/assign"
+            },
+            "Next": {
+              "type": "string"
+            }
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/And"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/Or"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/Boolean/Not"
+            }
+          ]
         }
       },
-      "oneOf": [
-        {
-          "required": ["And"]
+      "DataTest": {
+        "IsNull": {
+          "type": "object",
+          "required": ["IsNull"],
+          "properties": {
+            "IsNull": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["BooleanEquals"]
+        "IsPresent": {
+          "type": "object",
+          "required": ["IsPresent"],
+          "properties": {
+            "IsPresent": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["BooleanEqualsPath"]
+        "BooleanEquals": {
+          "type": "object",
+          "required": ["BooleanEquals"],
+          "properties": {
+            "BooleanEquals": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["IsBoolean"]
+        "BooleanEqualsPath": {
+          "type": "object",
+          "required": ["BooleanEqualsPath"],
+          "properties": {
+            "BooleanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["Not"]
+        "IsBoolean": {
+          "type": "object",
+          "required": ["IsBoolean"],
+          "properties": {
+            "IsBoolean": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["IsNull"]
+        "NumericEquals": {
+          "type": "object",
+          "required": ["NumericEquals"],
+          "properties": {
+            "NumericEquals": {
+              "type": "number"
+            }
+          }
         },
-        {
-          "required": ["IsPresent"]
+        "NumericEqualsPath": {
+          "type": "object",
+          "required": ["NumericEqualsPath"],
+          "properties": {
+            "NumericEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["NumericEquals"]
+        "NumericGreaterThan": {
+          "type": "object",
+          "required": ["NumericGreaterThan"],
+          "properties": {
+            "NumericGreaterThan": {
+              "type": "number"
+            }
+          }
         },
-        {
-          "required": ["NumericEqualsPath"]
+        "NumericGreaterThanPath": {
+          "type": "object",
+          "required": ["NumericGreaterThanPath"],
+          "properties": {
+            "NumericGreaterThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["NumericGreaterThan"]
+        "NumericGreaterThanEquals": {
+          "type": "object",
+          "required": ["NumericGreaterThanEquals"],
+          "properties": {
+            "NumericGreaterThanEquals": {
+              "type": "number"
+            }
+          }
         },
-        {
-          "required": ["NumericGreaterThanPath"]
+        "NumericGreaterThanEqualsPath": {
+          "type": "object",
+          "required": ["NumericGreaterThanEqualsPath"],
+          "properties": {
+            "NumericGreaterThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["NumericGreaterThanEquals"]
+        "NumericLessThan": {
+          "type": "object",
+          "required": ["NumericLessThan"],
+          "properties": {
+            "NumericLessThan": {
+              "type": "number"
+            }
+          }
         },
-        {
-          "required": ["NumericGreaterThanEqualsPath"]
+        "NumericLessThanPath": {
+          "type": "object",
+          "required": ["NumericLessThanPath"],
+          "properties": {
+            "NumericLessThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["NumericLessThan"]
+        "NumericLessThanEquals": {
+          "type": "object",
+          "required": ["NumericLessThanEquals"],
+          "properties": {
+            "NumericLessThanEquals": {
+              "type": "number"
+            }
+          }
         },
-        {
-          "required": ["NumericLessThanPath"]
+        "NumericLessThanEqualsPath": {
+          "type": "object",
+          "required": ["NumericLessThanEqualsPath"],
+          "properties": {
+            "NumericLessThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["NumericLessThanEquals"]
+        "IsNumeric": {
+          "type": "object",
+          "required": ["IsNumeric"],
+          "properties": {
+            "IsNumeric": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["NumericLessThanEqualsPath"]
+        "StringEquals": {
+          "type": "object",
+          "required": ["StringEquals"],
+          "properties": {
+            "StringEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["IsNumeric"]
+        "StringEqualsPath": {
+          "type": "object",
+          "required": ["StringEqualsPath"],
+          "properties": {
+            "StringEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["Or"]
+        "StringGreaterThan": {
+          "type": "object",
+          "required": ["StringGreaterThan"],
+          "properties": {
+            "StringGreaterThan": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringEquals"]
+        "StringGreaterThanPath": {
+          "type": "object",
+          "required": ["StringGreaterThanPath"],
+          "properties": {
+            "StringGreaterThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["StringEqualsPath"]
+        "StringGreaterThanEquals": {
+          "type": "object",
+          "required": ["StringGreaterThanEquals"],
+          "properties": {
+            "StringGreaterThanEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringGreaterThan"]
+        "StringGreaterThanEqualsPath": {
+          "type": "object",
+          "required": ["StringGreaterThanEqualsPath"],
+          "properties": {
+            "StringGreaterThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["StringGreaterThanPath"]
+        "StringLessThan": {
+          "type": "object",
+          "required": ["StringLessThan"],
+          "properties": {
+            "StringLessThan": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringGreaterThanEquals"]
+        "StringLessThanPath": {
+          "type": "object",
+          "required": ["StringLessThanPath"],
+          "properties": {
+            "StringLessThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["StringGreaterThanEqualsPath"]
+        "StringLessThanEquals": {
+          "type": "object",
+          "required": ["StringLessThanEquals"],
+          "properties": {
+            "StringLessThanEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringLessThan"]
+        "StringLessThanEqualsPath": {
+          "type": "object",
+          "required": ["StringLessThanEqualsPath"],
+          "properties": {
+            "StringLessThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["StringLessThanPath"]
+        "StringMatches": {
+          "type": "object",
+          "required": ["StringMatches"],
+          "properties": {
+            "StringMatches": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringLessThanEquals"]
+        "IsString": {
+          "type": "object",
+          "required": ["IsString"],
+          "properties": {
+            "IsString": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["StringLessThanEqualsPath"]
+        "TimestampEquals": {
+          "type": "object",
+          "required": ["TimestampEquals"],
+          "properties": {
+            "TimestampEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["StringMatches"]
+        "TimestampEqualsPath": {
+          "type": "object",
+          "required": ["TimestampEqualsPath"],
+          "properties": {
+            "TimestampEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["IsString"]
+        "TimestampGreaterThan": {
+          "type": "object",
+          "required": ["TimestampGreaterThan"],
+          "properties": {
+            "TimestampGreaterThan": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["TimestampEquals"]
+        "TimestampGreaterThanPath": {
+          "type": "object",
+          "required": ["TimestampGreaterThanPath"],
+          "properties": {
+            "TimestampGreaterThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["TimestampEqualsPath"]
+        "TimestampGreaterThanEquals": {
+          "type": "object",
+          "required": ["TimestampGreaterThanEquals"],
+          "properties": {
+            "TimestampGreaterThanEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["TimestampGreaterThan"]
+        "TimestampGreaterThanEqualsPath": {
+          "type": "object",
+          "required": ["TimestampGreaterThanEqualsPath"],
+          "properties": {
+            "TimestampGreaterThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["TimestampGreaterThanPath"]
+        "TimestampLessThan": {
+          "type": "object",
+          "required": ["TimestampLessThan"],
+          "properties": {
+            "TimestampLessThan": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["TimestampGreaterThanEquals"]
+        "TimestampLessThanPath": {
+          "type": "object",
+          "required": ["TimestampLessThanPath"],
+          "properties": {
+            "TimestampLessThanPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["TimestampGreaterThanEqualsPath"]
+        "TimestampLessThanEquals": {
+          "type": "object",
+          "required": ["TimestampLessThanEquals"],
+          "properties": {
+            "TimestampLessThanEquals": {
+              "type": "string"
+            }
+          }
         },
-        {
-          "required": ["TimestampLessThan"]
+        "TimestampLessThanEqualsPath": {
+          "type": "object",
+          "required": ["TimestampLessThanEqualsPath"],
+          "properties": {
+            "TimestampLessThanEqualsPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          }
         },
-        {
-          "required": ["TimestampLessThanPath"]
+        "IsTimestamp": {
+          "type": "object",
+          "required": ["IsTimestamp"],
+          "properties": {
+            "IsTimestamp": {
+              "type": "boolean"
+            }
+          }
         },
-        {
-          "required": ["TimestampLessThanEquals"]
+        "_DataTestExpression": {
+          "$comment": "Nested DataTestExpression MUST NOT have a Next and MAY have an Assign",
+          "type": "object",
+          "required": ["Variable"],
+          "properties": {
+            "Variable": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            }
+          },
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsNull"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsPresent"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/BooleanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/BooleanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsBoolean"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericGreaterThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericGreaterThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericGreaterThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericGreaterThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericLessThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericLessThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericLessThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/NumericLessThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsNumeric"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringGreaterThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringGreaterThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringGreaterThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringGreaterThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringLessThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringLessThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringLessThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringLessThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/StringMatches"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsString"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampGreaterThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampGreaterThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampGreaterThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampGreaterThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampLessThan"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampLessThanPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampLessThanEquals"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/TimestampLessThanEqualsPath"
+            },
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/IsTimestamp"
+            }
+          ]
         },
-        {
-          "required": ["TimestampLessThanEqualsPath"]
-        },
-        {
-          "required": ["IsTimestamp"]
-        },
-        {
-          "required": ["Condition"]
+        "DataTestExpression": {
+          "$comment": "Top level DataTestExpression MUST have a Next and MAY have an Assign",
+          "type": "object",
+          "properties": {
+            "Assign": {
+              "$ref": "paths.json#/definitions/assign"
+            },
+            "Next": {
+              "type": "string"
+            }
+          },
+          "required": ["Next"],
+          "allOf": [
+            {
+              "$ref": "#/definitions/ChoiceRules/DataTest/_DataTestExpression"
+            }
+          ]
         }
-      ]
-    }
-  },
-  "type": "object",
-  "properties": {
+      }
+    },
     "Type": {
       "type": "string",
       "enum": ["Choice"]
     },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "Choices": {
-      "type": "array",
-      "items": {
-        "allOf": [
-          {
-            "type": "object",
-            "properties": {
-              "Next": {
-                "type": "string"
-              },
-              "Assign": {
-                "$ref": "jsonata.json#/definitions/assign"
-              }
-            },
-            "required": ["Next"]
-          },
-          {
-            "$ref": "#/definitions/Operator"
-          }
-        ]
-      }
-    },
     "Default": {
       "type": "string"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
     }
   },
-  "required": ["Type", "Choices"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Default": {
+          "$ref": "#/definitions/Default"
+        },
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        },
+        "Choices": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/ChoiceRules/Boolean/BooleanExpression"
+              },
+              {
+                "$ref": "#/definitions/ChoiceRules/DataTest/DataTestExpression"
+              }
+            ]
+          }
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["Choices", "QueryLanguage", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Default": {
+          "$ref": "#/definitions/Default"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        },
+        "Choices": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["Condition", "Next"],
+            "properties": {
+              "Assign": {
+                "$ref": "jsonata.json#/definitions/assign"
+              },
+              "Condition": {
+                "$ref": "jsonata.json#/definitions/condition"
+              },
+              "Next": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["Choices", "QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }

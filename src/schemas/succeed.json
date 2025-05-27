@@ -1,28 +1,53 @@
 {
   "$id": "http://asl-validator.cloud/succeed.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
+  "definitions": {
     "Type": {
       "type": "string",
       "enum": ["Succeed"]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
-  "required": ["Type"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }

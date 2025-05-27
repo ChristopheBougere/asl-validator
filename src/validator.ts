@@ -1,4 +1,5 @@
 import { ErrorObject } from "ajv";
+import { JSONPath } from "jsonpath-plus";
 
 import { jsonSchemaErrors } from "./checks/json-schema-errors";
 import { missingTransitionTargetErrors } from "./checks/missing-transition-target-errors";
@@ -25,7 +26,6 @@ import {
   stateChecks,
 } from "./checks/state-checks";
 import { StateEntry } from "./checks/get-states";
-import { validateJsonataSyntax } from "./checks/jsonata-syntax-validator";
 
 const DefaultOptions: ValidationOptions = {
   checkPaths: true,
@@ -44,6 +44,22 @@ export = function validator(
   // The interpreter MUST support JSONPath and JSONata, and
   // MAY support others.
   const defaultQueryLanguage = definition.QueryLanguage ?? "JSONPath";
+
+  // Select all objects named "States"
+  const statesObjects: Record<string, unknown>[] = JSONPath({
+    path: "$..States",
+    json: definition,
+  });
+  for (const states of statesObjects) {
+    if (states && typeof states === "object") {
+      for (const stateName of Object.keys(states)) {
+        const state = states[stateName] as { QueryLanguage?: string };
+        if (state && typeof state === "object" && !state.QueryLanguage) {
+          state.QueryLanguage = defaultQueryLanguage;
+        }
+      }
+    }
+  }
 
   const IsJsonPath = ({ state }: StateEntry): boolean => {
     const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
@@ -64,7 +80,6 @@ export = function validator(
     errors.push(
       ...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition, options)
     );
-    errors.push(...validateJsonataSyntax(definition));
     errors.push(
       ...stateChecks(definition, options, [
         {

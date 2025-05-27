@@ -1,0 +1,41 @@
+{
+  "Comment": "ItemBatcher can specify some batch properties with jsonata",
+  "QueryLanguage": "JSONata",
+  "StartAt": "Map",
+  "States": {
+    "Map": {
+      "Type": "Map",
+      "ToleratedFailureCount": "{% 0 %}",
+      "ToleratedFailurePercentage": "{% 0 %}",
+      "ItemBatcher": {
+        "MaxItemsPerBatch": "{% 2 %}",
+        "MaxInputBytesPerBatch": "{% 131072 %}",
+        "BatchInput": {
+          "inputKey": "inputValue"
+        }
+      },
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "DISTRIBUTED",
+          "ExecutionType": "EXPRESS"
+        },
+        "StartAt": "LambdaTask",
+        "States": {
+          "LambdaTask": {
+            "QueryLanguage": "JSONPath",
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "OutputPath": "$.Payload",
+            "Parameters": {
+              "Payload.$": "$",
+              "FunctionName": "arn:aws:lambda:us-east-2:123456789012:function:processCSVData"
+            },
+            "End": true
+          }
+        }
+      },
+      "Label": "Map",
+      "End": true
+    }
+  }
+}

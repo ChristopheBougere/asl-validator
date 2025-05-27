@@ -1,6 +1,9 @@
 import Ajv, { ErrorObject } from "ajv";
+import jsonata from "jsonata";
+import addFormats from "ajv-formats";
+import common from "../schemas/common.json";
 import paths from "../schemas/paths.json";
-import jsonata from "../schemas/jsonata.json";
+import jsonataSchema from "../schemas/jsonata.json";
 import choice from "../schemas/choice.json";
 import fail from "../schemas/fail.json";
 import parallel from "../schemas/parallel.json";
@@ -20,8 +23,9 @@ import { isArnFormatValid } from "./formats";
 export const jsonSchemaErrors: AslChecker = (definition, options) => {
   const ajv = new Ajv({
     schemas: [
+      common,
       paths,
-      jsonata,
+      jsonataSchema,
       choice,
       fail,
       parallel,
@@ -37,6 +41,27 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
     ],
     allowUnionTypes: true,
   });
+  addFormats(ajv);
+
+  const validateJsonataString = (value: string): boolean => {
+    try {
+      const matched = value.match(/\{%\s+(.+)\s+%}/);
+      const expr = matched ? matched[1] : "";
+      jsonata(expr);
+      return true;
+    } catch (err: unknown) {
+      return false;
+    }
+  };
+  const maybeJsonataString = (value: string): boolean => {
+    if (value.startsWith("{%") || value.endsWith("%}")) {
+      return validateJsonataString(value);
+    }
+    return true;
+  };
+
+  ajv.addFormat("jsonata_string", validateJsonataString);
+  ajv.addFormat("maybe_jsonata_string", maybeJsonataString);
   if (options.checkPaths) {
     registerAll(ajv);
   } else {

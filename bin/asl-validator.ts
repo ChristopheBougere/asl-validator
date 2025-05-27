@@ -36,7 +36,7 @@ function getVersion(packageJsonPath: string): string | null {
 
 program
   .description("Amazon States Language validator")
-  // make it work wether it is compiled or not
+  // make it work whether it is compiled or not
   .version(
     getVersion(path.join(__dirname, "../package.json")) ??
       getVersion(path.join(__dirname, "../../package.json")) ??
