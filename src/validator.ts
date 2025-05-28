@@ -190,36 +190,6 @@ export = function validator(
             errorCode: StateMachineErrorCode.FailErrorProperty,
           }),
         },
-        // {
-        //   filter: IsJsonNata,
-        //   checker: None({
-        //     props: [
-        //       "InputPath",
-        //       "OutputPath",
-        //       "ResultPath",
-        //       "Parameters",
-        //       "ResultSelector",
-        //     ],
-        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-        //   }),
-        // },
-        // {
-        //   filter: IsJsonPath,
-        //   checker: None({
-        //     props: ["Arguments", "Output"],
-        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-        //   }),
-        // },
-        // {
-        //   filter: (entry) => {
-        //     return IsMap(entry) && IsJsonPath(entry);
-        //   },
-        //   checker: None({
-        //     props: ["Arguments"],
-        //     path: "$.ItemReader",
-        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-        //   }),
-        // },
       ])
     );
   }
