@@ -1,0 +1,60 @@
+{
+  "$id": "http://asl-validator.cloud/common.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Catch": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ErrorEquals": {
+            "type": "array",
+            "items": {
+              "$ref": "errors.json#"
+            }
+          },
+          "Next": {
+            "$ref": "#/definitions/Next"
+          }
+        },
+        "required": ["ErrorEquals", "Next"]
+      }
+    },
+    "Comment": {
+      "type": "string"
+    },
+    "End": {
+      "enum": [true]
+    },
+    "Next": {
+      "type": "string"
+    },
+    "Retry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ErrorEquals": {
+            "type": "array",
+            "items": {
+              "$ref": "errors.json#"
+            }
+          },
+          "IntervalSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "MaxAttempts": {
+            "type": "number",
+            "minimum": 0
+          },
+          "BackoffRate": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": ["ErrorEquals"]
+      }
+    }
+  }
+}

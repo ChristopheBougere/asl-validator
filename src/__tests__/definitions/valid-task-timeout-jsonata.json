@@ -1,0 +1,14 @@
+{
+  "Comment": "Task uses JSONata for timeout/heartbeat",
+  "QueryLanguage": "JSONata",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Type": "Task",
+      "Resource": "arn:aws:swf:us-east-1:123456789012:task:X",
+      "TimeoutSeconds": "{% 120 %}",
+      "HeartbeatSeconds": "{% 20 %}",
+      "End": true
+    }
+  }
+}

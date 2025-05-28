@@ -14,6 +14,9 @@
       "type": ["string", "null"],
       "format": "asl_result_path"
     },
+    "assign": {
+      "$ref": "#/definitions/asl_payload_template"
+    },
     "_payload_template_object": {
       "type": "object",
       "patternProperties": {
@@ -54,9 +57,16 @@
           }
         },
         {
-          "type": ["string", "boolean", "number"]
+          "type": ["boolean", "number"]
+        },
+        {
+          "$ref": "jsonata.json#/definitions/not_jsonata"
         }
       ]
+    },
+    "queryLanguage": {
+      "type": "string",
+      "enum": ["JSONPath"]
     }
   }
 }

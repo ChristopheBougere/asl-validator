@@ -1,0 +1,24 @@
+{
+  "Comment": "Pass with jsonata template Assign field.",
+  "StartAt": "ProvideTestData",
+  "States": {
+    "ProvideTestData": {
+      "Type": "Pass",
+      "QueryLanguage": "JSONata",
+      "Assign": {
+        "top-level": {
+          "child-1": {
+            "child-1-1": "{% $states.input %}",
+            "child-1-2": "{% 789.0123456789012 %}"
+          },
+          "child-2": "{% 622.2269926397355 %}",
+          "child-3": "{% $exists($states.input.moreData) ? $states.input.moreData : {} %}"
+        }
+      },
+      "Next": "End"
+    },
+    "End": {
+      "Type": "Succeed"
+    }
+  }
+}

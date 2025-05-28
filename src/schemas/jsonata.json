@@ -5,32 +5,97 @@
     "output": {
       "oneOf": [
         {
-          "type": "string"
+          "$ref": "#/definitions/jsonata"
         },
         {
-          "type": "object"
+          "$ref": "#/definitions/_jsonata_template_object"
         }
       ]
     },
     "assign": {
-      "type": "object"
+      "$ref": "#/definitions/_jsonata_template_object"
     },
     "arguments": {
       "oneOf": [
         {
-          "type": "string"
+          "$ref": "#/definitions/jsonata"
         },
         {
-          "type": "object"
+          "$ref": "#/definitions/_jsonata_template_object"
         }
       ]
     },
     "queryLanguage": {
       "type": "string",
-      "enum": ["JSONata", "JSONPath"]
+      "enum": ["JSONata"]
     },
     "condition": {
-      "type": "string"
+      "$ref": "#/definitions/jsonata"
+    },
+    "jsonata": {
+      "$comment": "A string that is a JSONata expression",
+      "type": "string",
+      "pattern": "^\\{% .+ %\\}$",
+      "format": "jsonata_string"
+    },
+    "not_jsonata": {
+      "$comment": "A string that is not a JSONata expression",
+      "type": "string",
+      "pattern": "^(?!\\{% )(.+)(?! %\\})$"
+    },
+    "maybe_jsonata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/not_jsonata"
+        },
+        {
+          "$ref": "#/definitions/jsonata"
+        }
+      ]
+    },
+    "_jsonata_template_object": {
+      "type": "object",
+      "patternProperties": {
+        "^.+$": {
+          "$comment": "Require string fields to be maybe_jsonata",
+          "oneOf": [
+            {
+              "type": ["number", "boolean", "null"]
+            },
+            {
+              "$ref": "#/definitions/maybe_jsonata"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/jsonata_template"
+              }
+            },
+            {
+              "$ref": "#/definitions/_jsonata_template_object"
+            }
+          ]
+        }
+      }
+    },
+    "jsonata_template": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/_jsonata_template_object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_jsonata_template_object"
+          }
+        },
+        {
+          "type": ["boolean", "number", "null"]
+        },
+        {
+          "$ref": "#/definitions/maybe_jsonata"
+        }
+      ]
     }
   }
 }

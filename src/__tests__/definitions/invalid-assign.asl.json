@@ -1,0 +1,23 @@
+{
+  "Comment": "Pass with error in nested jsonata template Assign field.",
+  "StartAt": "ProvideTestData",
+  "States": {
+    "ProvideTestData": {
+      "Type": "Pass",
+      "QueryLanguage": "JSONata",
+      "Assign": {
+        "top-level": {
+          "array": [
+            {
+              "child-1": "{% 420. %}"
+            }
+          ]
+        }
+      },
+      "Next": "End"
+    },
+    "End": {
+      "Type": "Succeed"
+    }
+  }
+}

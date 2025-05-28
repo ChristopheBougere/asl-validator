@@ -1,33 +1,70 @@
 {
   "$id": "http://asl-validator.cloud/fail.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "Type": {
-      "type": "string",
-      "enum": ["Fail"]
-    },
-    "Comment": {
-      "type": "string"
-    },
+  "definitions": {
     "Cause": {
-      "type": "string"
-    },
-    "CausePath": {
-      "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
       "type": "string"
     },
     "Error": {
       "type": "string"
     },
-    "ErrorPath": {
-      "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
-      "type": "string"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
+    "Type": {
+      "type": "string",
+      "enum": ["Fail"]
     }
   },
-  "required": ["Type"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        },
+        "Cause": {
+          "$ref": "#/definitions/Cause"
+        },
+        "CausePath": {
+          "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
+          "type": "string"
+        },
+        "Error": {
+          "$ref": "#/definitions/Error"
+        },
+        "ErrorPath": {
+          "$comment": "This field is a ReferencePath with limited Intrinsic Function support. Using string until custom validation is available.",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false,
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Cause": {
+          "$ref": "jsonata.json#/definitions/maybe_jsonata"
+        },
+        "Error": {
+          "$ref": "jsonata.json#/definitions/maybe_jsonata"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      }
+    }
+  ]
 }
