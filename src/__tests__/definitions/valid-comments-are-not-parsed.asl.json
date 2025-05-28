@@ -1,0 +1,13 @@
+{
+  "Comment": "The comment in the X state should not cause the validator to fail",
+  "StartAt": "X",
+  "States": {
+    "X": {
+      "Comment": "{% This is a comment",
+      "Type": "Pass",
+      "Output": "{% $states.input.data.items %}",
+      "QueryLanguage": "JSONata",
+      "End": true
+    }
+  }
+}

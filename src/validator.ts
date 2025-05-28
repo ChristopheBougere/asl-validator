@@ -22,10 +22,8 @@ import {
   IsSucceed,
   IsTask,
   IsWait,
-  None,
   stateChecks,
 } from "./checks/state-checks";
-import { StateEntry } from "./checks/get-states";
 
 const DefaultOptions: ValidationOptions = {
   checkPaths: true,
@@ -60,15 +58,6 @@ export = function validator(
       }
     }
   }
-
-  const IsJsonPath = ({ state }: StateEntry): boolean => {
-    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
-    return queryLanguage === "JSONPath";
-  };
-  const IsJsonNata = ({ state }: StateEntry): boolean => {
-    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
-    return queryLanguage === "JSONata";
-  };
 
   const options = opts ?? DefaultOptions;
   const errors = jsonSchemaErrors(definition, options);
@@ -118,7 +107,6 @@ export = function validator(
           }),
         },
         {
-          // performs the check that non-Terminal states do not contain a `Next` field.
           // This replaces the following schema snippet:
           // "oneOf": [{
           //     "required": ["Next"]
@@ -202,36 +190,36 @@ export = function validator(
             errorCode: StateMachineErrorCode.FailErrorProperty,
           }),
         },
-        {
-          filter: IsJsonNata,
-          checker: None({
-            props: [
-              "InputPath",
-              "OutputPath",
-              "ResultPath",
-              "Parameters",
-              "ResultSelector",
-            ],
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-          }),
-        },
-        {
-          filter: IsJsonPath,
-          checker: None({
-            props: ["Arguments", "Output"],
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-          }),
-        },
-        {
-          filter: (entry) => {
-            return IsMap(entry) && IsJsonPath(entry);
-          },
-          checker: None({
-            props: ["Arguments"],
-            path: "$.ItemReader",
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-          }),
-        },
+        // {
+        //   filter: IsJsonNata,
+        //   checker: None({
+        //     props: [
+        //       "InputPath",
+        //       "OutputPath",
+        //       "ResultPath",
+        //       "Parameters",
+        //       "ResultSelector",
+        //     ],
+        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
+        //   }),
+        // },
+        // {
+        //   filter: IsJsonPath,
+        //   checker: None({
+        //     props: ["Arguments", "Output"],
+        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
+        //   }),
+        // },
+        // {
+        //   filter: (entry) => {
+        //     return IsMap(entry) && IsJsonPath(entry);
+        //   },
+        //   checker: None({
+        //     props: ["Arguments"],
+        //     path: "$.ItemReader",
+        //     errorCode: StateMachineErrorCode.QueryLanguageFieldError,
+        //   }),
+        // },
       ])
     );
   }

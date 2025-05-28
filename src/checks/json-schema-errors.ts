@@ -45,8 +45,8 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
 
   const validateJsonataString = (value: string): boolean => {
     try {
-      const matched = value.match(/\{%\s+(.+)\s+%}/);
-      const expr = matched ? matched[1] : "";
+      let expr = value.startsWith("{%") ? value.slice(2) : value;
+      expr = expr.endsWith("%}") ? expr.slice(0, -2) : expr;
       jsonata(expr);
       return true;
     } catch (err: unknown) {
