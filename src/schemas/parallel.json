@@ -1,103 +1,107 @@
 {
   "$id": "http://asl-validator.cloud/parallel.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "Type": {
-      "type": "string",
-      "enum": ["Parallel"]
-    },
-    "Parameters": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "ResultSelector": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_result_path"
-    },
+  "definitions": {
     "Branches": {
       "type": "array",
       "items": {
         "$ref": "state-machine.json#"
       }
     },
-    "Retry": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "IntervalSeconds": {
-            "type": "number",
-            "minimum": 0
-          },
-          "MaxAttempts": {
-            "type": "number",
-            "minimum": 0
-          },
-          "BackoffRate": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": ["ErrorEquals"]
-      }
-    },
-    "Catch": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "Next": {
-            "type": "string"
-          },
-          "ResultPath": {
-            "$ref": "paths.json#/definitions/asl_result_path"
-          }
-        },
-        "required": ["ErrorEquals", "Next"]
-      }
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "Arguments": {
-      "$ref": "jsonata.json#/definitions/arguments"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
+    "Type": {
+      "type": "string",
+      "enum": ["Parallel"]
     }
   },
-  "required": ["Type", "Branches"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Parameters": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "ResultSelector": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "ResultPath": {
+          "$ref": "paths.json#/definitions/asl_result_path"
+        },
+        "Branches": {
+          "$ref": "#/definitions/Branches"
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["Branches", "QueryLanguage", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Branches": {
+          "$ref": "#/definitions/Branches"
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        },
+        "Arguments": {
+          "$ref": "jsonata.json#/definitions/arguments"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["Branches", "QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }

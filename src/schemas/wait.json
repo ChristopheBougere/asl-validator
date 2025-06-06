@@ -1,57 +1,113 @@
 {
   "$id": "http://asl-validator.cloud/wait.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
+  "definitions": {
+    "Seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
     "Type": {
       "type": "string",
       "enum": ["Wait"]
-    },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "Seconds": {
-      "oneOf": [
-        {
-          "type": "number",
-          "minimum": 0
-        },
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "Timestamp": {
-      "type": "string"
-    },
-    "SecondsPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "TimestampPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
-  "required": ["Type"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "Seconds": {
+          "$ref": "#/definitions/Seconds"
+        },
+        "Timestamp": {
+          "$ref": "#/definitions/Timestamp"
+        },
+        "SecondsPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "TimestampPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Seconds": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "Timestamp": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }

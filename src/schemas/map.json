@@ -1,83 +1,14 @@
 {
   "$id": "http://asl-validator.cloud/map.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "Type": {
-      "type": "string",
-      "enum": ["Map"]
-    },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_result_path"
-    },
-    "Items": {
-      "type": ["array", "string"]
-    },
-    "ItemsPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "Label": {
-      "type": "string"
-    },
-    "MaxConcurrency": {
-      "type": "number",
-      "minimum": 0
-    },
-    "MaxConcurrencyPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "ItemReader": {
-      "$comment": "A Map State MAY have an \"ItemReader\" field, whose value MUST be a JSON object and is called the ItemReader Configuration",
-      "type": "object",
-      "properties": {
-        "Resource": {
-          "$comment": "The ItemReader Configuration MUST have a \"Resource\" field, whose value MUST be a URI that uniquely identifies the specific task to execute. The States language does not constrain the URI scheme nor any other part of the URI.",
-          "type": "string"
-        },
-        "Parameters": {
-          "$comment": "The ItemReader Configuration MAY have a \"Parameters\" field, whose value MUST be a Payload Template.",
-          "$ref": "paths.json#/definitions/asl_payload_template"
-        },
-        "ReaderConfig": {
-          "$comment": "The ItemReader Configuration MAY have a \"ReaderConfig\" field whose value is a JSON object which MAY have a \"MaxItems\" field which MUST be a positive integer.",
-          "type": "object",
-          "properties": {
-            "MaxItems": {
-              "$comment": "MAY have a \"MaxItems\" field which MUST be a positive integer",
-              "type": "integer",
-              "minimum": 1
-            },
-            "MaxItemsPath": {
-              "$comment": "A \"ReaderConfig\" field MAY have \"MaxItemsPath\" field which MUST be a Reference Path which, when resolved, MUST select a field whose value is a positive integer.",
-              "$ref": "paths.json#/definitions/asl_ref_path"
-            },
-            "Arguments": {
-              "$ref": "jsonata.json#/definitions/arguments"
-            }
-          },
-          "additionalProperties": true
-        }
-      },
-      "required": ["Resource"]
-    },
+  "definitions": {
     "ItemProcessor": {
       "type": "object",
-      "allOf": [{ "$ref": "base-state-machine.json#" }],
+      "allOf": [
+        {
+          "$ref": "base-state-machine.json#"
+        }
+      ],
       "$comment": "The \"ItemProcessor\" field MAY contain a field named \"ProcessorConfig\", whose value MUST be a JSON object whose value is defined by the interpreter.",
       "properties": {
         "ProcessorConfig": {
@@ -109,115 +40,360 @@
         }
       }
     },
-    "Iterator": {
-      "$ref": "base-state-machine.json#"
+    "Label": {
+      "type": "string"
     },
-    "Parameters": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
+    "MaxConcurrency": {
+      "type": "number",
+      "minimum": 0
     },
-    "ItemSelector": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
+    "MaxInputBytesPerBatch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 262144
     },
-    "ItemBatcher": {
-      "type": "object",
-      "properties": {
-        "MaxItemsPerBatch": {
-          "type": "number",
-          "minimum": 0
-        },
-        "MaxItemsPerBatchPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "MaxInputBytesPerBatch": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 262144
-        },
-        "MaxInputBytesPerBatchPath": {
-          "$ref": "paths.json#/definitions/asl_ref_path"
-        },
-        "BatchInput": {
-          "$ref": "paths.json#/definitions/asl_payload_template"
-        }
-      }
+    "MaxItems": {
+      "$comment": "MAY have a \"MaxItems\" field which MUST be a positive integer",
+      "type": "integer",
+      "minimum": 1
     },
-    "ResultSelector": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
+    "MaxItemsPerBatch": {
+      "type": "integer",
+      "minimum": 0
     },
-    "ResultWriter": {
-      "$comment": "Allow any object for now and update in a subsequent PR to support S3 buckets and other outputs",
-      "type": "object"
-    },
-    "Retry": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "IntervalSeconds": {
-            "type": "number",
-            "minimum": 0
-          },
-          "MaxAttempts": {
-            "type": "number",
-            "minimum": 0
-          },
-          "BackoffRate": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": ["ErrorEquals"]
-      }
-    },
-    "Catch": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "Next": {
-            "type": "string"
-          }
-        },
-        "required": ["ErrorEquals", "Next"]
-      }
+    "Resource": {
+      "$comment": "The ResultWrite/ItemReader Configuration MUST have a \"Resource\" field, whose value MUST be a URI that uniquely identifies the specific task to execute. The States language does not constrain the URI scheme nor any other part of the URI.",
+      "type": "string"
     },
     "ToleratedFailureCount": {
       "type": "integer",
       "minimum": 0
-    },
-    "ToleratedFailureCountPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
     },
     "ToleratedFailurePercentage": {
       "type": "integer",
       "minimum": 0,
       "maximum": 100
     },
-    "ToleratedFailurePercentagePath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
+    "Type": {
+      "type": "string",
+      "enum": ["Map"]
     }
   },
-  "required": ["Type"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        },
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "ResultPath": {
+          "$ref": "paths.json#/definitions/asl_result_path"
+        },
+        "ItemsPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "Label": {
+          "$ref": "#/definitions/Label"
+        },
+        "MaxConcurrency": {
+          "$ref": "#/definitions/MaxConcurrency"
+        },
+        "MaxConcurrencyPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "ItemReader": {
+          "$comment": "A Map State MAY have an \"ItemReader\" field, whose value MUST be a JSON object and is called the ItemReader Configuration",
+          "type": "object",
+          "properties": {
+            "Resource": {
+              "$ref": "#/definitions/Resource"
+            },
+            "Parameters": {
+              "$comment": "The ItemReader Configuration MAY have a \"Parameters\" field, whose value MUST be a Payload Template.",
+              "$ref": "paths.json#/definitions/asl_payload_template"
+            },
+            "ReaderConfig": {
+              "$comment": "The ItemReader Configuration MAY have a \"ReaderConfig\" field whose value is a JSON object which MAY have a \"MaxItems\" field which MUST be a positive integer.",
+              "type": "object",
+              "properties": {
+                "MaxItems": {
+                  "$ref": "#/definitions/MaxItems"
+                },
+                "MaxItemsPath": {
+                  "$comment": "A \"ReaderConfig\" field MAY have \"MaxItemsPath\" field which MUST be a Reference Path which, when resolved, MUST select a field whose value is a positive integer.",
+                  "$ref": "paths.json#/definitions/asl_ref_path"
+                },
+                "Parameters": {
+                  "$ref": "paths.json#/definitions/asl_payload_template"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "required": ["Resource"]
+        },
+        "ItemProcessor": {
+          "$ref": "#/definitions/ItemProcessor"
+        },
+        "Iterator": {
+          "$ref": "base-state-machine.json#"
+        },
+        "Parameters": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "ItemSelector": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "ItemBatcher": {
+          "type": "object",
+          "properties": {
+            "MaxItemsPerBatch": {
+              "$ref": "#/definitions/MaxItemsPerBatch"
+            },
+            "MaxItemsPerBatchPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            },
+            "MaxInputBytesPerBatch": {
+              "$ref": "#/definitions/MaxInputBytesPerBatch"
+            },
+            "MaxInputBytesPerBatchPath": {
+              "$ref": "paths.json#/definitions/asl_ref_path"
+            },
+            "BatchInput": {
+              "$ref": "paths.json#/definitions/asl_payload_template"
+            }
+          }
+        },
+        "ResultSelector": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "ResultWriter": {
+          "$comment": "A Map State MAY have a \"ResultWriter\" field, whose value MUST be a JSON object and is called the ResultWriter Configuration.",
+          "type": "object",
+          "required": ["Resource"],
+          "properties": {
+            "Parameters": {
+              "$comment": "In a JSONPath Map State, the ResultWriter Configuration MAY have a \"Parameters\" field, whose value MUST be a Payload Template.",
+              "$ref": "paths.json#/definitions/asl_payload_template"
+            },
+            "Resource": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        },
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "ToleratedFailureCount": {
+          "$ref": "#/definitions/ToleratedFailureCount"
+        },
+        "ToleratedFailureCountPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "ToleratedFailurePercentage": {
+          "$ref": "#/definitions/ToleratedFailurePercentage"
+        },
+        "ToleratedFailurePercentagePath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["QueryLanguage", "Type"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        },
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Items": {
+          "oneOf": [
+            {
+              "type": "array"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "Label": {
+          "$ref": "#/definitions/Label"
+        },
+        "MaxConcurrency": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MaxConcurrency"
+            },
+            {
+              "$comment": "A JSONata Map State MAY specify a JSONata string for the \"MaxConcurrency\" field, which MUST evaluate to a non-negative integer.",
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "ItemReader": {
+          "$comment": "A Map State MAY have an \"ItemReader\" field, whose value MUST be a JSON object and is called the ItemReader Configuration",
+          "type": "object",
+          "properties": {
+            "Resource": {
+              "$ref": "#/definitions/Resource"
+            },
+            "Arguments": {
+              "$comment": "In a JSONata Map State, the ItemReader Configuration MAY have an \"Arguments\" field, whose value MUST be a JSON object or a JSONata string that evaluates to a JSON object.",
+              "$ref": "jsonata.json#/definitions/arguments"
+            },
+            "ReaderConfig": {
+              "$comment": "The ItemReader Configuration MAY have a \"ReaderConfig\" field whose value is a JSON object which MAY have a \"MaxItems\" field which MUST be a positive integer.",
+              "type": "object",
+              "properties": {
+                "MaxItems": {
+                  "$comment": "In a JSONata Map State, the \"ReaderConfig\" field's \"MaxItems\" field MAY be a JSONata string that MUST evaluate to a positive integer.",
+                  "oneOf": [
+                    {
+                      "$ref": "#/definitions/MaxItems"
+                    },
+                    {
+                      "$ref": "jsonata.json#/definitions/jsonata"
+                    }
+                  ]
+                },
+                "Arguments": {
+                  "$ref": "jsonata.json#/definitions/arguments"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "required": ["Resource"]
+        },
+        "ItemProcessor": {
+          "$ref": "#/definitions/ItemProcessor"
+        },
+        "Iterator": {
+          "$ref": "base-state-machine.json#"
+        },
+        "ItemSelector": {
+          "$ref": "jsonata.json#/definitions/jsonata_template"
+        },
+        "ItemBatcher": {
+          "type": "object",
+          "properties": {
+            "MaxItemsPerBatch": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/MaxItemsPerBatch"
+                },
+                {
+                  "$ref": "jsonata.json#/definitions/jsonata"
+                }
+              ]
+            },
+            "MaxInputBytesPerBatch": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/MaxInputBytesPerBatch"
+                },
+                {
+                  "$ref": "jsonata.json#/definitions/jsonata"
+                }
+              ]
+            },
+            "BatchInput": {
+              "oneOf": [
+                {
+                  "$ref": "jsonata.json#/definitions/jsonata"
+                },
+                {
+                  "$ref": "jsonata.json#/definitions/jsonata_template"
+                }
+              ]
+            }
+          }
+        },
+        "ResultWriter": {
+          "$comment": "A Map State MAY have a \"ResultWriter\" field, whose value MUST be a JSON object and is called the ResultWriter Configuration.",
+          "type": "object",
+          "required": ["Resource"],
+          "properties": {
+            "Arguments": {
+              "$comment": "In a JSONata Map State, the ResultWriter Configuration MAY have an \"Arguments\" field, whose value MUST be a JSON object or a JSONata string that evaluates to a JSON object.",
+              "$ref": "jsonata.json#/definitions/arguments"
+            },
+            "Resource": {
+              "$ref": "#/definitions/Resource"
+            }
+          }
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "ToleratedFailureCount": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ToleratedFailureCount"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "ToleratedFailurePercentage": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/ToleratedFailurePercentage"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }
