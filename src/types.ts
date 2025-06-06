@@ -1,4 +1,7 @@
-export type State = Record<string, unknown>;
+export type State = {
+  QueryLanguage?: string;
+  [key: string]: unknown;
+};
 export type States = Record<string, State>;
 export type StateMachine = {
   QueryLanguage?: string | null;

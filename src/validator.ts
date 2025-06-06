@@ -10,6 +10,7 @@ import {
   StateMachine,
   StateMachineError,
   StateMachineErrorCode,
+  States,
   ValidationOptions,
 } from "./types";
 import { mustNotHaveDuplicateFieldNamesAfterEvaluation } from "./checks/duplicate-payload-template-fields";
@@ -44,17 +45,15 @@ export = function validator(
   const defaultQueryLanguage = definition.QueryLanguage ?? "JSONPath";
 
   // Select all objects named "States"
-  const statesObjects: Record<string, unknown>[] = JSONPath({
+  const statesObjects: States[] = JSONPath({
     path: "$..States",
     json: definition,
   });
   for (const states of statesObjects) {
-    if (states && typeof states === "object") {
-      for (const stateName of Object.keys(states)) {
-        const state = states[stateName] as { QueryLanguage?: string };
-        if (state && typeof state === "object" && !state.QueryLanguage) {
-          state.QueryLanguage = defaultQueryLanguage;
-        }
+    for (const stateName of Object.keys(states)) {
+      const state = states[stateName];
+      if (!state.QueryLanguage) {
+        state.QueryLanguage = defaultQueryLanguage;
       }
     }
   }

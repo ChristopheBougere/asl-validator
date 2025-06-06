@@ -1,21 +1,21 @@
 import Ajv, { ErrorObject } from "ajv";
 import jsonata from "jsonata";
 import addFormats from "ajv-formats";
-import common from "../schemas/common.json";
-import paths from "../schemas/paths.json";
+import commonSchema from "../schemas/common.json";
+import pathsSchema from "../schemas/paths.json";
 import jsonataSchema from "../schemas/jsonata.json";
-import choice from "../schemas/choice.json";
-import fail from "../schemas/fail.json";
-import parallel from "../schemas/parallel.json";
-import pass from "../schemas/pass.json";
-import baseStateMachine from "../schemas/base-state-machine.json";
-import stateMachine from "../schemas/state-machine.json";
-import state from "../schemas/state.json";
-import succeed from "../schemas/succeed.json";
-import task from "../schemas/task.json";
-import wait from "../schemas/wait.json";
-import map from "../schemas/map.json";
-import errors from "../schemas/errors.json";
+import choiceSchema from "../schemas/choice.json";
+import failSchema from "../schemas/fail.json";
+import parallelSchema from "../schemas/parallel.json";
+import passSchema from "../schemas/pass.json";
+import baseStateMachineSchema from "../schemas/base-state-machine.json";
+import stateMachineSchema from "../schemas/state-machine.json";
+import stateSchema from "../schemas/state.json";
+import succeedSchema from "../schemas/succeed.json";
+import taskSchema from "../schemas/task.json";
+import waitSchema from "../schemas/wait.json";
+import mapSchema from "../schemas/map.json";
+import errorsSchema from "../schemas/errors.json";
 import { AslChecker, StateMachineError, StateMachineErrorCode } from "../types";
 import { registerAll } from "asl-path-validator";
 import { isArnFormatValid } from "./formats";
@@ -23,29 +23,30 @@ import { isArnFormatValid } from "./formats";
 export const jsonSchemaErrors: AslChecker = (definition, options) => {
   const ajv = new Ajv({
     schemas: [
-      common,
-      paths,
+      commonSchema,
+      pathsSchema,
       jsonataSchema,
-      choice,
-      fail,
-      parallel,
-      pass,
-      baseStateMachine,
-      stateMachine,
-      state,
-      succeed,
-      task,
-      wait,
-      map,
-      errors,
+      choiceSchema,
+      failSchema,
+      parallelSchema,
+      passSchema,
+      baseStateMachineSchema,
+      stateMachineSchema,
+      stateSchema,
+      succeedSchema,
+      taskSchema,
+      waitSchema,
+      mapSchema,
+      errorsSchema,
     ],
     allowUnionTypes: true,
   });
   addFormats(ajv);
 
   const validateJsonataString = (value: string): boolean => {
+    const trimmed = value.trim();
     try {
-      let expr = value.startsWith("{%") ? value.slice(2) : value;
+      let expr = trimmed.startsWith("{%") ? trimmed.slice(2) : trimmed;
       expr = expr.endsWith("%}") ? expr.slice(0, -2) : expr;
       jsonata(expr);
       return true;
@@ -54,8 +55,9 @@ export const jsonSchemaErrors: AslChecker = (definition, options) => {
     }
   };
   const maybeJsonataString = (value: string): boolean => {
-    if (value.startsWith("{%") || value.endsWith("%}")) {
-      return validateJsonataString(value);
+    const trimmed = value.trim();
+    if (trimmed.startsWith("{%") || trimmed.endsWith("%}")) {
+      return validateJsonataString(trimmed);
     }
     return true;
   };
