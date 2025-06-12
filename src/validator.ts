@@ -60,7 +60,6 @@ export = function validator(
 
   const options = opts ?? DefaultOptions;
   const errors = jsonSchemaErrors(definition, options);
-
   if (errors.length === 0) {
     errors.push(...missingTransitionTargetErrors(definition, options));
     errors.push(...stateTransitionsErrors(definition, options));
