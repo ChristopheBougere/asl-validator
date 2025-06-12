@@ -49,7 +49,7 @@ Return status:
 
 ## In your code
 
-```js
+```javascript
 const aslValidator = require("asl-validator");
 const definition = require("./path/to/my/state/machine/json/definition");
 const { isValid, errors, errorsText } = aslValidator(definition);
