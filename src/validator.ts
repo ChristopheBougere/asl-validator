@@ -1,4 +1,5 @@
 import { ErrorObject } from "ajv";
+import { JSONPath } from "jsonpath-plus";
 
 import { jsonSchemaErrors } from "./checks/json-schema-errors";
 import { missingTransitionTargetErrors } from "./checks/missing-transition-target-errors";
@@ -9,6 +10,7 @@ import {
   StateMachine,
   StateMachineError,
   StateMachineErrorCode,
+  States,
   ValidationOptions,
 } from "./types";
 import { mustNotHaveDuplicateFieldNamesAfterEvaluation } from "./checks/duplicate-payload-template-fields";
@@ -21,11 +23,8 @@ import {
   IsSucceed,
   IsTask,
   IsWait,
-  None,
   stateChecks,
 } from "./checks/state-checks";
-import { StateEntry } from "./checks/get-states";
-import { validateJsonataSyntax } from "./checks/jsonata-syntax-validator";
 
 const DefaultOptions: ValidationOptions = {
   checkPaths: true,
@@ -45,14 +44,19 @@ export = function validator(
   // MAY support others.
   const defaultQueryLanguage = definition.QueryLanguage ?? "JSONPath";
 
-  const IsJsonPath = ({ state }: StateEntry): boolean => {
-    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
-    return queryLanguage === "JSONPath";
-  };
-  const IsJsonNata = ({ state }: StateEntry): boolean => {
-    const queryLanguage = state.QueryLanguage ?? defaultQueryLanguage;
-    return queryLanguage === "JSONata";
-  };
+  // Select all objects named "States"
+  const statesObjects: States[] = JSONPath({
+    path: "$..States",
+    json: definition,
+  });
+  for (const states of statesObjects) {
+    for (const stateName of Object.keys(states)) {
+      const state = states[stateName];
+      if (!state.QueryLanguage) {
+        state.QueryLanguage = defaultQueryLanguage;
+      }
+    }
+  }
 
   const options = opts ?? DefaultOptions;
   const errors = jsonSchemaErrors(definition, options);
@@ -64,7 +68,6 @@ export = function validator(
     errors.push(
       ...mustNotHaveDuplicateFieldNamesAfterEvaluation(definition, options)
     );
-    errors.push(...validateJsonataSyntax(definition));
     errors.push(
       ...stateChecks(definition, options, [
         {
@@ -103,7 +106,6 @@ export = function validator(
           }),
         },
         {
-          // performs the check that non-Terminal states do not contain a `Next` field.
           // This replaces the following schema snippet:
           // "oneOf": [{
           //     "required": ["Next"]
@@ -185,36 +187,6 @@ export = function validator(
           checker: AtMostOne({
             props: ["Error", "ErrorPath"],
             errorCode: StateMachineErrorCode.FailErrorProperty,
-          }),
-        },
-        {
-          filter: IsJsonNata,
-          checker: None({
-            props: [
-              "InputPath",
-              "OutputPath",
-              "ResultPath",
-              "Parameters",
-              "ResultSelector",
-            ],
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-          }),
-        },
-        {
-          filter: IsJsonPath,
-          checker: None({
-            props: ["Arguments", "Output"],
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
-          }),
-        },
-        {
-          filter: (entry) => {
-            return IsMap(entry) && IsJsonPath(entry);
-          },
-          checker: None({
-            props: ["Arguments"],
-            path: "$.ItemReader",
-            errorCode: StateMachineErrorCode.QueryLanguageFieldError,
           }),
         },
       ])

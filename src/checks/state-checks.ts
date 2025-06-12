@@ -40,7 +40,7 @@ export type StateChecker = (entry: StateEntry) => StateMachineError | null;
 
 export const stateChecks = (
   definition: StateMachine,
-  options: ValidationOptions,
+  _options: ValidationOptions,
   checks: Array<{ filter: StateFilter; checker: StateChecker }>
 ): StateMachineError[] => {
   const errorMessages: StateMachineError[] = [];
@@ -147,30 +147,6 @@ export const AtMostOne = ({
     errorCode,
     path,
     errorMessage: "MUST contain at most one of",
-  });
-};
-
-export const None = ({
-  props,
-  errorCode,
-  path,
-}: {
-  props: string[];
-  errorCode: StateMachineErrorCode;
-  // path to a sub-property within the state to use as the
-  // context for the property checks. This is intended to
-  // support enforcement of constraints on nested properties
-  // within a State.
-  // See the Map's ItemReader.ReaderConfiguration at most one
-  // rule for MaxItems and MaxItemsPath.
-  path?: string;
-}): StateChecker => {
-  return enforceMaxCount({
-    maxCount: 0,
-    props,
-    errorCode,
-    path,
-    errorMessage: "MUST NOT contain any of",
   });
 };
 

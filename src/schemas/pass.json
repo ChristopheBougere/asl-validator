@@ -1,44 +1,79 @@
 {
   "$id": "http://asl-validator.cloud/pass.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
+  "definitions": {
     "Type": {
       "type": "string",
       "enum": ["Pass"]
-    },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_result_path"
-    },
-    "Parameters": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "Result": {},
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
     }
   },
-  "required": ["Type"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        },
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "ResultPath": {
+          "$ref": "paths.json#/definitions/asl_result_path"
+        },
+        "Parameters": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "Result": {},
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Result": {},
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }

@@ -1,26 +1,10 @@
 {
   "$id": "http://asl-validator.cloud/task.json#",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "Type": {
-      "type": "string",
-      "enum": ["Task"]
-    },
-    "Next": {
-      "type": "string"
-    },
-    "End": {
-      "enum": [true]
-    },
-    "Comment": {
-      "type": "string"
-    },
-    "OutputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
-    },
-    "InputPath": {
-      "$ref": "paths.json#/definitions/asl_path"
+  "definitions": {
+    "HeartbeatSeconds": {
+      "type": "integer",
+      "minimum": 1
     },
     "Resource": {
       "oneOf": [
@@ -50,93 +34,140 @@
         }
       ]
     },
-    "ResultPath": {
-      "$ref": "paths.json#/definitions/asl_result_path"
-    },
-    "Retry": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "IntervalSeconds": {
-            "type": "number",
-            "minimum": 0
-          },
-          "MaxAttempts": {
-            "type": "number",
-            "minimum": 0
-          },
-          "BackoffRate": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": ["ErrorEquals"]
-      }
-    },
-    "Catch": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "ErrorEquals": {
-            "type": "array",
-            "items": {
-              "$ref": "errors.json#"
-            }
-          },
-          "Next": {
-            "type": "string"
-          },
-          "ResultPath": {
-            "$ref": "paths.json#/definitions/asl_result_path"
-          }
-        },
-        "required": ["ErrorEquals", "Next"]
-      }
-    },
     "TimeoutSeconds": {
-      "type": "number",
+      "type": "integer",
       "minimum": 1
     },
-    "TimeoutSecondsPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "HeartbeatSeconds": {
-      "type": "number",
-      "minimum": 1
-    },
-    "HeartbeatSecondsPath": {
-      "$ref": "paths.json#/definitions/asl_ref_path"
-    },
-    "ResultSelector": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "Parameters": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "Credentials": {
-      "$ref": "paths.json#/definitions/asl_payload_template"
-    },
-    "Output": {
-      "$ref": "jsonata.json#/definitions/output"
-    },
-    "Assign": {
-      "$ref": "jsonata.json#/definitions/assign"
-    },
-    "Arguments": {
-      "$ref": "jsonata.json#/definitions/arguments"
-    },
-    "QueryLanguage": {
-      "$ref": "jsonata.json#/definitions/queryLanguage"
+    "Type": {
+      "type": "string",
+      "enum": ["Task"]
     }
   },
-  "required": ["Type", "Resource"],
-  "additionalProperties": false
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "OutputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "InputPath": {
+          "$ref": "paths.json#/definitions/asl_path"
+        },
+        "Resource": {
+          "$ref": "#/definitions/Resource"
+        },
+        "ResultPath": {
+          "$ref": "paths.json#/definitions/asl_result_path"
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "TimeoutSeconds": {
+          "$ref": "#/definitions/TimeoutSeconds"
+        },
+        "TimeoutSecondsPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "HeartbeatSeconds": {
+          "$ref": "#/definitions/HeartbeatSeconds"
+        },
+        "HeartbeatSecondsPath": {
+          "$ref": "paths.json#/definitions/asl_ref_path"
+        },
+        "ResultSelector": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "Parameters": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "Credentials": {
+          "$ref": "paths.json#/definitions/asl_payload_template"
+        },
+        "Assign": {
+          "$ref": "paths.json#/definitions/assign"
+        },
+        "QueryLanguage": {
+          "$ref": "paths.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Resource", "Type"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "$ref": "#/definitions/Type"
+        },
+        "Next": {
+          "$ref": "common.json#/definitions/Next"
+        },
+        "End": {
+          "$ref": "common.json#/definitions/End"
+        },
+        "Comment": {
+          "$ref": "common.json#/definitions/Comment"
+        },
+        "Resource": {
+          "$ref": "#/definitions/Resource"
+        },
+        "Retry": {
+          "$ref": "common.json#/definitions/Retry"
+        },
+        "Catch": {
+          "$ref": "common.json#/definitions/Catch"
+        },
+        "TimeoutSeconds": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/TimeoutSeconds"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "HeartbeatSeconds": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/HeartbeatSeconds"
+            },
+            {
+              "$ref": "jsonata.json#/definitions/jsonata"
+            }
+          ]
+        },
+        "Credentials": {},
+        "Output": {
+          "$ref": "jsonata.json#/definitions/output"
+        },
+        "Assign": {
+          "$ref": "jsonata.json#/definitions/assign"
+        },
+        "Arguments": {
+          "$ref": "jsonata.json#/definitions/arguments"
+        },
+        "QueryLanguage": {
+          "$ref": "jsonata.json#/definitions/queryLanguage"
+        }
+      },
+      "required": ["QueryLanguage", "Resource", "Type"],
+      "additionalProperties": false
+    }
+  ]
 }
